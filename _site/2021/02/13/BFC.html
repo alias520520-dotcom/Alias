@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>Css-—BFC原理及作用</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="不懂BFC，所以要学一学BFC。" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="Css" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="Css-—BFC原理及作用" />
+<meta name="twitter:description" content="不懂BFC，所以要学一学BFC。" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/02/13/BFC" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="Css-—BFC原理及作用" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/02/13/BFC" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="不懂BFC，所以要学一学BFC。" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-02-13T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="Css" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/02/13/BFC">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">Css-—BFC原理及作用</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-02-13T00:00:00+08:00" itemprop="datePublished">
+                
+                Feb 13, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Css-—BFC原理及作用</h1>
+    <p class="post-meta">
+      <time datetime="2021-02-13T00:00:00+08:00" itemprop="datePublished">
+        
+        Feb 13, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>不懂BFC，所以要学一学BFC。</p>
+
+<h2 id="常见布局模式">常见布局模式</h2>
+
+<p><strong>CSS中的三种布局模型</strong>：流动模型（Flow）、浮动模型（Float）和层模型（Layer）。</p>
+
+<h2 id="bfc概念">BFC概念</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Block fomatting context</code> = <code class="language-plaintext highlighter-rouge">block-level box</code> + <code class="language-plaintext highlighter-rouge">Formatting Context</code></p>
+<h3 id="box">Box</h3>
+
+<p>Box即盒子模型；</p>
+
+<ul>
+  <li>block-level box 即块级元素
+    <blockquote>
+      <p>display属性为<code class="language-plaintext highlighter-rouge">block</code>, <code class="language-plaintext highlighter-rouge">list-item</code>,<code class="language-plaintext highlighter-rouge">table</code>的元素，会生成<code class="language-plaintext highlighter-rouge">block-level box</code>；并且参与 <code class="language-plaintext highlighter-rouge">block fomatting context</code></p>
+
+      <p>每个块级元素至少生成一个<strong>块级盒</strong>（<code class="language-plaintext highlighter-rouge">block-level Box</code>）参与 BFC ，称为主要块级盒(<code class="language-plaintext highlighter-rouge">principal block-level box</code>)</p>
+    </blockquote>
+  </li>
+  <li>inline-level box 即行内元素
+    <blockquote>
+      <p>display 属性为 <code class="language-plaintext highlighter-rouge">inline</code>, <code class="language-plaintext highlighter-rouge">inline-block</code>, <code class="language-plaintext highlighter-rouge">inline-table</code>的元素，会生成<code class="language-plaintext highlighter-rouge">inline-level box</code>。并且参与 <code class="language-plaintext highlighter-rouge">inline formatting context</code></p>
+
+      <p>行内级元素生成<strong>行内级盒</strong>(inline-level boxes)，参与行内格式化上下文 IFC 。</p>
+    </blockquote>
+  </li>
+  <li>flex container：当元素的 CSS 属性 display 的计算值为 <code class="language-plaintext highlighter-rouge">flex</code> 或 <code class="language-plaintext highlighter-rouge">inline-flex</code> ，称它为弹性容器。
+    <blockquote>
+      <p><code class="language-plaintext highlighter-rouge">display:flex</code>这个值会导致一个元素生成一个块级（<code class="language-plaintext highlighter-rouge">block-level</code>）弹性容器框。</p>
+
+      <p><code class="language-plaintext highlighter-rouge">display:inline-flex</code>这个值会导致一个元素生成一个行内级（<code class="language-plaintext highlighter-rouge">inline-level</code>）弹性容器框。</p>
+    </blockquote>
+  </li>
+  <li>grid container：当元素的 CSS 属性 display 的计算值为 grid 或 <code class="language-plaintext highlighter-rouge">inline-grid</code>，称它为栅格容器。</li>
+</ul>
+
+<h3 id="formatting-context">Formatting context</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Formatting context</code>是W3C CSS2.1规范中的一个概念。它是页面中的一块渲染区域，并且有一套渲染规则，它决定了其子元素将如何定位，以及和其他元素的关系、相互作用。</p>
+
+<p>最常见的 <code class="language-plaintext highlighter-rouge">Formatting context</code> 有 <code class="language-plaintext highlighter-rouge">Block fomatting context</code> (简称BFC)和 <code class="language-plaintext highlighter-rouge">Inline formatting context</code>(简称IFC)。</p>
+
+<font style="color: blue;">CSS2.1 中只有BFC和IFC, CSS3中还增加了 G（grid）FC和 F(flex)FC。 </font>
+
+<h3 id="bfc-定义">BFC 定义</h3>
+
+<p>BFC 即 <code class="language-plaintext highlighter-rouge">Block Formatting Contexts</code> (块级格式化上下文)，它属于上述布局模式的流动模型。是W3C <code class="language-plaintext highlighter-rouge">CSS2.1</code>规范中的一个概念，决定了元素如何对其内容进行定位，以及与其他元素的关系和相互作用。</p>
+
+<p><mark>具有BFC特性的元素可以看做是隔离了的独立容器，容器里面的元素不会在布局上影响到外面的元素，并且BFC具有普通容器所没有的的一些特性。</mark></p>
+
+<h2 id="形成bfc的条件">形成BFC的条件</h2>
+
+<p>BFC是一块渲染区域，那这块渲染区域到底在哪，它又是有多大，这些由生成BFC的元素决定，CSS2.1中规定满足下列CSS声明之一的元素便会生成BFC。</p>
+
+<h3 id="bfc的生成">BFC的生成</h3>
+
+<p>只要元素满足下面任一条件即可触发<code class="language-plaintext highlighter-rouge">BFC</code>特性：</p>
+<ul>
+  <li>html根元素</li>
+  <li>浮动元素：<code class="language-plaintext highlighter-rouge">float</code> 除 <code class="language-plaintext highlighter-rouge">none</code> 以外的值</li>
+  <li>绝对定位元素：<code class="language-plaintext highlighter-rouge">position</code> (<code class="language-plaintext highlighter-rouge">absolute</code>、<code class="language-plaintext highlighter-rouge">fixed</code>)</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">display</code>不是<code class="language-plaintext highlighter-rouge">block</code>的块(<code class="language-plaintext highlighter-rouge">inline-block</code>、<code class="language-plaintext highlighter-rouge">table-cell</code>（表格单元格）、<code class="language-plaintext highlighter-rouge">table-caption</code>（表格标题）)</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">overflow</code> 除了 <code class="language-plaintext highlighter-rouge">visible</code> 以外的值 (<code class="language-plaintext highlighter-rouge">hidden</code>、<code class="language-plaintext highlighter-rouge">auto</code>、<code class="language-plaintext highlighter-rouge">scroll</code>)</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">display</code>为<code class="language-plaintext highlighter-rouge">flex</code>、<code class="language-plaintext highlighter-rouge">grid</code>、<code class="language-plaintext highlighter-rouge">flow-root</code>的元素(<code class="language-plaintext highlighter-rouge">flow-root</code>为专门设置BFC的属性值)</li>
+</ul>
+
+<p>BFC包含创建该上下文元素的所有子元素，但不包括创建了新BFC的子元素的内部元素。</p>
+
+<h3 id="bfc的约束规则">BFC的约束规则</h3>
+
+<ul>
+  <li>内部的Box会在<strong>垂直方向</strong>上一个接一个的放置</li>
+  <li>垂直方向上的距离由margin决定。（完整的说法是：属于同一个BFC的两个相邻Box的margin会发生重叠（塌陷），与方向无关。）</li>
+  <li>每个元素的左外边距与包含块的<strong>左边界相接触</strong>（从左向右），即使浮动元素也是如此。（这说明BFC中子元素不会超出他的包含块，而position为absolute的元素可以超出他的包含块边界）</li>
+  <li>BFC的区域<strong>不会</strong>与float的元素<strong>区域重叠</strong>
+</li>
+  <li>计算BFC的高度时，<strong>浮动子元素也参与计算</strong>
+</li>
+  <li>BFC就是页面上的一个<strong>隔离的独立容器</strong>，容器里面的子元素不会影响到外面元素，反之亦然</li>
+</ul>
+
+<h2 id="bfc常见作用">BFC常见作用</h2>
+
+<h3 id="阻止外边距折叠">阻止外边距折叠</h3>
+
+<font style="color: #ec7907;">问题案例：两个相邻Box垂直方向margin重叠</font>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nt">&lt;head&gt;</span>
+div{
+    width: 100px;
+    height: 100px;
+    background: lightblue;
+    margin: 100px;
+}
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</code></pre></div></div>
+
+<p><img src="../../../images/bfc1.png" alt="image.png"></p>
+
+<p>从效果上看，因为两个div元素都处于同一个BFC容器下（这里指html根元素），所以第一个div的下边距和第二个div的上边距发生了重叠，所以两个盒子之间距离只有100px，而不是200px。</p>
+
+<p>这是一种规范：<strong>如果想要避免外边距的重叠，可以将其放在不同的 BFC 容器中</strong>。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;p&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;p&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.container</span> <span class="p">{</span>
+    <span class="nl">overflow</span><span class="p">:</span> <span class="nb">hidden</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">p</span> <span class="p">{</span>
+    <span class="nl">width</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+    <span class="nl">height</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="no">lightblue</span><span class="p">;</span>
+    <span class="nl">margin</span><span class="p">:</span> <span class="m">100px</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="../../../images/bfc2.png" alt="image.png"></p>
+
+<font style="color: #ec7907;">问题案例：相邻Box水平方向margin重叠</font>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype HTML&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+
+    <span class="nf">#green</span> <span class="p">{</span>
+        <span class="nl">margin</span><span class="p">:</span><span class="m">10px</span> <span class="m">10px</span> <span class="m">10px</span> <span class="m">10px</span>
+    <span class="p">}</span>
+    <span class="nf">#blue</span> <span class="p">{</span>
+        <span class="nl">margin</span><span class="p">:</span><span class="m">10px</span> <span class="m">10px</span> <span class="m">10px</span> <span class="m">10px</span>
+    <span class="p">}</span>
+    <span class="nf">#red</span> <span class="p">{</span>
+        <span class="nl">margin</span><span class="p">:</span><span class="m">10px</span> <span class="m">10px</span> <span class="m">10px</span> <span class="m">10px</span>
+    <span class="p">}</span>
+    <span class="nt">body</span> <span class="p">{</span>
+        <span class="nl">writing-mode</span><span class="p">:</span><span class="n">tb-rl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"green"</span> <span class="na">style=</span><span class="s">"background:lightgreen;height:100px;width:100px;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"blue"</span> <span class="na">style=</span><span class="s">"background:lightblue;height:100px;width:100px;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"red"</span> <span class="na">style=</span><span class="s">"background:pink;height:100px;width:100px;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p><img src="../../../images/bfc7.png" alt="image.png"></p>
+
+<p>我们可以给div加个<code class="language-plaintext highlighter-rouge">display:inline-block</code>，触每个div容器生成一个BFC。那么三个DIV便不属于同一个BFC（这个只body根元素形成的BFC），就不会发生margin重叠了。</p>
+
+<p><img src="../../../images/bfc8.png" alt="image.png"></p>
+
+<font style="color: #ec7907;">问题案例：嵌套元素的margin重叠</font>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>  
+<span class="nt">&lt;head&gt;</span> 
+  <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Type"</span> <span class="na">content=</span><span class="s">"text/html; charset=utf-8"</span><span class="nt">&gt;</span>
+  <span class="c">&lt;!--The viewport meta tag is used to improve the presentation and behavior of the samples 
+    on iOS devices--&gt;</span>
+  <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"initial-scale=1, maximum-scale=1,user-scalable=no"</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+
+  <span class="nt">&lt;style&gt;</span> 
+    <span class="nt">html</span><span class="o">,</span> <span class="nt">body</span> <span class="p">{</span> <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span> <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span> <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span> <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nf">#map</span><span class="p">{</span>
+      <span class="nl">padding</span><span class="p">:</span><span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nc">.first</span><span class="p">{</span>
+      <span class="nl">margin</span><span class="p">:</span><span class="m">20px</span><span class="p">;</span>
+      <span class="nl">background</span><span class="p">:</span><span class="no">lightgreen</span><span class="p">;</span>
+      <span class="nl">width</span><span class="p">:</span><span class="m">100px</span><span class="p">;</span>
+      <span class="nl">height</span><span class="p">:</span><span class="m">100px</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nt">ul</span><span class="p">{</span>
+      <span class="c">/*display:inline-block;*/</span>
+      <span class="nl">margin</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+      <span class="nl">background</span><span class="p">:</span><span class="no">lightblue</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nt">li</span><span class="p">{</span>
+      <span class="nl">margin</span><span class="p">:</span><span class="m">25px</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="nt">&lt;/style&gt;</span> 
+  
+  
+<span class="nt">&lt;/head&gt;</span> 
+
+<span class="nt">&lt;body</span> <span class="na">class=</span><span class="s">"claro"</span><span class="nt">&gt;</span> 
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"first"</span><span class="nt">&gt;&lt;/div&gt;</span>
+  <span class="nt">&lt;ul&gt;</span>
+    <span class="nt">&lt;li&gt;</span>1<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>2<span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;li&gt;</span>3<span class="nt">&lt;/li&gt;</span>
+  <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/body&gt;</span> 
+
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>此时<code class="language-plaintext highlighter-rouge">div</code>与<code class="language-plaintext highlighter-rouge">ul</code>之间的垂直距离，取<code class="language-plaintext highlighter-rouge">div</code>、<code class="language-plaintext highlighter-rouge">ul</code>、<code class="language-plaintext highlighter-rouge">li</code>三者之间的最大外边距（只需让<code class="language-plaintext highlighter-rouge">ul</code>生成<code class="language-plaintext highlighter-rouge">BFC</code>，这样<code class="language-plaintext highlighter-rouge">div</code>、<code class="language-plaintext highlighter-rouge">ul</code>、<code class="language-plaintext highlighter-rouge">li</code>之间便不会发生重叠现象）。</li>
+  <li>而<code class="language-plaintext highlighter-rouge">li</code>位于同一<code class="language-plaintext highlighter-rouge">BFC</code>内所以仍然存在重叠现象（给<code class="language-plaintext highlighter-rouge">li</code>设置<code class="language-plaintext highlighter-rouge">line-block</code>重新生成一个bfc就不存在重叠现象了）。</li>
+</ul>
+
+<p>注意：如果为<code class="language-plaintext highlighter-rouge">ul</code>设置了<code class="language-plaintext highlighter-rouge">border</code>或<code class="language-plaintext highlighter-rouge">padding</code>，那元素的<code class="language-plaintext highlighter-rouge">margin</code>便会被包含在父元素的盒式模型内，不会与外部<code class="language-plaintext highlighter-rouge">div</code>重叠。</p>
+
+<h3 id="包含浮动元素">包含浮动元素</h3>
+
+<p>问题案列：高度塌陷问题，在通常情况下父元素的高度会被子元素撑开，而在这里因为其子元素为浮动元素所以父元素发生了高度坍塌，上下边界重合，这时就可以用BFC来清除浮动了。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"border: 1px solid #000;"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"width: 100px;height: 100px;background: grey;float: left;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+<p><img src="../../../images/bfc3.png" alt="image.png"></p>
+
+<p>由于容器内元素浮动，脱离了文档流，所以容器只剩下2px的边距高度。如果触发容器的BFC，那么容器将会包裹浮动元素。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"border: 1px solid #000;overflow: hidden"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"width: 100px;height: 100px;background: grey;float: left;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p><img src="../../../images/bfc4.png" alt="image.png"></p>
+
+<h3 id="阻止元素被浮动元素覆盖">阻止元素被浮动元素覆盖</h3>
+
+<p>问题案例：div浮动兄弟触发该问题：由于左侧块级元素发生了浮动，所以和右侧未发生浮动的块级元素不在同一层内，所以会发生div遮挡问题。可以给右侧元素添加 <code class="language-plaintext highlighter-rouge">overflow: hidden</code>，触发BFC来解决遮挡问题。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"height: 100px;width: 100px;float: left;background: lightblue"</span><span class="nt">&gt;</span>
+    我是一个左浮动的元素
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"width: 200px; height: 200px;background: grey"</span><span class="nt">&gt;</span>
+    我是一个没有设置浮动, 也没有触发 BFC 元素, width: 200px; height:200px; background: grey;
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+<p><img src="../../../images/bfc5.png" alt="image.png">   </p>
+
+<p>这时候其实第二个元素有部分被浮动元素所覆盖，但是文本信息不会被浮动元素所覆盖，如果想避免元素被覆盖，可触发第二个元素的BFC特性，在第二个元素中加入<code class="language-plaintext highlighter-rouge">overflow：hidden</code>，就会变成：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"height: 100px;width: 100px;float: left;background: lightblue"</span><span class="nt">&gt;</span>
+    我是一个左浮动的元素
+<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"width: 200px; height: 200px;background: grey;overflow:hidden"</span><span class="nt">&gt;</span>
+    我是一个没有设置浮动, 也没有触发 BFC 元素, width: 200px; height:200px; background: grey;
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+<p><img src="../../../images/bfc6.png" alt="image.png">  </p>
+
+<p>这个方法可以用来实现两列自适应布局，效果不错，这时候左边的宽度固定，右边的内容自适应宽度。</p>
+
+<h2 id="参考文章">参考文章</h2>
+
+<p><a href="https://blog.csdn.net/DFF1993/article/details/80394150" target="_blank" rel="noopener noreferrer nofollow">浅析BFC原理及作用</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/25321647" target="_blank" rel="noopener noreferrer nofollow">10 分钟理解 BFC 原理</a></p>
+
+<p><a href="https://www.jianshu.com/p/42116364651b" target="_blank" rel="noopener noreferrer nofollow">牛笔了！字节跳动大佬整理：CSS 核心知识（万字长文，值得收藏！）</a></p>
+
+<p><a href="https://github.com/chokcoco/iCSS/issues/56" target="_blank" rel="noopener noreferrer nofollow">IFC、BFC、GFC 与 FFC 知多少</a></p>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

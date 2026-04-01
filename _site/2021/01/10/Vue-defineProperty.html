@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>Vue源码---响应式原理（未完）</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="Vue源码之响应式原理学习，包括vue2.x版本和vue3.0。" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="Vue&amp;React" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="Vue源码---响应式原理（未完）" />
+<meta name="twitter:description" content="Vue源码之响应式原理学习，包括vue2.x版本和vue3.0。" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/01/10/Vue-defineProperty" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="Vue源码---响应式原理（未完）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/01/10/Vue-defineProperty" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="Vue源码之响应式原理学习，包括vue2.x版本和vue3.0。" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-01-10T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="Vue&amp;React" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/01/10/Vue-defineProperty">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">Vue源码---响应式原理（未完）</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-01-10T00:00:00+08:00" itemprop="datePublished">
+                
+                Jan 10, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Vue源码---响应式原理（未完）</h1>
+    <p class="post-meta">
+      <time datetime="2021-01-10T00:00:00+08:00" itemprop="datePublished">
+        
+        Jan 10, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>Vue源码之响应式原理学习，包括vue2.x版本和vue3.0。</p>
+
+<p><img src="../../../images/defineProperty1.png" alt="image.png"></p>
+
+<h2 id="观察者模式">观察者模式</h2>
+
+<p>观察者模式，它定义了一种 <strong>一对多</strong> 的关系，让多个观察者对象同时监听某一个主题对象，这个主题对象的状态发生变化时就会通知所有的观察者对象，使得它们能够自动更新自己。在观察者模式中有两个主要角色：Subject（主题）和 Observer（观察者）。</p>
+
+<p><img src="../../../images/defineProperty2.png" alt="image.png"></p>
+
+<p>由于观察者模式支持简单的广播通信，当消息更新时，会自动通知所有的观察者。</p>
+
+<p>使用 TypeScript 来实现观察者模式:</p>
+<h3 id="concreteobserver">ConcreteObserver</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">Observer</span> <span class="p">{</span>
+  <span class="nl">notify</span><span class="p">:</span> <span class="nb">Function</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nx">ConcreteObserver</span> <span class="k">implements</span> <span class="nx">Observer</span><span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{}</span>
+  <span class="nx">notify</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2"> has been notified.`</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="subject-类">Subject 类</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Subject</span> <span class="p">{</span> 
+  <span class="k">private</span> <span class="nx">observers</span><span class="p">:</span> <span class="nx">Observer</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+
+  <span class="k">public</span> <span class="nx">addObserver</span><span class="p">(</span><span class="nx">observer</span><span class="p">:</span> <span class="nx">Observer</span><span class="p">):</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">observers</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">observer</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">public</span> <span class="nx">notifyObservers</span><span class="p">():</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">notify all the observers</span><span class="dl">"</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">observers</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">observer</span> <span class="o">=&gt;</span> <span class="nx">observer</span><span class="p">.</span><span class="nx">notify</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="使用示例">使用示例</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ① 创建主题对象</span>
+<span class="kd">const</span> <span class="nx">subject</span><span class="p">:</span> <span class="nx">Subject</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Subject</span><span class="p">();</span>
+
+<span class="c1">// ② 添加观察者</span>
+<span class="kd">const</span> <span class="nx">observerA</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ConcreteObserver</span><span class="p">(</span><span class="dl">"</span><span class="s2">ObserverA</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">observerC</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ConcreteObserver</span><span class="p">(</span><span class="dl">"</span><span class="s2">ObserverC</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">subject</span><span class="p">.</span><span class="nx">addObserver</span><span class="p">(</span><span class="nx">observerA</span><span class="p">);</span> 
+<span class="nx">subject</span><span class="p">.</span><span class="nx">addObserver</span><span class="p">(</span><span class="nx">observerC</span><span class="p">);</span>
+
+<span class="c1">// ③ 通知所有观察者</span>
+<span class="nx">subject</span><span class="p">.</span><span class="nx">notifyObservers</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>主要包含三个步骤：</p>
+
+<p>① 创建主题对象、② 添加观察者、③ 通知观察者。</p>
+
+<p>上述代码成功运行后，控制台会输出以下结果：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>notify all the observers
+ObserverA has been notified.
+ObserverC has been notified.
+</code></pre></div></div>
+
+<p>这三个步骤实现自动化，这就是实现响应式的核心思路。</p>
+
+<p><img src="../../../images/defineProperty3.png" alt="image.png"></p>
+
+<h2 id="vue响应式原理2612">Vue响应式原理(2.6.12)</h2>
+
+<ul>
+  <li>从 Vue 初始化，到首次渲染生成 DOM 的流程</li>
+  <li>从 Vue 数据修改，到页面更新 DOM 的流程</li>
+</ul>
+
+<h3 id="vue-初始化">Vue 初始化</h3>
+
+<p>初始化 Vue 过程中处理数据的部分:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;template&gt;
+  &lt;div&gt;
+    
+  &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+new Vue({
+  data() {
+    return {
+      message: "hello kitty",
+    };
+  },
+});
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>new Vue 开始</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 执行 new Vue 时会依次执行以下方法</span>
+<span class="c1">// 1. Vue.prototype._init(option)</span>
+<span class="c1">// 2. initState(vm)</span>
+<span class="c1">// 3. observe(vm._data)</span>
+<span class="c1">// 4. new Observer(data)</span>
+
+<span class="c1">// 5. 调用 walk 方法，遍历 data 中的每一个属性，监听数据的变化。</span>
+<span class="kd">function</span> <span class="nx">walk</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">keys</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">keys</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">defineReactive</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 6. 执行 defineProperty 监听数据读取和设置。</span>
+<span class="kd">function</span> <span class="nx">defineReactive</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// 为每个属性创建 Dep（依赖搜集的容器，后文会讲）</span>
+  <span class="kd">const</span> <span class="nx">dep</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dep</span><span class="p">();</span>
+  <span class="c1">// 绑定 get、set</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="p">{</span>
+    <span class="kd">get</span><span class="p">()</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span>
+      <span class="c1">// 如果有 target 标识，则进行依赖搜集</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">Dep</span><span class="p">.</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">dep</span><span class="p">.</span><span class="nx">depend</span><span class="p">();</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="kd">set</span><span class="p">(</span><span class="nx">newVal</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">val</span> <span class="o">=</span> <span class="nx">newVal</span><span class="p">;</span>
+      <span class="c1">// 修改数据时，通知页面重新渲染</span>
+      <span class="nx">dep</span><span class="p">.</span><span class="nx">notify</span><span class="p">();</span>
+    <span class="p">},</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>数据描述符绑定完成后：</p>
+
+<p><img src="../../../images/defineProperty4.png" alt="image.png"></p>
+
+<p>Vue 初始化时，进行了数据的 get、set 绑定，并创建了一个 Dep 对象</p>
+
+<p>Dep 对象用于依赖收集，它实现了一个发布订阅模式，完成了数据 Data 和渲染视图 Watcher 的订阅</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Dep</span> <span class="p">{</span>
+  <span class="c1">// 根据 ts 类型提示，我们可以得出 Dep.target 是一个 Watcher 类型。</span>
+  <span class="k">static</span> <span class="nx">target</span><span class="p">:</span> <span class="p">?</span><span class="nx">Watcher</span><span class="p">;</span>
+  <span class="c1">// subs 存放搜集到的 Watcher 对象集合</span>
+  <span class="nl">subs</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">Watcher</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">subs</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="p">}</span>
+  <span class="nx">addSub</span><span class="p">(</span><span class="nx">sub</span><span class="p">:</span> <span class="nx">Watcher</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 搜集所有使用到这个 data 的 Watcher 对象。</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">subs</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">sub</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">depend</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">Dep</span><span class="p">.</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 搜集依赖，最终会调用上面的 addSub 方法</span>
+      <span class="nx">Dep</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">addDep</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">notify</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">subs</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">subs</span><span class="p">.</span><span class="nx">slice</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">subs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 调用对应的 Watcher，更新视图</span>
+      <span class="nx">subs</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">update</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>从 new Vue 开始，首先通过 get、set 监听 Data 中的数据变化，同时创建 Dep 用来搜集使用该 Data 的 Watcher</p>
+
+<p>对 Dep 的源码分析:</p>
+
+<p><img src="../../../images/defineProperty5.png" alt="image.png"></p>
+
+<p>了解 Data 和 Dep 之后，我们讲一下 Watcher</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Watcher</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">vm</span><span class="p">:</span> <span class="nx">Component</span><span class="p">,</span> <span class="nx">expOrFn</span><span class="p">:</span> <span class="kr">string</span> <span class="o">|</span> <span class="nb">Function</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 将 vm._render 方法赋值给 getter。</span>
+    <span class="c1">// 这里的 expOrFn 其实就是 vm._render，后文会讲到。</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">getter</span> <span class="o">=</span> <span class="nx">expOrFn</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="kd">get</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="kd">get</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 给 Dep.target 赋值为当前 Watcher 对象</span>
+    <span class="nx">Dep</span><span class="p">.</span><span class="nx">target</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="c1">// this.getter 其实就是 vm._render</span>
+    <span class="c1">// vm._render 用来生成虚拟 dom、执行 dom-diff、更新真实 dom。</span>
+    <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getter</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">vm</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">vm</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nx">addDep</span><span class="p">(</span><span class="nx">dep</span><span class="p">:</span> <span class="nx">Dep</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 将当前的 Watcher 添加到 Dep 收集池中</span>
+    <span class="nx">dep</span><span class="p">.</span><span class="nx">addSub</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">update</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 开启异步队列，批量更新 Watcher</span>
+    <span class="nx">queueWatcher</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">run</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 和初始化一样，会调用 get 方法，更新视图</span>
+    <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="kd">get</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>编译模板，创建 Watcher，并将 Dep.target 标识为当前 Watcher</p>
+
+<p>编译模板时，如果使用到了 Data 中的数据，就会触发 Data 的 get 方法，然后调用 Dep.addSub 将 Watcher 搜集起来</p>
+
+<p>源码中我们看到，Watcher 实现了渲染方法 <code class="language-plaintext highlighter-rouge">_render</code> 和 Dep 的关联， 初始化 Watcher 的时候，打上 Dep.target 标识，然后调用 get 方法进行页面渲染。</p>
+
+<p>加上上文的 Data，目前 Data、Dep、Watcher 三者的关系如下：</p>
+
+<p><img src="../../../images/defineProperty6.png" alt="image.png"></p>
+
+<p>整体流程：</p>
+
+<p>Vue 通过 <code class="language-plaintext highlighter-rouge">defineProperty</code> 完成了 Data 中所有数据的代理，当数据触发 get 查询时，会将当前的 Watcher 对象加入到依赖收集池 Dep 中，当数据 Data 变化时，会触发 set 通知所有使用到这个 Data 的 Watcher 对象去 update 视图。</p>
+
+<p><img src="../../../images/defineProperty7.png" alt="image.png"></p>
+
+<p>上图的流程中 Data 和 Dep 都是 Vue 初始化时创建的，但现在我们并不知道 Wacher 是从哪里创建的</p>
+
+<h3 id="模板渲染">模板渲染</h3>
+
+<p>数据渲染的部分</p>
+
+<p>new Vue 执行到最后，会调用 mount 方法，将 Vue 实例渲染成 dom</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// new Vue 执行流程。</span>
+<span class="c1">// 1. Vue.prototype._init(option)</span>
+<span class="c1">// 2. vm.$mount(vm.$options.el)</span>
+<span class="c1">// 3. render = compileToFunctions(template) ，编译 Vue 中的 template 模板，生成 render 方法。</span>
+<span class="c1">// 4. Vue.prototype.$mount 调用上面的 render 方法挂载 dom。</span>
+<span class="c1">// 5. mountComponent</span>
+
+<span class="c1">// 6. 创建 Watcher 实例</span>
+<span class="kd">const</span> <span class="nx">updateComponent</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">vm</span><span class="p">.</span><span class="nx">_update</span><span class="p">(</span><span class="nx">vm</span><span class="p">.</span><span class="nx">_render</span><span class="p">());</span>
+<span class="p">};</span>
+<span class="c1">// 结合上文，我们就能得出，updateComponent 就是传入 Watcher 内部的 getter 方法。</span>
+<span class="k">new</span> <span class="nx">Watcher</span><span class="p">(</span><span class="nx">vm</span><span class="p">,</span> <span class="nx">updateComponent</span><span class="p">);</span>
+
+<span class="c1">// 7. new Watcher 会执行 Watcher.get 方法</span>
+<span class="c1">// 8. Watcher.get 会执行 this.getter.call(vm, vm) ，也就是执行 updateComponent 方法</span>
+<span class="c1">// 9. updateComponent 会执行 vm._update(vm._render())</span>
+
+<span class="c1">// 10. 调用 vm._render 生成虚拟 dom</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_render</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">():</span> <span class="nx">VNode</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">vm</span><span class="p">:</span> <span class="nx">Component</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">render</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$options</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">vnode</span> <span class="o">=</span> <span class="nx">render</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">vm</span><span class="p">.</span><span class="nx">_renderProxy</span><span class="p">,</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">$createElement</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">vnode</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="c1">// 11. 调用 vm._update(vnode) 渲染虚拟 dom</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_update</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">vnode</span><span class="p">:</span> <span class="nx">VNode</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">vm</span><span class="p">:</span> <span class="nx">Component</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">prevVnode</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 初次渲染</span>
+    <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">__patch__</span><span class="p">(</span><span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span><span class="p">,</span> <span class="nx">vnode</span><span class="p">,</span> <span class="nx">hydrating</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// 更新</span>
+    <span class="nx">vm</span><span class="p">.</span><span class="nx">$el</span> <span class="o">=</span> <span class="nx">vm</span><span class="p">.</span><span class="nx">__patch__</span><span class="p">(</span><span class="nx">prevVnode</span><span class="p">,</span> <span class="nx">vnode</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+<span class="c1">// 12. vm.__patch__ 方法就是做的 dom diff 比较，然后更新 dom，这里就不展开了。</span>
+</code></pre></div></div>
+
+<p>结合Vue 模板渲染的过程得到如下的流程图：</p>
+
+<p><img src="../../../images/defineProperty8.png" alt="image.png"></p>
+
+<p>Watcher 其实是在 Vue 初始化的阶段创建的，属于生命周期中 beforeMount 的位置创建的，创建 Watcher 时会执行 render 方法，最终将 Vue 代码渲染成真实的 DOM</p>
+
+<p>结合 Vue 初始化</p>
+
+<p><img src="../../../images/defineProperty9.png" alt="image.png"></p>
+
+<font style="color: red">当数据变化时，Vue 又是怎么进行更新的？</font>
+
+<p>在 Data 变化时，会调用 Dep.notify 方法，随即调用 Watcher 内部的 update 方法，此方法会将所有使用到这个 Data 的 Watcher 加入一个队列，并开启一个异步队列进行更新，最终执行 <code class="language-plaintext highlighter-rouge">_render</code> 方法完成页面更新。</p>
+
+<p>Vue 的响应式原理，如下图</p>
+
+<p><img src="../../../images/defineProperty10.png" alt="image.png"></p>
+
+<h3 id="组件渲染">组件渲染</h3>
+
+<font style="color: red">Vue 组件又是怎么渲染的呢？</font>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 从模板编译开始，当发现一个自定义组件时，会执行以下函数</span>
+<span class="c1">// 1. compileToFunctions(template)</span>
+<span class="c1">// 2. compile(template, options);</span>
+<span class="c1">// 3. const ast = parse(template.trim(), options)</span>
+<span class="c1">// 4. const code = generate(ast, options)</span>
+<span class="c1">// 5. createElement</span>
+
+<span class="c1">// 6. createComponent</span>
+<span class="k">export</span> <span class="kd">function</span> <span class="nx">createComponent</span><span class="p">(</span>
+  <span class="nx">Ctor</span><span class="p">:</span> <span class="nx">Class</span><span class="o">&lt;</span><span class="nx">Component</span><span class="o">&gt;</span> <span class="o">|</span> <span class="nb">Function</span> <span class="o">|</span> <span class="nb">Object</span> <span class="o">|</span> <span class="k">void</span><span class="p">,</span>
+  <span class="nx">data</span><span class="p">:</span> <span class="p">?</span><span class="nx">VNodeData</span><span class="p">,</span>
+  <span class="nx">context</span><span class="p">:</span> <span class="nx">Component</span><span class="p">,</span>
+  <span class="nx">children</span><span class="p">:</span> <span class="p">?</span><span class="nb">Array</span><span class="o">&lt;</span><span class="nx">VNode</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="nx">tag</span><span class="p">?:</span> <span class="nx">string</span>
+<span class="p">):</span> <span class="nx">VNode</span> <span class="o">|</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">VNode</span><span class="o">&gt;</span> <span class="o">|</span> <span class="k">void</span> <span class="p">{</span>
+  <span class="c1">// $options._base 其实就是全局 Vue 构造函数，在初始化时 initGlobalAPI 中定义的：Vue.options._base = Vue</span>
+  <span class="kd">const</span> <span class="nx">baseCtor</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">$options</span><span class="p">.</span><span class="nx">_base</span><span class="p">;</span>
+  <span class="c1">// Ctor 就是 Vue 组件中 &lt;script&gt; 标签下 export 出的对象</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">isObject</span><span class="p">(</span><span class="nx">Ctor</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// 将组件中 export 出的对象，继承自 Vue，得到一个构造函数</span>
+    <span class="c1">// 相当于 Vue.extend(YourComponent)</span>
+    <span class="nx">Ctor</span> <span class="o">=</span> <span class="nx">baseCtor</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">Ctor</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="kd">const</span> <span class="nx">vnode</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">VNode</span><span class="p">(</span><span class="s2">`vue-component-</span><span class="p">${</span><span class="nx">Ctor</span><span class="p">.</span><span class="nx">cid</span><span class="p">}</span><span class="s2">xxx`</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">vnode</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 7. 实现组件继承 Vue，并调用 Vue._init 方法，进行初始化</span>
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">extend</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">extendOptions</span><span class="p">:</span> <span class="nb">Object</span><span class="p">):</span> <span class="nb">Function</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">Super</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">Sub</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">VueComponent</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 调用 Vue.prototype._init，之后的流程就和首次加载保持一致</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_init</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+  <span class="p">};</span>
+  <span class="c1">// 原型继承，相当于：Component extends Vue</span>
+  <span class="nx">Sub</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">Super</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+  <span class="nx">Sub</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">Sub</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">Sub</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>图中的蓝色部分就是渲染组件的过程</p>
+
+<p><img src="../../../images/defineProperty11.png" alt="image.png"></p>
+
+<p>Vue 响应式原理图：</p>
+
+<p><img src="../../../images/defineProperty12.png" alt="image.png"></p>
+
+<h3 id="objectdefineproperty-的缺陷">Object.defineProperty 的缺陷</h3>
+
+<p>如果通过下标方式修改数组数据或者给对象新增属性并不会触发组件的重新渲染，因为 <code class="language-plaintext highlighter-rouge">Object.defineProperty</code> 不能拦截到这些操作，更精确的来说，对于数组而言，大部分操作都是拦截不到的，只是 Vue 内部通过重写函数的方式解决了这个问题。</p>
+
+<p>通过下标方式修改数组数据、给对象新增属性，不触发组件的重新渲染，Vue提供了API</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">function</span> <span class="kd">set</span> <span class="p">(</span><span class="nx">target</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">|</span> <span class="nb">Object</span><span class="p">,</span> <span class="nx">key</span><span class="p">:</span> <span class="nx">any</span><span class="p">,</span> <span class="nx">val</span><span class="p">:</span> <span class="nx">any</span><span class="p">):</span> <span class="nx">any</span> <span class="p">{</span>
+<span class="c1">// 判断是否为数组且下标是否有效</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">isValidArrayIndex</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+  <span class="c1">// 调用 splice 函数触发派发更新</span>
+  <span class="c1">// 该函数已被重写</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">val</span>
+  <span class="p">}</span>
+  <span class="c1">// 判断 key 是否已经存在</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nx">target</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">(</span><span class="nx">key</span> <span class="k">in</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">target</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">val</span>
+    <span class="k">return</span> <span class="nx">val</span>
+  <span class="p">}</span>
+  <span class="kd">const</span> <span class="nx">ob</span> <span class="o">=</span> <span class="p">(</span><span class="nx">target</span><span class="p">:</span> <span class="nx">any</span><span class="p">).</span><span class="nx">__ob__</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">target</span><span class="p">.</span><span class="nx">_isVue</span> <span class="o">||</span> <span class="p">(</span><span class="nx">ob</span> <span class="o">&amp;&amp;</span> <span class="nx">ob</span><span class="p">.</span><span class="nx">vmCount</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">!==</span> <span class="dl">'</span><span class="s1">production</span><span class="dl">'</span> <span class="o">&amp;&amp;</span> <span class="nx">warn</span><span class="p">(</span>
+      <span class="dl">'</span><span class="s1">Avoid adding reactive properties to a Vue instance or its root $data </span><span class="dl">'</span> <span class="o">+</span>
+      <span class="dl">'</span><span class="s1">at runtime - declare it upfront in the data option.</span><span class="dl">'</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="nx">val</span>
+  <span class="p">}</span>
+  <span class="c1">// 如果对象不是响应式对象，就赋值返回</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">ob</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">target</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">val</span>
+    <span class="k">return</span> <span class="nx">val</span>
+  <span class="p">}</span>
+  <span class="c1">// 进行双向绑定</span>
+  <span class="nx">defineReactive</span><span class="p">(</span><span class="nx">ob</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+  <span class="c1">// 手动派发更新</span>
+  <span class="nx">ob</span><span class="p">.</span><span class="nx">dep</span><span class="p">.</span><span class="nx">notify</span><span class="p">()</span>
+  <span class="k">return</span> <span class="nx">val</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>对于数组而言，Vue 内部重写了以下函数实现派发更新</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 获得数组原型</span>
+<span class="kd">const</span> <span class="nx">arrayProto</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">arrayMethods</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">arrayProto</span><span class="p">)</span>
+<span class="c1">// 重写以下函数</span>
+<span class="kd">const</span> <span class="nx">methodsToPatch</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="dl">'</span><span class="s1">push</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">pop</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">shift</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">unshift</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">splice</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">sort</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">reverse</span><span class="dl">'</span>
+<span class="p">]</span>
+<span class="nx">methodsToPatch</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// 缓存原生函数</span>
+  <span class="kd">const</span> <span class="nx">original</span> <span class="o">=</span> <span class="nx">arrayProto</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span>
+  <span class="c1">// 重写函数</span>
+  <span class="nx">def</span><span class="p">(</span><span class="nx">arrayMethods</span><span class="p">,</span> <span class="nx">method</span><span class="p">,</span> <span class="kd">function</span> <span class="nx">mutator</span> <span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// 先调用原生函数获得结果</span>
+    <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">original</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">ob</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">__ob__</span>
+    <span class="kd">let</span> <span class="nx">inserted</span>
+    <span class="c1">// 调用以下几个函数时，监听新数据</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="dl">'</span><span class="s1">push</span><span class="dl">'</span><span class="p">:</span>
+      <span class="k">case</span> <span class="dl">'</span><span class="s1">unshift</span><span class="dl">'</span><span class="p">:</span>
+        <span class="nx">inserted</span> <span class="o">=</span> <span class="nx">args</span>
+        <span class="k">break</span>
+      <span class="k">case</span> <span class="dl">'</span><span class="s1">splice</span><span class="dl">'</span><span class="p">:</span>
+        <span class="nx">inserted</span> <span class="o">=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">inserted</span><span class="p">)</span> <span class="nx">ob</span><span class="p">.</span><span class="nx">observeArray</span><span class="p">(</span><span class="nx">inserted</span><span class="p">)</span>
+    <span class="c1">// 手动派发更新</span>
+    <span class="nx">ob</span><span class="p">.</span><span class="nx">dep</span><span class="p">.</span><span class="nx">notify</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nx">result</span>
+  <span class="p">})</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<h2 id="vue-30proxy">Vue 3.0（proxy）</h2>
+
+<p>Proxy 在 ES2015 规范中被正式发布，它在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，是Object.defineProperty的全方位加强版。</p>
+
+<p>用法如下，new Proxy()表示生成一个Proxy实例，target参数表示所要拦截的目标对象，handler参数也是一个对象，用来定制拦截行为。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">handler</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">proxy</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Proxy</span><span class="p">({},</span> <span class="p">{</span>
+    <span class="na">get</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">prop</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">设置 get 操作</span><span class="dl">'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+    <span class="p">},</span>
+    <span class="na">set</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">prop</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">设置 set 操作</span><span class="dl">'</span><span class="p">)</span>
+        <span class="nx">obj</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">proxy</span><span class="p">.</span><span class="nx">time</span> <span class="o">=</span> <span class="mi">35</span><span class="p">;</span> <span class="c1">// 设置 set 操作</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">proxy</span><span class="p">.</span><span class="nx">time</span><span class="p">);</span> <span class="c1">// 设置 get 操作 // 35</span>
+</code></pre></div></div>
+
+<h2 id="参考文章">参考文章</h2>
+
+<p><a href="https://juejin.cn/post/6857669921166491662" target="_blank" rel="noopener noreferrer nofollow">图解 Vue 响应式原理</a></p>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

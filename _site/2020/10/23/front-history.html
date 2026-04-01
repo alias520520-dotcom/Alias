@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>前端发展历程</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="简述从后端为主的MVC时代到前端为主的MVVM时代的演进，V8引擎。" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="浏览器&amp;网络" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="前端发展历程" />
+<meta name="twitter:description" content="简述从后端为主的MVC时代到前端为主的MVVM时代的演进，V8引擎。" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2020/10/23/front-history" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="前端发展历程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2020/10/23/front-history" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="简述从后端为主的MVC时代到前端为主的MVVM时代的演进，V8引擎。" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2020-10-23T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="浏览器&amp;网络" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2020/10/23/front-history">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">前端发展历程</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2020-10-23T00:00:00+08:00" itemprop="datePublished">
+                
+                Oct 23, 2020
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">前端发展历程</h1>
+    <p class="post-meta">
+      <time datetime="2020-10-23T00:00:00+08:00" itemprop="datePublished">
+        
+        Oct 23, 2020
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>简述从后端为主的<strong>MVC</strong>时代到前端为主的<strong>MVVM</strong>时代的演进，<strong>V8引擎</strong>。</p>
+
+<p><img src="../../../images/chorme12.png" alt="浏览器系列知识学习框架"></p>
+<center style="font-size:14px;color:#C0C0C0;">浏览器系列知识学习框架</center>
+
+<h1 id="前端发展历史">前端发展历史</h1>
+<h3 id="早期时代1990-">早期时代（1990-）</h3>
+
+<p><img src="../../../images/front1.png" alt=""></p>
+
+<p>Web 1.0 时代，非常适合创业型小项目，不分前后端，经常 3-5 人搞定所有开发。<strong>页面由 JSP、PHP 等工程师在服务端生成，浏览器负责展现</strong>。基本上是服务端给什么浏览器就展现什么，展现的控制在 Web Server 层。</p>
+
+<p>这种模式的<strong>好处</strong>是简单明快，适合小型项目。</p>
+
+<p>但是，业务总会变复杂，此时会遇到这种情况：</p>
+<ul>
+  <li>1、<strong>Service 越来越多，调用关系变复杂</strong> 前端开发难以本地化，但这对研发效率的影响大。</li>
+  <li>2、<strong>JSP 等代码的可维护性越来越差</strong>前后端的职责不清晰，JSP变成了一个灰色地带。经常为了赶项目，为了各种紧急需求，会在 JSP 里揉杂大量业务代码，往往会带来大量维护成本。</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">所以，为了提高代码的可维护性。为了让前后端分工更合理高效。提出了MVC。</code></p>
+
+<h3 id="后端为主的-mvc-时代">后端为主的 MVC 时代</h3>
+
+<p>为了降低复杂度，以后端为出发点，有了 Web Server 层的架构升级，比如 Structs、Spring MVC 等，这是后端的 MVC 时代。</p>
+
+<p><img src="../../../images/front2.jpg" alt=""></p>
+
+<p>后端MVC时代，<strong>服务器返回的都是HTML页面，并且是渲染后返回给用户</strong>。绝大部分后端服务器，都做一件事情：接收用户发来的请求，返回一段响应内容。</p>
+
+<p><img src="../../../images/front5.png" alt=""></p>
+
+<blockquote>
+  <p>简单理解：用户操作-&gt;View（负责接收用户的输入操作）-&gt;Controller（业务逻辑处理）-&gt;Model（数据持久化）-&gt;View（将结果反馈给View）。每一层都对外提供接口（Interface），供上面一层调用。。</p>
+</blockquote>
+
+<p>工作原理：</p>
+<ul>
+  <li>
+<strong>M</strong>指数据库 文件等；<strong>V</strong>指HTML模板；<strong>C</strong>则是HTTP请求路由、搜索引擎、数据分析、文件服务等。</li>
+  <li>用户在浏览器进行了一些操作，发送请求给后端。</li>
+  <li>Controller先从model获取数据，再获取HTML内容，将数据填入HTML，生成view，再返回给用户。</li>
+</ul>
+
+<p>典型问题是：</p>
+<ul>
+  <li>1、<strong>前端开发重度依赖开发环境</strong>。 这种架构下，前后端协作有两种模式：一种是前端写 demo，写好后，让后端去套模板，来回沟通调整的成本比较大。另一种协作模式是前端负责浏览器端的所有开发和服务器端的View层模板开发，不足就是前端开发重度绑定后端环境。</li>
+  <li>2、<strong>前后端职责依旧纠缠不清</strong>。 前端往往就会被要求在模板层写出不少业务代码。还有一个很大的灰色地带是 Controller，页面路由等功能由后端来实现。Controller 本身与 Model 往往也会纠缠不清。</li>
+</ul>
+
+<h3 id="ajax带来的spa时代2005">AJAX带来的SPA时代（2005）</h3>
+
+<p><img src="../../../images/front3.jpg" alt=""></p>
+
+<p>这种模式下，前后端的分工非常清晰，前后端的关键协作点是 Ajax 接口。</p>
+
+<p>与 JSP 时代区别不大，复杂度从服务端的 JSP 里移到了浏览器的 JavaScript，浏览器端变得很复杂。</p>
+
+<p>类似 Spring MVC，这个时代开始出现浏览器端的分层架构：</p>
+
+<p><img src="../../../images/front4.jpg" alt=""></p>
+
+<p>对于 SPA 应用，有几个很重要的挑战：</p>
+<ul>
+  <li>1、<strong>前后端接口的约定</strong>。 在业界有 API Blueprint 等方案来约定和沉淀接口，使得前后端可以在约定接口后实现高效并行开发。</li>
+  <li>2、<strong>前端开发的复杂度控制</strong>。 SPA 应用大多以功能交互型为主，JavaScript 代码过十万行很正常。大量 JS 代码的组织，与 View 层的绑定等。典型的解决方案是业界的 Backbone，但 Backbone 做的事还很有限，依旧存在大量空白区域需要挑战。</li>
+</ul>
+
+<h3 id="前端为主的mvvm时代2010">前端为主的MVVM时代（2010）</h3>
+
+<p>早期有对mvc改进从而产生了mvp架构，MVP是把MVC中的Controller换成了Presenter（呈现），目的就是为了完全切断View跟Model之间的联系，由Presenter充当桥梁，做到View-Model之间通信的完全隔离。</p>
+
+<p><img src="../../../images/front6.png" alt=""></p>
+
+<blockquote>
+  <p>.NET程序员熟知的ASP.NET webform、winform基于事件驱动的开发技术就是使用的MVP模式。控件组成的页面充当View，实体数据库操作充当Model，而View和Model之间的控件数据绑定操作则属于Presenter。控件事件的处理可以通过自定义的IView接口实现，而View和IView都将对Presenter负责。</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">如果说MVP是对MVC的进一步改进，那么MVVM则是思想的完全变革。</code></p>
+
+<p>它是将“<strong>数据模型数据双向绑定</strong>”的思想作为核心，因此在View和Model之间没有联系，通过ViewModel进行交互，而且Model和ViewModel之间的交互是双向的，因此视图的数据的变化会同时修改数据源，而数据源数据的变化也会立即反应到View上。</p>
+
+<p><img src="../../../images/front7.png" alt=""></p>
+
+<blockquote>
+  <p>MVVM最早由微软提出来，它借鉴了桌面应用程序的MVC思想，在前端页面中，把Model用纯JavaScript对象表示，View负责显示，<strong>两者做到了最大限度的分离</strong>。</p>
+
+  <p>把Model和View关联起来的就是ViewModel。ViewModel负责把Model的数据同步到View显示出来，还负责把View的修改同步回Model。</p>
+
+  <p><strong>MVVM的设计思想</strong>：关注Model的变化，让MVVM框架去自动更新DOM的状态，从而把开发者从操作DOM的繁琐步骤中解脱出来！</p>
+</blockquote>
+
+<p>好处：</p>
+<ul>
+  <li>1、<strong>前后端职责很清晰</strong>。 前端工作在浏览器端，后端工作在服务端。清晰的分工，可以让开发并行，测试数据的模拟不难，前端可以本地开发。后端则可以专注于业务逻辑的处理，输出 RESTful 等接口。</li>
+  <li>2、前端开发的复杂度可控。 前端代码很重，但合理的分层，让前端代码能各司其职。</li>
+  <li>3、部署相对独立，产品体验可以快速改进。</li>
+</ul>
+
+<p>不足之处：</p>
+<ul>
+  <li>1、代码不能复用。比如后端依旧需要对数据做各种校验，校验逻辑无法复用浏览器端的代码。</li>
+  <li>2、全异步，对 SEO 不利。往往还需要服务端做同步渲染的降级方案。</li>
+  <li>3、性能并非最佳，特别是移动互联网环境下。</li>
+  <li>4、SPA 不能满足所有需求，依旧存在大量多页面应用。URL Design 需要后端配合，前端无法完全掌控。</li>
+</ul>
+
+<h3 id="node-带来的全栈时代">Node 带来的全栈时代</h3>
+
+<p><img src="../../../images/front8.png" alt=""></p>
+
+<p>随着 Node.js 的兴起，JavaScript 开始有能力运行在服务端。</p>
+
+<blockquote>
+  <p>在这种研发模式下，前后端的职责很清晰。对前端来说，两个 UI 层各司其职：</p>
+  <ul>
+    <li>1、Front-end UI layer 处理浏览器层的展现逻辑。通过 CSS 渲染样式，通过 JavaScript 添加交互功能，HTML 的生成也可以放在这层，具体看应用场景。</li>
+    <li>2、Back-end UI layer 处理路由、模板、数据获取、cookie 等。通过路由，前端终于可以自主把控 URL Design，这样无论是单页面应用还是多页面应用，前端都可以自由调控。后端也终于可以摆脱对展现的强关注，转而可以专心于业务逻辑层的开发。</li>
+  </ul>
+</blockquote>
+
+<p>通过 Node，Web Server 层也是 JavaScript 代码，这意味着部分代码可前后复用，需要 SEO 的场景可以在服务端同步渲染，由于异步请求太多导致的性能问题也可以通过服务端来缓解。前一种模式的不足，通过这种模式几乎都能完美解决掉。</p>
+
+<p>与 JSP 模式相比，全栈模式看起来是一种回归，也的确是一种向原始开发模式的回归，不过是一种螺旋上升式的回归。</p>
+
+<blockquote>
+  <p>基于 Node 的全栈模式，依旧面临很多挑战：</p>
+  <ul>
+    <li>1、需要前端对服务端编程有更进一步的认识。比如 network/tcp、PE 等知识的掌握。</li>
+    <li>2、Node 层与 Java 层的高效通信。Node 模式下，都在服务器端，RESTful HTTP 通信未必高效，通过 SOAP 等方式通信更高效。一切需要在验证中前行。</li>
+    <li>3、对部署、运维层面的熟练了解，需要更多知识点和实操经验。</li>
+    <li>4、大量历史遗留问题如何过渡。这可能是最大最大的阻力。</li>
+  </ul>
+</blockquote>
+
+<h1 id="前端时间轴">前端时间轴</h1>
+
+<p><img src="../../../images/front9.png" alt=""></p>
+
+<ul>
+  <li>1990年，Tim 以<strong>超文本语言 HTML</strong> 为基础在 NeXT 电脑上发明了最原始的 Web 浏览器。</li>
+  <li>1994年11月，网景公司成立，并发布<strong>Mosaic Netscape 1.0 beta 浏览器</strong>，后改名为 Navigator。</li>
+  <li>1994 W3C诞生。</li>
+  <li>1995年网景推出JavaScript。</li>
+  <li>1996年微软发布JScript并内置于IE3。JavaScript与JScript存在差异。导致程序员开发的网页<strong>无法同时兼容IE和Navigator浏览器</strong>。IE开始抢夺Navigator的市场份额，导致了<strong>第一次浏览器大战</strong>。</li>
+  <li>1996年11月，网景将JavaScript提交到ECMA以便将其国际标准化。</li>
+  <li>1997年6月，<strong>ECMAScript1.0</strong>推出。</li>
+  <li>1998.6 <strong>ECMAScript 2</strong>规范发布。</li>
+  <li>1999.12 <strong>ECMAScript 3</strong> 规范发布。此后10年，基本没有发生变动。ECMAScript 3 成为当今主流浏览器最广泛使用和实现的语言规范基础。</li>
+  <li>2001.5 W3C 推出了 <strong>CSS 3.0</strong> 规范草案</li>
+  <li>2004年11月。<strong>火狐浏览器</strong>诞生。第二次浏览器战争开始。（第一次浏览器战争以IE的完胜告终，垄断浏览器市场，并且<strong>IE不遵循W3C标准</strong>）</li>
+  <li>2005年 <strong>AJAX</strong>诞生。局部刷新页面。</li>
+  <li>第二次浏览器战争中，随着以 Firefox 和 Opera 为首的 W3C 阵营与 IE 对抗程度的加剧，浏览器碎片化问题越来越严重，不同的浏览器执行不同的标准，对于开发人员来说这是一个噩梦。</li>
+  <li>
+<strong>为了解决浏览器兼容性问题</strong>，Dojo、jQuery、YUI、ExtJS、MooTools 等前端 Framework 相继诞生。前端开发人员用这些 Framework 频繁发送 AJAX 请求到后台，在得到数据后，再用这些 Framework 更新 DOM 树。</li>
+  <li>其中，<strong>jQuery</strong>独领风骚，几乎成了所有网站的标配。</li>
+  <li>2008，<strong>HTML5</strong>草案发布。</li>
+  <li>2008.12 <strong>Chrome</strong>浏览器诞生，并搭配JavaScript引擎V8（V8是被设计用来提高网页浏览器内部JavaScript执行的性能）。</li>
+  <li>2009.12 <strong>ECMAScript 5.0</strong> 规范发布。</li>
+  <li>2009 <strong>Node.js</strong>诞生。</li>
+  <li>2010年起，<strong>Angular ，Vue， React</strong> MVVM框架诞生。</li>
+  <li>2015 年 6 月，<strong>ECMAScript 6.0</strong> 发布。</li>
+</ul>
+
+<h1 id="引擎v8与javascript">引擎V8与JavaScript</h1>
+<h3 id="代码的概念">代码的概念</h3>
+
+<p><code class="language-plaintext highlighter-rouge">高级语言代码</code>:
+高级语言又主要是相对于汇编语言而言的，它是较接近自然语言和数学公式的编程，基本脱离了机器的硬件系统，用人们更易理解的方式编写程序。编写的程序称之为<strong>源程序</strong>。java，c，c++，C#等都是高级语言。</p>
+
+<p><code class="language-plaintext highlighter-rouge">汇编语言</code>:
+汇编语言作为一门低级语言，对应于计算机或者其他可编程的硬件。它和计算机的体系结构以及机器指令是强关联的。不同的汇编语言代码对应特定的硬件。</p>
+
+<p><code class="language-plaintext highlighter-rouge">字节码</code>:
+字节码严格来说不算是编程语言，而是高级编程语言为了种种需求（可移植性、可传输性、预编译等）而产生的<strong>中间码</strong>。</p>
+
+<p><code class="language-plaintext highlighter-rouge">机器码</code>:
+机器码是一组可以直接被CPU执行的指令集，
+每一条指令都代表一个特定的任务，或者是加载，或者是跳转，亦或是计算操作等等。属于最低级的语言。</p>
+<h3 id="高级语言的分类">高级语言的分类</h3>
+
+<p><strong>编译 Compile</strong>：把整个程序源代码翻译成另外一种代码，然后等待被执行，发生在运行之前，产物是另一份代码。</p>
+
+<p><strong>解释 Interpret</strong>：把程序源代码一行一行的读懂然后执行，发生在运行时，产物是运行结果。</p>
+
+<blockquote>
+  <ul>
+    <li>
+<strong>编译型语言</strong>。把做好的源程序全部编译成二进制代码的可运行程序。然后，可直接运行这个程序。执行效率高，但依赖编译器。代表性语言：C，C++。</li>
+    <li>
+<strong>解释型语言</strong>。把做好的源程序翻译一句，然后执行一句，直至结束。代表性语言：JavaScript。</li>
+  </ul>
+</blockquote>
+
+<p><img src="../../../images/front10.png" alt=""></p>
+
+<blockquote>
+  <ul>
+    <li>编译型语言的源代码不能直接翻译成机器语言，而是先翻译成中间代码，再由解释器对中间代码进行解释运行。<strong>源代码–&gt; 中间代码–&gt; 机器语言</strong>。</li>
+    <li>解释型语言程序只有在运行的时候才翻译成机器语言，每执行一次就翻译一次。</li>
+  </ul>
+</blockquote>
+
+<h3 id="高级语言如何转化为计算机能看懂的语言">高级语言如何转化为计算机能看懂的语言</h3>
+
+<ul>
+  <li>如果高级语言是<strong>编译型</strong>的。编译器会把源代码直接翻译成二进制的计算机可直接运行的机器语言，然后CPU就可以直接按指令执行。</li>
+  <li>如果高级语言是<strong>解释型</strong>的。以JavaScript为例，尽管是解释型语言，但具有编译特性，比如会先进行变量，函数的提升声明，再逐条进行解释。</li>
+</ul>
+
+<h3 id="编辑器编译器解释器ide的区别">编辑器/编译器/解释器/IDE的区别</h3>
+
+<p><code class="language-plaintext highlighter-rouge">编辑器</code>
+编写文字或代码的应用软件。如记事本。</p>
+
+<p><code class="language-plaintext highlighter-rouge">编译器</code>
+将一种语言（通常为高级语言）翻译成另外一种语（低级语言）言的程序。这个转换的过程通常的目的是生成可执行的程序。</p>
+
+<p><code class="language-plaintext highlighter-rouge">解释器</code>
+解释器是一种计算机程序，它直接执行由编程语言或脚本语言编写的代码，并不会把源代码预编译成机器码。可以把解释器看成一个黑盒子，我们输入源码，它就会实时返回结果。
+不同类型的解释器，黑盒子里面的构造不一样，有些还会集成编译器，缓存编译结果，用来提高执行效率（例如 Chrome V8 也是这么做的）。
+解释器通常是工作在「运行时」，并且对于我们输入的源码，是一行一行的解释然后执行，然后返回结果。</p>
+
+<p><code class="language-plaintext highlighter-rouge">IDE</code>
+集成开发环境。集成了编辑器，编译器，链接器等功能。VSCode，Eclipse等都是。</p>
+<h3 id="浅谈v8引擎解释javascript的过程">浅谈v8引擎解释JavaScript的过程</h3>
+
+<p>随着web相关技术的发展，JavaScript承担的工作越来越多，所以需要一个更为强大的JS引擎去<strong>快速的解析和执行JavaScript脚本</strong>。所以v8出现了。</p>
+
+<ul>
+  <li>V8引擎可以将JavaScript<strong>编译</strong>为原生的机器码，并且使用如<strong>内联缓存</strong>等方法提高性能。（JavaScript虽然是解释型高级语言，但具有编译性）</li>
+  <li>而其他JavaScript引擎采用的方法是转化为<strong>字节码或解释执行</strong>。</li>
+</ul>
+
+<h4 id="工作过程编译阶段运行阶段">工作过程（编译阶段+运行阶段）</h4>
+<ul>
+  <li>源代码被解析器转化为抽象语法树（AST）</li>
+  <li>使用JIT编译器的全代码生成器从AST直接生成本地可执行代码。</li>
+</ul>
+
+<p>为了提高性能v8向很多同时解释形语言的老前辈学习了很多经验，我们先来看一下同是解释形语言的java的运行过程。</p>
+
+<p><img src="../../../images/front11.png" alt=""></p>
+
+<p><a href="https://blog.csdn.net/qq_36042506/article/details/82976586" target="_blank" rel="noopener noreferrer nofollow">什么是JIT</a></p>
+
+<p>我们再看一下V8是怎么做的</p>
+
+<p><img src="../../../images/front12.png" alt=""></p>
+
+<ul>
+  <li>
+<strong>Parse阶段</strong>：V8引擎负责将 JS 代码转换为 AST （抽象语法树）</li>
+  <li>
+<strong>Ignition 阶段</strong>：解释器将 AST 转换为字节码，解析执行字节码也会为下一个阶段优化编译提供需要的信息</li>
+  <li>
+<strong>TurboFan阶段</strong>：编译器利用上个阶段收集的信息，将字节码优化为可以执行的机器码</li>
+  <li>
+<strong>Orioco阶段</strong>：垃圾回收阶段，将程序中不再使用的内存空间进行回收</li>
+</ul>
+
+<p>整个过程和java的编译执行过程非常像</p>
+
+<p>将javascript代码编译成抽象语法树再转化成字节码，通过解释器来执行，并通过JIT工具将部分字节码转化成可直接执行的本地代码。（java是分两个阶段完成，在编译阶段尽可能的生成高效的字节码。）</p>
+
+<p>V8更加直接的将抽象语法树通过JIT技术转换成本地代码，放弃了在字节码阶段可以进行的一些性能优化，但保证了执行速度。虽然少了生成字节码这一阶段的性能优化，但极大减少了转换时间。</p>
+<h4 id="编译过程">编译过程</h4>
+<p>首先我们要了解一下在执行编译运行过程中所用到的几个类</p>
+
+<ul>
+  <li>Script类：表示是JavaScript代码，既包含源代码，又包含编译之后生成的本地代码，所以它既是编译入口，又是运行入口；</li>
+  <li>Compiler类：编译器类，辅助Script类来编译生成代码，它主要起一个协调者的作用，会调用解释器（Parser）来生成抽象语法树和全代码生成器，来为抽象语法树生成本地代码；</li>
+  <li>Parser类：将源代码解释并构建成抽象语法树，使用AstNode类来创建它们，并使用Zone类来分配内存；</li>
+  <li>AstNode类：抽象语法树节点类，是其他所有节点的基类，它包含非常多的子类，后面会针对不同的子类生成不同的本地代码；</li>
+  <li>AstVisitor类：抽象语法树的访问者类，主要用来遍历抽象语法树；</li>
+  <li>FullCodeGenerator：AstVisitor类的子类，通过遍历抽象语法树来为JavaScrit生成本地代码；</li>
+</ul>
+
+<p><img src="../../../images/front13.png" alt=""></p>
+<h4 id="运行过程">运行过程</h4>
+<ul>
+  <li>Script表示JavaScript代码，即包含源代码，又包含编译之后生成的本地代码，即是编译入口，又是运行入口；</li>
+  <li>Execution：运行代码的辅组类，包含一些重要函数，如Call函数，它辅组进入和执行Script代码；</li>
+  <li>JSFunction：需要执行的JavaScript函数表示类；</li>
+  <li>Runtime：运行这些本地代码的辅组类，主要提供运行时所需的辅组函数，如：属性访问、类型转换、编译、算术、位操作、比较、正则表达式等；</li>
+  <li>Heap：运行本地代码需要使用的内存堆类；</li>
+  <li>MarkCompactCollector：垃圾回收机制的主要实现类，用来标记、清除和整理等基本的垃圾回收过程；</li>
+  <li>SweeperThread：负责垃圾回收的线程。</li>
+</ul>
+
+<p>执行过程如下:</p>
+
+<p><img src="../../../images/front14.png" alt=""></p>
+
+<p>编译和执行的整体过程如下：</p>
+
+<p><img src="../../../images/front15.png" alt=""></p>
+
+<h3 id="v8-vs-javascriptcore">V8 VS JavaScriptCore</h3>
+
+<p><strong>JavaScriptCore引擎</strong>：是WebKit中默认的JavaScript引擎，也是苹果开源的一个项目，应用较为广泛。最初，性能不是很好，从2008年开始了一系列的优化，重新实现了编译器和字节码解释器，使得引擎的性能有较大的提升。随后<strong>内嵌缓存</strong>、<strong>基于正则表达式的JIT</strong>、<strong>简单的JIT及字节码解释器</strong>等技术引入进来，JavaScriptCore引擎也在不断的迭代和发展。</p>
+
+<p><strong>V8引擎</strong>：自诞生之日起就以性能优化作为目标，引入了众多新技术，极大了带动了整个业界JavaScript引擎性能的快速发展。</p>
+
+<p>总的来说，V8引擎较为激进，青睐可以提高性能的新技术，而JavaScriptCore引擎较为稳健，渐进式的改变着自己的性能。</p>
+
+<p>JavaScript引擎工作流程（包含v8和JavaScriptCore）如下所示：</p>
+
+<p><img src="../../../images/front16.png" alt=""></p>
+
+<p><strong>JavaScriptCore</strong> 的大致流程为：源代码–&gt;抽象语法树–&gt;字节码–&gt;JIT–&gt;本地代码。</p>
+
+<p>V8：新增了<strong>字节码的中间表示</strong>，并加入了多层JIT编译器（如：简单JIT编译器、DFG JIT编译器、LLVM等）优化性能，不停的对本地代码进行优化。(在 V8 的 5.9 版本中，新增了一个 Ignition 字节码解释器，TurboFan 和 Ignition 结合起来共同完成JavaScript的编译，此后 V8 将与 JavaScriptCore 有大致相同的流程，Node 8.0中 V8 版本为 5.8)</p>
+
+<p>数据表示方面：V8在不同的机器上使用与机器位数相匹配的数据表示，而在JavaScriptCore中句柄都是使用64位表示，其可以表示更大范围的数字，所以即使在32位机器上，浮点类型同样可以保存在句柄中，不再需要访问堆中的数据，当也会占用更多的空间。</p>
+<h2 id="参考文章">参考文章</h2>
+
+<p><a href="https://juejin.cn/post/6844904116200669197" target="_blank" rel="noopener noreferrer nofollow">前端发展历史，渲染进程</a></p>
+
+<p><a href="https://juejin.cn/post/6844904137792962567" target="_blank" rel="noopener noreferrer nofollow">V8引擎详解（一）——概述</a></p>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

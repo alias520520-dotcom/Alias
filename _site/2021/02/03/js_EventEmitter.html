@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>JS基础---实现一个EventEmitter</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="进入 Node.js 的 events 模块以及 EventEmitter 的学习，并且实现它的底层逻辑。" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="JavaScript系列文章" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="JS基础---实现一个EventEmitter" />
+<meta name="twitter:description" content="进入 Node.js 的 events 模块以及 EventEmitter 的学习，并且实现它的底层逻辑。" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/02/03/js_EventEmitter" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="JS基础---实现一个EventEmitter" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/02/03/js_EventEmitter" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="进入 Node.js 的 events 模块以及 EventEmitter 的学习，并且实现它的底层逻辑。" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-02-03T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="JavaScript系列文章" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/02/03/js_EventEmitter">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">JS基础---实现一个EventEmitter</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-02-03T00:00:00+08:00" itemprop="datePublished">
+                
+                Feb 3, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">JS基础---实现一个EventEmitter</h1>
+    <p class="post-meta">
+      <time datetime="2021-02-03T00:00:00+08:00" itemprop="datePublished">
+        
+        Feb 3, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>进入 Node.js 的 events 模块以及 EventEmitter 的学习，并且实现它的底层逻辑。</p>
+
+<blockquote>
+  <p>events 模块属于 Node.js 服务端的知识，但是由于大多数 Node.js 核心API 构建用的是异步时间驱动架构</p>
+</blockquote>
+
+<p>问题1：</p>
+<font style="color: #ec7907;">EventEmitter 采用的是什么设计模式？</font>
+
+<p>问题2：</p>
+<font style="color: #ec7907;">EventEmitter 常用的API是怎样实现的？</font>
+
+<h2 id="events-基本介绍">Events 基本介绍</h2>
+
+<p>Node.js 的events 模块对外提供了一个 EventEmitter 对象，用于对Node.js 中的事件进行统一管理</p>
+
+<p>在 EventEmitter 的基础上</p>
+
+<p>Node.js 中几乎所有的模块都继承了这个类，以实现异步事件驱动架构</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">events</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">events</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">eventEmitter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">events</span><span class="p">.</span><span class="nx">EventEmitter</span><span class="p">();</span>
+<span class="nx">eventEmitter</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello</span><span class="dl">'</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="nx">eventEmitter</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Jonh</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="常用的-eventemitter-模块的api">常用的 EventEmitter 模块的API</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>方法名</th>
+      <th>方法描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>addListener(event, listener)</td>
+      <td>为指定事件添加一个监听器到监听器数组的尾部</td>
+    </tr>
+    <tr>
+      <td>prependListener(event, listener)</td>
+      <td>与addListener 相对，为指定事件添加一个监听器到监听器数组的头部</td>
+    </tr>
+    <tr>
+      <td>on(event, listener)</td>
+      <td>其实就是 addListener 的别名</td>
+    </tr>
+    <tr>
+      <td>once(event, listener)</td>
+      <td>为指定事件注册一个单次监听器，即监听器最多只会触发一次，触发后立刻解除该监听器</td>
+    </tr>
+    <tr>
+      <td>removeListener(event, listener)</td>
+      <td>移除执行事件的某个监听器，监听器必须是该事件已经注册过的监听器</td>
+    </tr>
+    <tr>
+      <td>off(event, listener)</td>
+      <td>removeListener的别名</td>
+    </tr>
+    <tr>
+      <td>removeAllListeners(event, listener)</td>
+      <td>移除所有事件的所有监听器，如果指定事件，则移除指定事件的所有监听器</td>
+    </tr>
+    <tr>
+      <td>setMaxListeners(n)</td>
+      <td>默认情况下，EventEmitter 中如果添加的监听器超过10个就会输出警告信息；setMaxListeners 函数用于提高监听器的默认限制的数量</td>
+    </tr>
+    <tr>
+      <td>listeners(event)</td>
+      <td>返回指定事件的监听器数组</td>
+    </tr>
+    <tr>
+      <td>emit(event, [arg1], [arg2], […])</td>
+      <td>按参数的顺序执行每个监听器，如果事件有注册监听返回true，否则返回false</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>两个不需要手动添加的，额外特殊事件</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>事件名</th>
+      <th>事件描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>newListener</td>
+      <td>该事件在添加新事件监听器的时候触发</td>
+    </tr>
+    <tr>
+      <td>removeListener</td>
+      <td>从指定监听器数组中删除一个监听器，需要注意的是，此操作将会改变处于被删监听器之后的那些监听器的索引</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="addlistener-和-removelisteneron-和-off-方法对比">addListener 和 removeListener、on 和 off 方法对比</h3>
+
+<p>addListener 方法的作用是为指定事件添加一个监听器，其实和 on 方法实现的功能是一样的</p>
+
+<p>同时 removeListener 方法的作用是为移除某个事件的监听器</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">events</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">events</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">emitter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">events</span><span class="p">.</span><span class="nx">EventEmitter</span><span class="p">();</span>
+<span class="kd">function</span> <span class="nx">hello1</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">hello 1</span><span class="dl">'</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">hello2</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">hello 2</span><span class="dl">'</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="nx">hello1</span><span class="p">);</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="nx">hello2</span><span class="p">);</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">John</span><span class="dl">'</span><span class="p">);</span>
+<span class="c1">// 输出hello 1 John</span>
+<span class="c1">// 输出hello 2 John</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">removeListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="nx">hello1</span><span class="p">);</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">John</span><span class="dl">'</span><span class="p">);</span>
+<span class="c1">// 相应的，监听say事件的hello1事件被移除</span>
+<span class="c1">// 只输出hello 2 John</span>
+</code></pre></div></div>
+
+<h3 id="removelistener-和-removealllisteners">removeListener 和 removeAllListeners</h3>
+
+<p>removeListener 方法是指移除一个指定事件的某一个监听器</p>
+
+<p>removeAllListeners 指的是移除某一个指定事件的全部监听器</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">events</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">events</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">emitter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">events</span><span class="p">.</span><span class="nx">EventEmitter</span><span class="p">();</span>
+<span class="kd">function</span> <span class="nx">hello1</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">hello 1</span><span class="dl">'</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">hello2</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">hello 2</span><span class="dl">'</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="nx">hello1</span><span class="p">);</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="nx">hello2</span><span class="p">);</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">removeAllListeners</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">John</span><span class="dl">'</span><span class="p">);</span>
+<span class="c1">// removeAllListeners 移除了所有关于 say 事件的监听</span>
+<span class="c1">// 因此没有任何输出</span>
+</code></pre></div></div>
+
+<h3 id="on-和-once-方法区别">on 和 once 方法区别</h3>
+
+<p><strong>on方法</strong>：对于某一指定事件添加的监听器可以持续不断的监听相应的事件
+<strong>once方法</strong>：添加的监听器，监听一次后，就会被消除</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">events</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">events</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">emitter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">events</span><span class="p">.</span><span class="nx">EventEmitter</span><span class="p">();</span>
+<span class="kd">function</span> <span class="nx">hello</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">hello</span><span class="dl">'</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="nx">hello</span><span class="p">);</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">John</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Lily</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">say</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Lucy</span><span class="dl">'</span><span class="p">);</span>
+<span class="c1">// 会输出 hello John、hello Lily、hello Lucy, 之后还要加也可以继续触发</span>
+
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">once</span><span class="p">(</span><span class="dl">'</span><span class="s1">see</span><span class="dl">'</span><span class="p">,</span> <span class="nx">hello</span><span class="p">);</span>
+<span class="nx">emitter</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="dl">'</span><span class="s1">see</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Tom</span><span class="dl">'</span><span class="p">);</span>
+<span class="c1">// 只会输出一次 hello Tom</span>
+</code></pre></div></div>
+
+<h2 id="带你实现一个-eventemitter">带你实现一个 EventEmitter</h2>
+
+<blockquote>
+  <p>在浏览器端实现一个这样的 EventEmitter 是否可以呢？</p>
+</blockquote>
+
+<p>自己封装一个能在浏览器中跑的 EventEmitter，它可以帮你实现自定义事件的订阅和发布，从而提升业务开发的便利性</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">EventEmitter</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">__events</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="p">}</span>
+<span class="nx">EventEmitter</span><span class="p">.</span><span class="nx">VERSION</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">1.0.0</span><span class="dl">'</span><span class="p">;</span>
+</code></pre></div></div>
+<font style="color: #ec7907;">on 方法</font>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">EventEmitter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">on</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">eventName</span><span class="p">,</span> <span class="nx">listener</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">eventName</span> <span class="o">||</span> <span class="o">!</span><span class="nx">listener</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="c1">// 判断回调的 listener 是否为函数</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isValidListener</span><span class="p">(</span><span class="nx">listener</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">TypeError</span><span class="p">(</span><span class="dl">'</span><span class="s1">listener must be a function</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">events</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">__events</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">listeners</span> <span class="o">=</span> <span class="nx">events</span><span class="p">[</span><span class="nx">eventName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">events</span><span class="p">[</span><span class="nx">eventName</span><span class="p">]</span> <span class="o">||</span> <span class="p">[];</span>
+    <span class="kd">var</span> <span class="nx">listenerIsWrapped</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">listener</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">;</span>
+    <span class="c1">// 不重复添加事件，判断是否有一样的</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">listeners</span><span class="p">,</span> <span class="nx">listener</span><span class="p">)</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">listeners</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">listenerIsWrapped</span> <span class="p">?</span> <span class="nx">listener</span> <span class="p">:</span> <span class="p">{</span>
+            <span class="na">listener</span><span class="p">:</span> <span class="nx">listener</span><span class="p">,</span>
+            <span class="na">once</span><span class="p">:</span> <span class="kc">false</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// 判断是否是合法的 listener</span>
+<span class="kd">function</span> <span class="nx">isValidListener</span><span class="p">(</span><span class="nx">listener</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">listener</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">listener</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">listener</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">isValidListener</span><span class="p">(</span><span class="nx">listener</span><span class="p">.</span><span class="nx">listener</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 顾名思义，判断新增自定义事件是否存在</span>
+<span class="kd">function</span> <span class="nx">indexOf</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="nx">item</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">item</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span> <span class="p">?</span> <span class="nx">item</span><span class="p">.</span><span class="nx">listener</span> <span class="p">:</span> <span class="nx">item</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">listener</span> <span class="o">===</span> <span class="nx">item</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">result</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<font style="color: #ec7907;">emit 和 off 方法</font>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">EventEmitter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">emit</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">eventName</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 直接通过内部对象获取对应自定义事件的回调函数</span>
+    <span class="kd">var</span> <span class="nx">listeners</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">__events</span><span class="p">[</span><span class="nx">eventName</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">listeners</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+    <span class="c1">// 需要考虑多个listener 的情况</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">listeners</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">listener</span> <span class="o">=</span> <span class="nx">listeners</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">listener</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">listener</span><span class="p">.</span><span class="nx">listener</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">args</span> <span class="o">||</span> <span class="p">[]);</span>
+            <span class="c1">// 给 listener 中 once 为 true 的进行特殊处理</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">listener</span><span class="p">.</span><span class="nx">once</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">off</span><span class="p">(</span><span class="nx">eventName</span><span class="p">,</span> <span class="nx">listener</span><span class="p">.</span><span class="nx">listener</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">EventEmitter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">off</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">eventName</span><span class="p">,</span> <span class="nx">listener</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">listeners</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">__events</span><span class="p">[</span><span class="nx">eventName</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">listeners</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">index</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">listeners</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">listeners</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">listeners</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">listener</span> <span class="o">===</span> <span class="nx">listener</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">index</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// off 的关键</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">index</span> <span class="o">!==</span> <span class="dl">'</span><span class="s1">undefined</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">listeners</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">null</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<font style="color: #ec7907;">once 和 allOff 方法</font>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">EventEmitter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">once</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">eventName</span><span class="p">,</span> <span class="nx">listener</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 直接调用 on 方法，once 参数传入 true，待执行之后进行 once 处理</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="nx">eventName</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">listener</span><span class="p">:</span> <span class="nx">listener</span><span class="p">,</span>
+        <span class="na">once</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="nx">EventEmitter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">allOff</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">eventName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 如果该 eventName 存在，则将其对应的 listener 的数组直接清空</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">eventName</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">__events</span><span class="p">[</span><span class="nx">eventName</span><span class="p">])</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">__events</span><span class="p">[</span><span class="nx">eventName</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">__events</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p>EventEmitter 采用的正是发布-订阅模式</p>
+
+<p><mark>发布-订阅模式其实是观察者模式的一种变形</mark></p>
+
+<p>区别在于：发布-订阅模式在观察者模式的基础上，在目标和观察者之间增加了一个调度中心</p>
+
+<font style="color: blue;">在 Vue 框架中不同组件之间的通讯里，有一种解决方案叫做 EventBus</font>
+
+<blockquote>
+  <p>和 EventEmitter 的思路类似，它的基本用途是将 EventBus 作为组件传递数据的桥梁，所有组件共用相同的事件中心，可以向该中心注册发送事件或接收事件，所有组件都可以收到通知，使用起来非常便利，其核心其实就是发布-订阅模式的落地实现。</p>
+</blockquote>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

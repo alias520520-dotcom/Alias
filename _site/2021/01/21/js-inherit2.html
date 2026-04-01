@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>JS基础---实现new、apply、call、bind的底层逻辑</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="JS继承进阶、深入了解new、apply、call、bind实现逻辑。" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="JavaScript系列文章" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="JS基础---实现new、apply、call、bind的底层逻辑" />
+<meta name="twitter:description" content="JS继承进阶、深入了解new、apply、call、bind实现逻辑。" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/01/21/js-inherit2" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="JS基础---实现new、apply、call、bind的底层逻辑" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/01/21/js-inherit2" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="JS继承进阶、深入了解new、apply、call、bind实现逻辑。" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-01-21T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="JavaScript系列文章" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/01/21/js-inherit2">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">JS基础---实现new、apply、call、bind的底层逻辑</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-01-21T00:00:00+08:00" itemprop="datePublished">
+                
+                Jan 21, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">JS基础---实现new、apply、call、bind的底层逻辑</h1>
+    <p class="post-meta">
+      <time datetime="2021-01-21T00:00:00+08:00" itemprop="datePublished">
+        
+        Jan 21, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>JS继承进阶、深入了解new、apply、call、bind实现逻辑。</p>
+
+<p>问题1：</p>
+<font style="color: #ec7907;">用什么样的思路可以实现 new 关键词？</font>
+
+<p>问题2：</p>
+<font style="color: #ec7907;">apply、call、bind 这三个方法之间有什么区别？</font>
+
+<p>问题3：</p>
+<font style="color: #ec7907;">怎样实现一个 apply 或者 call 的方法？</font>
+
+<h2 id="new-原理介绍">new 原理介绍</h2>
+
+<p>new 关键词的作用</p>
+
+<ul>
+  <li>就是执行一个构造函数，返回一个实例对象</li>
+  <li>根据构造函数的情况，来确定是否可以接收参数的传递</li>
+</ul>
+
+<font style="color: blue;">使用new关键词</font>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Jack</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">// Jack</span>
+</code></pre></div></div>
+<p>new在这个生成实例的过程中，经历了哪些<strong>步骤</strong>：</p>
+<ol>
+  <li>创建一个新对象</li>
+  <li>将构造函数的作用域赋给新对象（this 指向新对象）</li>
+  <li>执行构造函数中的代码（为这个新对象添加属性）</li>
+  <li>返回新对象</li>
+</ol>
+
+<font style="color: blue;">不使用new关键字</font>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Jack</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// js在默认情况下，new执行之后，this的指向是window，那么name就是Jack</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">Person</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="c1">// undefined</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="c1">// Jack，这是一种不存在new关键词的情况</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">// 'name' of undefined</span>
+</code></pre></div></div>
+
+<font style="color: blue;">有return一个对象的操作</font>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Jack</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="na">age</span><span class="p">:</span> <span class="mi">18</span> <span class="p">}</span> <span class="c1">// 必须是一个对象，如果不是对象，那么构造函数还是会在new的时候按照步骤返回新生成的对象</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="c1">// {age: 18}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="c1">// undefined</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">age</span><span class="p">)</span> <span class="c1">// 18</span>
+</code></pre></div></div>
+
+<font style="color: blue;">return的不是一个对象时</font>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Person</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Jack</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">return</span> <span class="dl">'</span><span class="s1">tom</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="c1">// {name: 'Jack'}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="c1">// Jack</span>
+</code></pre></div></div>
+<font style="color: red;">注意</font>
+
+<p>new关键词执行之后<strong>总是会返回</strong>一个对象，要么是<strong>实例对象</strong>，要么是<strong>return语句</strong>指定的对象</p>
+
+<h2 id="apply--call--bind原理介绍">apply &amp; call &amp; bind原理介绍</h2>
+
+<p>call、 apply 和 bind 是挂在Function对象上的三个方法</p>
+
+<p>调用这三个方法的必须是一个函数</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">func</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">thisArg</span><span class="p">,</span> <span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">,</span> <span class="p">...)</span> <span class="c1">// thisArg一般为this所指的对象</span>
+<span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">thisArg</span><span class="p">,</span> <span class="p">[</span><span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">,</span> <span class="p">...])</span>
+<span class="nx">func</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">thisArg</span><span class="p">,</span> <span class="nx">param1</span><span class="p">,</span> <span class="nx">param2</span><span class="p">,</span> <span class="p">...)</span>
+</code></pre></div></div>
+
+<p>改变函数 func 的 this 指向</p>
+
+<p>call、 apply的参数不同，改变this指向后立马执行
+bind虽然改变了function的this指向，但不是马上执行</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>生活中我不经常做饭，家里没有锅，周末突然想给自己做个饭尝尝。
+但是家里没有锅，而我又不想出去买，所以就问隔壁邻居借了一个锅来用，
+这样做了饭，又节省了开销，一举两得
+</code></pre></div></div>
+
+<p>A对象有个 getName 的方法，B 对象也需要临时使用同样的方法那么这时候可以借用A对象的 getName 方法</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">jack</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">getName</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">msg</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">lily</span><span class="dl">'</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">getName</span><span class="p">(</span><span class="dl">'</span><span class="s1">hello~</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// hello~jack</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">getName</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="dl">'</span><span class="s1">hi~</span><span class="dl">'</span><span class="p">));</span> <span class="c1">// hi~lily</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">getName</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">hi~</span><span class="dl">'</span><span class="p">]));</span> <span class="c1">// hi~lily</span>
+<span class="kd">let</span> <span class="nx">name</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">getName</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="dl">'</span><span class="s1">hello~</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span><span class="p">());</span> <span class="c1">// hello~lily</span>
+</code></pre></div></div>
+
+<h2 id="方法的应用场景">方法的应用场景</h2>
+
+<p>下面几种应用场景的理念都是“借用”方法的思路</p>
+
+<h3 id="判断数据类型">判断数据类型</h3>
+
+<p>用 Object.prototype.toString 几乎可以判断所有类型的数据</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span>  <span class="nx">getType</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">type</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">obj</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">!==</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">type</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj</span><span class="p">).</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/^</span><span class="se">\[</span><span class="sr">object </span><span class="se">(\S</span><span class="sr">+</span><span class="se">)\]</span><span class="sr">$/</span><span class="p">,</span> <span class="dl">'</span><span class="s1">$1</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="类数组借用方法">类数组借用方法</h3>
+
+<p>类数组因为不是真正的数组，所以没有数组类型上自带的种种方法，可以利用一些方法去借用数组的方法</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">arrayLike</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">0</span><span class="p">:</span> <span class="dl">'</span><span class="s1">java</span><span class="dl">'</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="dl">'</span><span class="s1">script</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">length</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">}</span>
+
+<span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">push</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arrayLike</span><span class="p">,</span> <span class="dl">'</span><span class="s1">jack</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">lily</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">arrayLike</span><span class="p">);</span> <span class="c1">// 'object'</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arrayLike</span><span class="p">);</span>
+<span class="c1">// { 0: 'java', 1: 'script', 2: 'jack', 3: 'lily', length: 4 }</span>
+</code></pre></div></div>
+
+<h3 id="获取数组的最大--最小值">获取数组的最大 / 最小值</h3>
+
+<p>用 <code class="language-plaintext highlighter-rouge">apply</code> 来实现数组中判断最大 / 最小值, apply直接传递数组作为调用方法的参数，也可以减少一步展开数组</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">16</span><span class="p">];</span>
+<span class="kd">const</span> <span class="nx">max</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nb">Math</span><span class="p">,</span> <span class="nx">arr</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">min</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nb">Math</span><span class="p">,</span> <span class="nx">arr</span><span class="p">);</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">max</span><span class="p">);</span> <span class="c1">// 16</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">min</span><span class="p">);</span> <span class="c1">// 6</span>
+</code></pre></div></div>
+
+<h3 id="继承">继承</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Parent3</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">parent3</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">play</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="nx">Parent3</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getName</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(){</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">Child3</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 第二次调用Paernt3()</span>
+    <span class="nx">Parent3</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">child3</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 第一次调用Parent3()</span>
+<span class="nx">Child3</span><span class="p">.</span><span class="nx">protptype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Parent3</span><span class="p">();</span>
+<span class="c1">// 手动挂上构造器，指向自己的构造函数</span>
+<span class="nx">Child3</span><span class="p">.</span><span class="nx">protptype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">Child3</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">s3</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Child3</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">s4</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Child3</span><span class="p">();</span>
+<span class="nx">s3</span><span class="p">.</span><span class="nx">play</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">s3</span><span class="p">.</span><span class="nx">play</span><span class="p">,</span> <span class="nx">s4</span><span class="p">.</span><span class="nx">play</span><span class="p">);</span> <span class="c1">// 不互相影响</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">s3</span><span class="p">.</span><span class="nx">getName</span><span class="p">());</span> <span class="c1">// 正常输出'parent3'</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">s4</span><span class="p">.</span><span class="nx">getName</span><span class="p">());</span> <span class="c1">// 正常输出'parent3'</span>
+</code></pre></div></div>
+
+<h2 id="如何自己实现这些方法">如何自己实现这些方法</h2>
+
+<h3 id="new-的实现">new 的实现</h3>
+
+<p>new 被调用后大致做了哪几件事情</p>
+<ul>
+  <li>让实例可以访问到私有属性</li>
+  <li>让实例可以访问构造函数原型（constructor.prototype）所在原型链上的属性</li>
+  <li>构造函数返回的最后结果是引用数据类型</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">_new</span><span class="p">(</span><span class="nx">ctor</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">ctor</span> <span class="o">!==</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="dl">'</span><span class="s1">ctor must be a function</span><span class="dl">'</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+    <span class="nx">obj</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">ctor</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+    <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">ctor</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">);</span>
+    
+    <span class="kd">const</span> <span class="nx">isObject</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">res</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">res</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">isFunction</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">res</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">isObject</span> <span class="o">||</span> <span class="nx">isFunction</span> <span class="p">?</span> <span class="nx">res</span> <span class="p">:</span> <span class="nx">obj</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="apply-和-call-的实现">apply 和 call 的实现</h3>
+
+<p>结合方法“借用”的原理</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">call</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">context</span> <span class="o">||</span> <span class="nb">window</span><span class="p">;</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nx">fn</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="dl">'</span><span class="s1">context.fn(...args)</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">delete</span> <span class="nx">context</span><span class="p">.</span><span class="nx">fn</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">apply</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="nx">context</span> <span class="o">||</span> <span class="nb">window</span><span class="p">;</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nx">fn</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="dl">'</span><span class="s1">context.fn(...args)</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">delete</span> <span class="nx">context</span><span class="p">.</span><span class="nx">fn</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>这两个方法是直接返回执行结果，而<code class="language-plaintext highlighter-rouge">bind</code>方法是返回一个函数，因此这里直接用<code class="language-plaintext highlighter-rouge">eval</code>执行得到结果</p>
+
+<h3 id="bind-的实现">bind 的实现</h3>
+
+<p>bind 的实现思路基本和 apply 一样</p>
+
+<p>但是在最后实现返回结果这里</p>
+
+<p>bind 不需要直接执行，因此不再需要用 eval 而是需要通过返回一个函数的方式将结果返回</p>
+
+<p>之后再通过执行这个结果，得到想要的执行效果</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">bind</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="k">this</span> <span class="o">!==</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">Erroe</span><span class="p">(</span><span class="dl">'</span><span class="s1">this must be a function</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nb">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">fbound</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nb">self</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span> <span class="k">instanceof</span> <span class="nb">self</span> <span class="p">?</span> <span class="k">this</span> <span class="p">:</span> <span class="nx">context</span><span class="p">,</span>
+    <span class="nx">args</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)));</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">fbound</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">fbound</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<p><img src="../../../images/inherit2-1.png" alt="image.png"></p>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>Vue源码---解析准备篇</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="之前有尝试看过Vue源码，但是理解都不是很深刻动不动就忘记了，现在来把前置条件学习一下。" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="Vue&amp;React" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="Vue源码---解析准备篇" />
+<meta name="twitter:description" content="之前有尝试看过Vue源码，但是理解都不是很深刻动不动就忘记了，现在来把前置条件学习一下。" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/01/03/vue-prepare" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="Vue源码---解析准备篇" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/01/03/vue-prepare" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="之前有尝试看过Vue源码，但是理解都不是很深刻动不动就忘记了，现在来把前置条件学习一下。" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-01-03T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="Vue&amp;React" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/01/03/vue-prepare">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">Vue源码---解析准备篇</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-01-03T00:00:00+08:00" itemprop="datePublished">
+                
+                Jan 3, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Vue源码---解析准备篇</h1>
+    <p class="post-meta">
+      <time datetime="2021-01-03T00:00:00+08:00" itemprop="datePublished">
+        
+        Jan 3, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>之前有尝试看过Vue源码，但是理解都不是很深刻动不动就忘记了，现在来把前置条件学习一下。</p>
+
+<p><img src="../../../images/prepare1.png" alt="image.png"></p>
+
+<h2 id="flow基本语法">Flow基本语法</h2>
+
+<p>javascript是弱类型的语言，在写代码灰常爽的同时也十分容易犯错误，所以Facebook搞了这么一个类型检查工具，可以加入类型的限制，提高代码质量，举个例子:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>如果这么调用这个函数sum(‘a’, 1) 甚至sum(1, [1,2,3])这么调用，执行时会得到一些你想不到的结果，这样编程未免太不稳定了。那我们看看用了Flow之后的结果：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">a</span><span class="p">:</span> <span class="nx">number</span><span class="p">,</span> <span class="nx">b</span><span class="p">:</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>多了一个number的限制，标明对a和b只能传递数字类型的，否则的话用Flow工具检测会报错。</p>
+
+<p>其实这里大家可能有疑问，这么写还是js吗？ 浏览器还能认识执行吗？当然不认识了，所以需要翻译或者说编译。其实现在前端技术发展太快了，各种插件层出不穷–Babel、Typescript等等，其实都是将一种更好的写法编译成浏览器认识的javascript代码（我们以前都是写浏览器认识的javascript代码的）。</p>
+
+<p>我们继续说Flow的事情，在Vue源码中其实出现的Flow语法都比较好懂，比如下面这个函数的定义:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">function</span> <span class="nx">renderList</span> <span class="p">(</span>
+  <span class="nx">val</span><span class="p">:</span> <span class="nx">any</span><span class="p">,</span>
+  <span class="nx">render</span><span class="p">:</span> <span class="p">(</span>
+    <span class="nx">val</span><span class="p">:</span> <span class="nx">any</span><span class="p">,</span>
+    <span class="nx">keyOrIndex</span><span class="p">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span><span class="p">,</span>
+    <span class="nx">index</span><span class="p">?:</span> <span class="nx">number</span>
+  <span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">VNode</span>
+<span class="p">):</span> <span class="p">?</span><span class="nb">Array</span><span class="o">&lt;</span><span class="nx">VNode</span><span class="o">&gt;</span><span class="p">{</span>
+<span class="p">...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>val是any代表可以传入的类型是任何类型;</p>
+
+<p>keyOrIndex是<code class="language-plaintext highlighter-rouge">string|number</code>类型，代表要不是string类型，要不是number，不能是别的;</p>
+
+<p>index?:number这个我们想想正则表达式中？的含义—0个或者1个，这里其实意义也是一致的，但是要注意?的位置是在冒号之前还是冒号之后–因为这两种可能性都有，上面代码中<strong>问号是跟在冒号前面，代表index可以不传，但是传的话一定要传入数字类型</strong>；如果<strong>问号是在冒号后面的话，则代表这个参数必须要传递，但是可以是数字类型也可以是空</strong>。</p>
+
+<p>如果想学习Flow更多的细节， 可以看看下面这个学习文档：</p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/26204569" target="_blank" rel="noopener noreferrer nofollow">Flow学习资料</a></p>
+
+<h2 id="原型与原型继承">原型与原型继承</h2>
+
+<h3 id="原型链">原型链</h3>
+
+<p><strong>创建对象</strong></p>
+
+<p>用<code class="language-plaintext highlighter-rouge">obj.xxx</code>访问一个对象的属性时，JavaScript引擎先在当前对象上查找该属性，如果没有找到，就到其原型对象上找，如果还没有找到，就一直上溯到<code class="language-plaintext highlighter-rouge">Object.prototype</code>对象，最后，如果还没有找到，就只能返回<code class="language-plaintext highlighter-rouge">undefined</code>。</p>
+
+<p>创建一个Array对象：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>其原型链是：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>arr ----&gt; Array.prototype ----&gt; Object.prototype ----&gt; null
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Array.prototype</code>定义了<code class="language-plaintext highlighter-rouge">indexOf()</code>、<code class="language-plaintext highlighter-rouge">shift()</code>等方法，因此你可以在所有的Array对象上直接调用这些方法。</p>
+
+<p>创建一个函数：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>函数也是一个对象，它的原型链是：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>foo ----&gt; Function.prototype ----&gt; Object.prototype ----&gt; null
+</code></pre></div></div>
+
+<p>由于<code class="language-plaintext highlighter-rouge">Function.prototype</code>定义了<code class="language-plaintext highlighter-rouge">apply()</code>等方法，因此，所有函数都可以调用<code class="language-plaintext highlighter-rouge">apply()</code>方法。</p>
+
+<p>如果原型链很长，那么访问一个对象的属性就会因为花更多的时间查找而变得更慢，因此要注意不要把原型链搞得太长。</p>
+
+<hr>
+
+<p><strong>构造函数</strong></p>
+
+<p>除了直接用<code class="language-plaintext highlighter-rouge">{ ... }</code>创建一个对象外，JavaScript还可以用一种构造函数的方法来创建对象。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Student</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">hello</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">!</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">xiaoming</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Student</span><span class="p">(</span><span class="dl">'</span><span class="s1">小明</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">xiaoming</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// '小明'</span>
+<span class="nx">xiaoming</span><span class="p">.</span><span class="nx">hello</span><span class="p">();</span> <span class="c1">// Hello, 小明!</span>
+</code></pre></div></div>
+
+<font style="color: red;">注意</font>
+
+<p>如果不写<code class="language-plaintext highlighter-rouge">new</code>，这就是一个普通函数，它返回<code class="language-plaintext highlighter-rouge">undefined</code>。但是，如果写了<code class="language-plaintext highlighter-rouge">new</code>，它就变成了一个构造函数，它绑定的<code class="language-plaintext highlighter-rouge">this</code>指向新创建的对象，并默认返回<code class="language-plaintext highlighter-rouge">this</code>，也就是说，不需要在最后写<code class="language-plaintext highlighter-rouge">return this;</code>。</p>
+
+<p>新创建的<code class="language-plaintext highlighter-rouge">xiaoming</code>的原型链是：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xiaoming ----&gt; Student.prototype ----&gt; Object.prototype ----&gt; null
+</code></pre></div></div>
+
+<p>所以，<code class="language-plaintext highlighter-rouge">xiaoming</code>的原型指向函数Student的原型。如果你又创建了<code class="language-plaintext highlighter-rouge">xiaohong</code>、<code class="language-plaintext highlighter-rouge">xiaojun</code>，那么这些对象的原型与<code class="language-plaintext highlighter-rouge">xiaoming</code>是一样的：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xiaoming ↘
+xiaohong -→ Student.prototype ----&gt; Object.prototype ----&gt; null
+xiaojun  ↗
+</code></pre></div></div>
+
+<p>用<code class="language-plaintext highlighter-rouge">new Student()</code>创建的对象还从原型上获得了一个<code class="language-plaintext highlighter-rouge">constructor</code>属性，它指向函数<code class="language-plaintext highlighter-rouge">Student</code>本身：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">xiaoming</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">===</span> <span class="nx">Student</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span><span class="p">;</span> <span class="c1">// true</span>
+<span class="nx">Student</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">===</span> <span class="nx">Student</span><span class="p">;</span> <span class="c1">// true</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="nx">xiaoming</span><span class="p">)</span> <span class="o">===</span> <span class="nx">Student</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span> <span class="c1">// true</span>
+
+<span class="nx">xiaoming</span> <span class="k">instanceof</span> <span class="nx">Student</span><span class="p">;</span> <span class="c1">// true</span>
+</code></pre></div></div>
+
+<p><img src="../../../images/prepare2.png" alt="image.png"></p>
+
+<p>红色箭头是原型链。注意，<code class="language-plaintext highlighter-rouge">Student.prototype</code>指向的对象就是<code class="language-plaintext highlighter-rouge">xiaoming</code>、<code class="language-plaintext highlighter-rouge">xiaohong</code>的原型对象，这个原型对象自己还有个属性<code class="language-plaintext highlighter-rouge">constructor</code>，指向<code class="language-plaintext highlighter-rouge">Student</code>函数本身。</p>
+
+<p>另外，函数<code class="language-plaintext highlighter-rouge">Student</code>恰好有个属性<code class="language-plaintext highlighter-rouge">prototype</code>指向<code class="language-plaintext highlighter-rouge">xiaoming</code>、<code class="language-plaintext highlighter-rouge">xiaohong</code>的原型对象，但是<code class="language-plaintext highlighter-rouge">xiaoming</code>、<code class="language-plaintext highlighter-rouge">xiaohong</code>这些对象可没有<code class="language-plaintext highlighter-rouge">prototype</code>这个属性，不过可以用<code class="language-plaintext highlighter-rouge">__proto__</code>这个非标准用法来查看。</p>
+
+<p>现在我们就认为<code class="language-plaintext highlighter-rouge">xiaoming</code>、<code class="language-plaintext highlighter-rouge">xiaohong</code>这些对象“继承”自<code class="language-plaintext highlighter-rouge">Student</code>。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">xiaoming</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// '小明'</span>
+<span class="nx">xiaohong</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// '小红'</span>
+<span class="nx">xiaoming</span><span class="p">.</span><span class="nx">hello</span><span class="p">;</span> <span class="c1">// function: Student.hello()</span>
+<span class="nx">xiaohong</span><span class="p">.</span><span class="nx">hello</span><span class="p">;</span> <span class="c1">// function: Student.hello()</span>
+<span class="nx">xiaoming</span><span class="p">.</span><span class="nx">hello</span> <span class="o">===</span> <span class="nx">xiaohong</span><span class="p">.</span><span class="nx">hello</span><span class="p">;</span> <span class="c1">// false</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">xiaoming</code>和<code class="language-plaintext highlighter-rouge">xiaohong</code>各自的<code class="language-plaintext highlighter-rouge">name</code>不同，这是对的，否则我们无法区分谁是谁了。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">xiaoming</code>和<code class="language-plaintext highlighter-rouge">xiaohong</code>各自的<code class="language-plaintext highlighter-rouge">hello</code>是一个函数，但它们是两个不同的函数，虽然函数名称和代码都是相同的！</p>
+  </li>
+</ul>
+
+<p>如果我们通过<code class="language-plaintext highlighter-rouge">new Student()</code>创建了很多对象，这些对象的<code class="language-plaintext highlighter-rouge">hello</code>函数实际上只需要共享同一个函数就可以了，这样可以节省很多内存。</p>
+
+<p>要让创建的对象共享一个<code class="language-plaintext highlighter-rouge">hello</code>函数，根据对象的属性查找原则，我们只要把<code class="language-plaintext highlighter-rouge">hello</code>函数移动到<code class="language-plaintext highlighter-rouge">xiaoming</code>、<code class="language-plaintext highlighter-rouge">xiaohong</code>这些对象共同的原型上就可以了，也就是<code class="language-plaintext highlighter-rouge">Student.prototype</code>：</p>
+
+<p><img src="../../../images/prepare3.png" alt="image.png"></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Student</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">Student</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hello</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">!</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<p>用new创建基于原型的JavaScript的对象就是这么简单！</p>
+
+<h3 id="原型继承">原型继承</h3>
+
+<p>JavaScript由于采用原型继承，我们无法直接扩展一个Class，因为根本不存在Class这种类型。</p>
+
+<p>上文，<code class="language-plaintext highlighter-rouge">Student</code>构造函数：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Student</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">props</span><span class="p">.</span><span class="nx">name</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">Unnamed</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">Student</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hello</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">!</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>所以，<code class="language-plaintext highlighter-rouge">Student</code>的原型链：</p>
+
+<p><img src="../../../images/prepare4.png" alt="image.png"></p>
+
+<p>基于<code class="language-plaintext highlighter-rouge">Student</code>扩展出<code class="language-plaintext highlighter-rouge">PrimaryStudent</code>，可以先定义出<code class="language-plaintext highlighter-rouge">PrimaryStudent</code>：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">PrimaryStudent</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 调用Student构造函数，绑定this变量:</span>
+    <span class="nx">Student</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">grade</span> <span class="o">=</span> <span class="nx">props</span><span class="p">.</span><span class="nx">grade</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>调用了<code class="language-plaintext highlighter-rouge">Student</code>构造函数不等于继承了<code class="language-plaintext highlighter-rouge">Student</code>，<code class="language-plaintext highlighter-rouge">PrimaryStudent</code>创建的对象的原型是：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new PrimaryStudent() ----&gt; PrimaryStudent.prototype ----&gt; Object.prototype ----&gt; null
+</code></pre></div></div>
+
+<p>必须想办法把原型链修改为：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new PrimaryStudent() ----&gt; PrimaryStudent.prototype ----&gt; Student.prototype ----&gt; Object.prototype ----&gt; null
+</code></pre></div></div>
+
+<p>这样新的基于<code class="language-plaintext highlighter-rouge">PrimaryStudent</code>创建的对象不但能调用<code class="language-plaintext highlighter-rouge">PrimaryStudent.prototype</code>定义的方法，也可以调用<code class="language-plaintext highlighter-rouge">Student.prototype</code>定义的方法。</p>
+
+<p>如果你想用最简单粗暴的方法这么干：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PrimaryStudent.prototype = Student.prototype;
+</code></pre></div></div>
+
+<p>这样的话，<code class="language-plaintext highlighter-rouge">PrimaryStudent</code>和<code class="language-plaintext highlighter-rouge">Student</code>共享一个原型对象，那还要定义<code class="language-plaintext highlighter-rouge">PrimaryStudent</code>干啥？</p>
+
+<p>我们必须借助一个中间对象来实现正确的原型链，这个中间对象的原型要指向<code class="language-plaintext highlighter-rouge">Student.prototype</code>。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// PrimaryStudent构造函数:</span>
+<span class="kd">function</span> <span class="nx">PrimaryStudent</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Student</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">props</span><span class="p">);</span> <span class="c1">// // 调用Student构造函数，绑定this变量:</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">grade</span> <span class="o">=</span> <span class="nx">props</span><span class="p">.</span><span class="nx">grade</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 空函数F:</span>
+<span class="kd">function</span> <span class="nx">F</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="c1">// 把F的原型指向Student.prototype:</span>
+<span class="nx">F</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">Student</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+
+<span class="c1">// 把PrimaryStudent的原型指向一个新的F对象，F对象的原型正好指向Student.prototype:</span>
+<span class="nx">PrimaryStudent</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">F</span><span class="p">();</span>
+
+<span class="c1">// 以上三句也可改成</span>
+<span class="c1">// PrimaryStudent.prototype = Object.Create(Student.prototype);</span>
+
+<span class="c1">// 把PrimaryStudent原型的构造函数修复为PrimaryStudent:</span>
+<span class="nx">PrimaryStudent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">PrimaryStudent</span><span class="p">;</span>
+
+<span class="c1">// 继续在PrimaryStudent原型（就是new F()对象）上定义方法：</span>
+<span class="nx">PrimaryStudent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getGrade</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">grade</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// 创建xiaoming:</span>
+<span class="kd">var</span> <span class="nx">xiaoming</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PrimaryStudent</span><span class="p">({</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">小明</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">grade</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">});</span>
+<span class="nx">xiaoming</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span> <span class="c1">// '小明'</span>
+<span class="nx">xiaoming</span><span class="p">.</span><span class="nx">grade</span><span class="p">;</span> <span class="c1">// 2</span>
+
+<span class="c1">// 验证原型:</span>
+<span class="nx">xiaoming</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nx">PrimaryStudent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span> <span class="c1">// true</span>
+<span class="nx">xiaoming</span><span class="p">.</span><span class="nx">__proto__</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nx">Student</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span> <span class="c1">// true</span>
+
+<span class="c1">// 验证继承关系:</span>
+<span class="nx">xiaoming</span> <span class="k">instanceof</span> <span class="nx">PrimaryStudent</span><span class="p">;</span> <span class="c1">// true</span>
+<span class="nx">xiaoming</span> <span class="k">instanceof</span> <span class="nx">Student</span><span class="p">;</span> <span class="c1">// true</span>
+</code></pre></div></div>
+
+<p>新的原型链：</p>
+
+<p><img src="../../../images/prepare5.png" alt="image.png"></p>
+
+<font style="color: red;">注意</font>
+
+<p>函数<code class="language-plaintext highlighter-rouge">F</code>仅用于桥接，我们仅创建了一个<code class="language-plaintext highlighter-rouge">new F()</code>实例，而且，没有改变原有的<code class="language-plaintext highlighter-rouge">Student</code>定义的原型链。</p>
+
+<p>如果把继承这个动作用一个<code class="language-plaintext highlighter-rouge">inherits()</code>函数封装起来，还可以隐藏F的定义，并简化代码：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">inherits</span><span class="p">(</span><span class="nx">Child</span><span class="p">,</span> <span class="nx">Parent</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">F</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{};</span>
+    <span class="nx">F</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">Parent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+    <span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">F</span><span class="p">();</span>
+    <span class="c1">// 以上也可改成</span>
+    <span class="c1">// Child.prototype = Object.Create(Parent.prototype);</span>
+    <span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">Child</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>这个<code class="language-plaintext highlighter-rouge">inherits()</code>函数可以复用：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Student</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">props</span><span class="p">.</span><span class="nx">name</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">Unnamed</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">Student</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hello</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">!</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">PrimaryStudent</span><span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Student</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">props</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">grade</span> <span class="o">=</span> <span class="nx">props</span><span class="p">.</span><span class="nx">grade</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 实现原型继承链:</span>
+<span class="nx">inherits</span><span class="p">(</span><span class="nx">PrimaryStudent</span><span class="p">,</span> <span class="nx">Student</span><span class="p">);</span>
+
+<span class="c1">// 绑定其他方法到PrimaryStudent原型:</span>
+<span class="nx">PrimaryStudent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getGrade</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">grade</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<hr>
+
+<p><strong>构造函数的继承</strong></p>
+
+<ul>
+  <li>构造函数绑定</li>
+  <li>prototype模式</li>
+  <li>直接继承prototype</li>
+  <li>利用空对象作为中介</li>
+  <li>拷贝继承</li>
+</ul>
+
+<font style="color: #ec7907;">构造函数绑定</font>
+
+<p>最简单的方法，使用<code class="language-plaintext highlighter-rouge">call</code>或<code class="language-plaintext highlighter-rouge">apply</code>方法，将父对象的构造函数绑定在子对象上</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Cat</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span><span class="nx">color</span><span class="p">){</span>
+  <span class="nx">Animal</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">color</span> <span class="o">=</span> <span class="nx">color</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">cat1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">(</span><span class="dl">"</span><span class="s2">大毛</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">黄色</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">cat1</span><span class="p">.</span><span class="nx">species</span><span class="p">);</span> <span class="c1">// 动物</span>
+</code></pre></div></div>
+<hr>
+
+<font style="color: #ec7907;">prototype模式</font>
+
+<p>如下：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animal</span><span class="p">();</span>  <span class="c1">// 将Cat的prototype对象指向一个Animal的实例,</span>
+                               <span class="c1">// 它相当于完全删除了prototype 对象原先的值，然后赋予一个新值</span>
+<span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">Cat</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">cat1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">(</span><span class="dl">"</span><span class="s2">大毛</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">黄色</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">cat1</span><span class="p">.</span><span class="nx">species</span><span class="p">);</span> <span class="c1">// 动物</span>
+</code></pre></div></div>
+
+<p>任何一个<code class="language-plaintext highlighter-rouge">prototype</code>对象都有一个constructor属性，指向它的构造函数。</p>
+
+<p>如果没有”Cat.prototype = new Animal();”这一行，<code class="language-plaintext highlighter-rouge">Cat.prototype.constructor</code>是指向<code class="language-plaintext highlighter-rouge">Cat</code>的；加了这一行以后，<code class="language-plaintext highlighter-rouge">Cat.prototype.constructor</code>指向<code class="language-plaintext highlighter-rouge">Animal</code></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">alert</span><span class="p">(</span><span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">==</span> <span class="nx">Animal</span><span class="p">);</span> <span class="c1">//true</span>
+</code></pre></div></div>
+
+<p>每一个实例也有一个constructor属性，默认调用<code class="language-plaintext highlighter-rouge">prototype</code>对象的<code class="language-plaintext highlighter-rouge">constructor</code>属性</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">alert</span><span class="p">(</span><span class="nx">cat1</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">==</span> <span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span><span class="p">);</span> <span class="c1">// true</span>
+</code></pre></div></div>
+
+<p>因此，在运行”Cat.prototype = new Animal();”这一行之后，<code class="language-plaintext highlighter-rouge">cat1.constructor</code>也指向<code class="language-plaintext highlighter-rouge">Animal</code>！</p>
+
+<p>这显然会导致继承链的紊乱（cat1明明是用构造函数Cat生成的），因此我们必须手动纠正，将Cat.prototype对象的constructor值改为Cat。</p>
+
+<hr>
+
+<font style="color: #ec7907;">直接继承prototype</font>
+
+<p>第三种方法是对第二种方法的改进。由于Animal对象中，不变的属性都可以直接写入<code class="language-plaintext highlighter-rouge">Animal.prototype</code>。所以，我们也可以让Cat()跳过 Animal()，直接继承Animal.prototype。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">Animal</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+<span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">Cat</span><span class="p">;</span>  <span class="c1">// 实际上把Animal.prototype对象的constructor属性也改掉了</span>
+<span class="kd">var</span> <span class="nx">cat1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">(</span><span class="dl">"</span><span class="s2">大毛</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">黄色</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">cat1</span><span class="p">.</span><span class="nx">species</span><span class="p">);</span> <span class="c1">// 动物    </span>
+</code></pre></div></div>
+
+<p>这样做的优点是效率比较高（不用执行和建立Animal的实例了），比较省内存。缺点是 <code class="language-plaintext highlighter-rouge">Cat.prototype</code>和<code class="language-plaintext highlighter-rouge">Animal.prototype</code>现在指向了同一个对象，那么任何对Cat.prototype的修改，都会反映到Animal.prototype。</p>
+
+<hr>
+
+<font style="color: #ec7907;">利用空对象作为中介</font>
+
+<p>如下：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">F</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){};</span> <span class="c1">// F是空对象，所以几乎不占内存</span>
+<span class="nx">F</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">Animal</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+<span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">F</span><span class="p">();</span>
+<span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">Cat</span><span class="p">;</span> <span class="c1">// 修改Cat的prototype对象，就不会影响到Animal的prototype对象</span>
+</code></pre></div></div>
+
+<p>封装函数</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">extend</span><span class="p">(</span><span class="nx">Child</span><span class="p">,</span> <span class="nx">Parent</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">F</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){};</span>
+  <span class="nx">F</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nx">Parent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+  <span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">F</span><span class="p">();</span>
+  <span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">Child</span><span class="p">;</span>
+  <span class="nx">Child</span><span class="p">.</span><span class="nx">uber</span> <span class="o">=</span> <span class="nx">Parent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span> <span class="c1">// 为子对象设一个uber属性，这个属性直接指向父对象的prototype属性; 等于在子对象上打开一条通道，可以直接调用父对象的方法</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr>
+
+<font style="color: #ec7907;">拷贝继承</font>
+
+<p>简单说，如果把父对象的所有属性和方法，拷贝进子对象，不也能够实现继承</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">extend2</span><span class="p">(</span><span class="nx">Child</span><span class="p">,</span> <span class="nx">Parent</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">Parent</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">Child</span><span class="p">.</span><span class="nx">prototype</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">c</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">p</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span> <span class="c1">// 用的是浅拷贝的方法,c[i] 是指向到 p[i], 而非赋值,建议使用深拷贝</span>
+  <span class="p">}</span>
+  <span class="nx">c</span><span class="p">.</span><span class="nx">uber</span> <span class="o">=</span> <span class="nx">p</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="class继承">class继承</h3>
+
+<p>新的关键字<code class="language-plaintext highlighter-rouge">class</code>从ES6开始正式被引入到JavaScript中。<code class="language-plaintext highlighter-rouge">class</code>的目的就是让定义类更简单</p>
+
+<p>用函数实现<code class="language-plaintext highlighter-rouge">Student</code>的方法：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Student</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">Student</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">hello</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">!</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>用新的<code class="language-plaintext highlighter-rouge">class</code>关键字来编写<code class="language-plaintext highlighter-rouge">Student</code>，可以这样写：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Student</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">hello</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">!</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>比较一下就可以发现，<code class="language-plaintext highlighter-rouge">class</code>的定义包含了构造函数<code class="language-plaintext highlighter-rouge">constructor</code>和定义在原型对象上的函数<code class="language-plaintext highlighter-rouge">hello()</code>（注意没有function关键字），这样就避免了<code class="language-plaintext highlighter-rouge">Student.prototype.hello = function () {...}</code>这样分散的代码。</p>
+
+<p>创建一个<code class="language-plaintext highlighter-rouge">Student</code>对象代码和前面章节完全一样：</p>
+
+<pre><code class="language-JS">var xiaoming = new Student('小明');
+xiaoming.hello();
+</code></pre>
+
+<hr>
+
+<p><strong>class继承</strong></p>
+
+<p>直接通过<code class="language-plaintext highlighter-rouge">extends</code>来实现:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">PrimaryStudent</span> <span class="kd">extends</span> <span class="nx">Student</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">grade</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">super</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span> <span class="c1">// 记得用super调用父类的构造方法!</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">grade</span> <span class="o">=</span> <span class="nx">grade</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">myGrade</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">I am at grade </span><span class="dl">'</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">grade</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<font style="color: red;">注意</font>
+
+<p>所以，<code class="language-plaintext highlighter-rouge">PrimaryStudent</code>的定义也是<code class="language-plaintext highlighter-rouge">class</code>关键字实现的，而<code class="language-plaintext highlighter-rouge">extends</code>则表示原型链对象来自<code class="language-plaintext highlighter-rouge">Student</code>。子类的构造函数可能会与父类不太相同，例如，PrimaryStudent需要name和grade两个参数，并且需要通过<code class="language-plaintext highlighter-rouge">super(name)</code>来调用父类的构造函数，否则父类的<code class="language-plaintext highlighter-rouge">name</code>属性无法正常初始化。</p>
+
+<p>此外，<code class="language-plaintext highlighter-rouge">PrimaryStudent</code>已经自动获得了父类<code class="language-plaintext highlighter-rouge">Student</code>的hello方法，我们又在子类中定义了新的myGrade方法。</p>
+
+<h2 id="objectdefineproperty">Object.defineProperty</h2>
+
+<p>这个方法在js中十分强大，Vue正是使用了它实现了响应式数据功能。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">function</span> <span class="nx">defineReactive</span> <span class="p">(</span>
+  <span class="nx">obj</span><span class="p">:</span> <span class="nb">Object</span><span class="p">,</span>
+  <span class="nx">key</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+  <span class="nx">val</span><span class="p">:</span> <span class="nx">any</span><span class="p">,</span>
+  <span class="nx">customSetter</span><span class="p">?:</span> <span class="p">?</span><span class="nb">Function</span><span class="p">,</span>
+  <span class="nx">shallow</span><span class="p">?:</span> <span class="nx">boolean</span>
+<span class="p">)</span> <span class="p">{</span>
+  <span class="p">.....</span>
+  <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">enumerable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">configurable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">get</span><span class="p">:</span> <span class="kd">function</span> <span class="nx">reactiveGetter</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">getter</span> <span class="p">?</span> <span class="nx">getter</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">:</span> <span class="nx">val</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">Dep</span><span class="p">.</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">dep</span><span class="p">.</span><span class="nx">depend</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">childOb</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">childOb</span><span class="p">.</span><span class="nx">dep</span><span class="p">.</span><span class="nx">depend</span><span class="p">()</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">value</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nx">dependArray</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">value</span>
+    <span class="p">},</span>
+    <span class="na">set</span><span class="p">:</span> <span class="kd">function</span> <span class="nx">reactiveSetter</span> <span class="p">(</span><span class="nx">newVal</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">getter</span> <span class="p">?</span> <span class="nx">getter</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">:</span> <span class="nx">val</span>
+      <span class="cm">/* eslint-disable no-self-compare */</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">newVal</span> <span class="o">===</span> <span class="nx">value</span> <span class="o">||</span> <span class="p">(</span><span class="nx">newVal</span> <span class="o">!==</span> <span class="nx">newVal</span> <span class="o">&amp;&amp;</span> <span class="nx">value</span> <span class="o">!==</span> <span class="nx">value</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">return</span>
+      <span class="p">}</span>
+      <span class="cm">/* eslint-enable no-self-compare */</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">!==</span> <span class="dl">'</span><span class="s1">production</span><span class="dl">'</span> <span class="o">&amp;&amp;</span> <span class="nx">customSetter</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">customSetter</span><span class="p">()</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">setter</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">setter</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">newVal</span><span class="p">)</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">val</span> <span class="o">=</span> <span class="nx">newVal</span>
+      <span class="p">}</span>
+      <span class="nx">childOb</span> <span class="o">=</span> <span class="o">!</span><span class="nx">shallow</span> <span class="o">&amp;&amp;</span> <span class="nx">observe</span><span class="p">(</span><span class="nx">newVal</span><span class="p">)</span>
+      <span class="nx">dep</span><span class="p">.</span><span class="nx">notify</span><span class="p">()</span>
+    <span class="p">}</span>
+  <span class="p">})</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>设置值时再通知一下View视图做更新，Vue源码正是通过这种方式实现了<strong>访问属性时收集依赖</strong>，设置属性时源码有一句<code class="language-plaintext highlighter-rouge">dep.notify</code>，里面便是通知视图更新的相关操作。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">{</span>
+      <span class="na">get</span><span class="p">:</span> <span class="kd">function</span><span class="p">(){</span>
+           <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">getter called!</span><span class="dl">"</span><span class="p">)</span>
+      <span class="p">},</span>
+      <span class="na">set</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">newVal</span><span class="p">){</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">setter called! newVal is:</span><span class="dl">"</span> <span class="o">+</span> <span class="nx">newVal</span><span class="p">)</span>
+      <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<h2 id="vnode概念">Vnode概念</h2>
+
+<p>Vnode，顾名思义，Virtual node，虚拟节点，首先声明，这不是Vue自己首创的概念，其实Github上早就有一个类似的项目:Snabbdom。</p>
+
+<font style="color: #ec7907;">为啥要用Vnode呢？</font>
+
+<p>其实原因主要是原生的dom节点<strong>对象太大</strong>了，如果采用之前的Jquery这种方式直接操作dom，<strong>性能差</strong>，所以snabbdom或者Vue中应用了Vnode。</p>
+
+<p>看看Vue源码对Vnode的定义：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">default</span> <span class="kd">class</span> <span class="nx">VNode</span> <span class="p">{</span>
+  <span class="nl">tag</span><span class="p">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span>
+  <span class="nl">data</span><span class="p">:</span> <span class="nx">VNodeData</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span>
+  <span class="nl">children</span><span class="p">:</span> <span class="p">?</span><span class="nb">Array</span><span class="o">&lt;</span><span class="nx">VNode</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="nl">text</span><span class="p">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span>
+  <span class="nl">elm</span><span class="p">:</span> <span class="nx">Node</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span>
+  <span class="nl">ns</span><span class="p">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span>
+  <span class="nl">context</span><span class="p">:</span> <span class="nx">Component</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span> <span class="c1">// rendered in this component's scope</span>
+  <span class="nl">key</span><span class="p">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span>
+  <span class="nl">componentOptions</span><span class="p">:</span> <span class="nx">VNodeComponentOptions</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span>
+  <span class="nl">componentInstance</span><span class="p">:</span> <span class="nx">Component</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span> <span class="c1">// component instance</span>
+  <span class="nl">parent</span><span class="p">:</span> <span class="nx">VNode</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span> <span class="c1">// component placeholder node</span>
+
+  <span class="c1">// strictly internal</span>
+  <span class="nl">raw</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span> <span class="c1">// contains raw HTML? (server only)</span>
+  <span class="nl">isStatic</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span> <span class="c1">// hoisted static node</span>
+  <span class="nl">isRootInsert</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span> <span class="c1">// necessary for enter transition check</span>
+  <span class="nl">isComment</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span> <span class="c1">// empty comment placeholder?</span>
+  <span class="nl">isCloned</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span> <span class="c1">// is a cloned node?</span>
+  <span class="nl">isOnce</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span> <span class="c1">// is a v-once node?</span>
+  <span class="nl">asyncFactory</span><span class="p">:</span> <span class="nb">Function</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span> <span class="c1">// async component factory function</span>
+  <span class="nl">asyncMeta</span><span class="p">:</span> <span class="nb">Object</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span>
+  <span class="nl">isAsyncPlaceholder</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span>
+  <span class="nl">ssrContext</span><span class="p">:</span> <span class="nb">Object</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span>
+  <span class="nl">fnContext</span><span class="p">:</span> <span class="nx">Component</span> <span class="o">|</span> <span class="k">void</span><span class="p">;</span> <span class="c1">// real context vm for functional nodes</span>
+  <span class="nl">fnOptions</span><span class="p">:</span> <span class="p">?</span><span class="nx">ComponentOptions</span><span class="p">;</span> <span class="c1">// for SSR caching</span>
+  <span class="nl">fnScopeId</span><span class="p">:</span> <span class="p">?</span><span class="nx">string</span><span class="p">;</span>
+<span class="p">....</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>其实大多数场景下即便有很多修改，但是如果从宏观角度观看，其实修改的点不多。</p>
+
+<p>举个例子：三个dom节点A B C —-&gt; 依次会改成 B C D</p>
+
+<ul>
+  <li>
+<strong>Jquery</strong>：当碰到第一次A改为B时，修改了一次，再碰到B改为C，又修改了一次，再次碰到C改为D，又又修改了一次。（无法以全局视角看问题）</li>
+</ul>
+
+<p>显然其实从宏观上看，只需要删除A，然后末尾加上D即可；这种优化是需要从<strong>宏观角度</strong>看才行。</p>
+
+<ul>
+  <li>
+<strong>Vue</strong>：从全局看问题的方式就是异步，先把修改放到队列中，然后整成一批去修改，做diff，这个时候从统计学意义上来讲确实可以优化性能。这也是为啥Vue源码中出现下述代码的原因:</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">queueWatcher</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</code></pre></div></div>
+<h2 id="函数柯里化">函数柯里化</h2>
+
+<p>将一个函数拆分成多个函数，是固定部分参数，返回一个接受剩余参数的函数，也称为部分计算函数，目的是为了缩小适用范围，创建一个针对性更强的函数。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 实现一个简单的加法</span>
+<span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span><span class="k">return</span> <span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="p">}</span>
+<span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="c1">// 用柯里化实现</span>
+<span class="kd">const</span> <span class="nx">currying</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="k">return</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span><span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">currying</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">2</span><span class="p">))</span> <span class="c1">// 3</span>
+</code></pre></div></div>
+
+<p>柯里化函数就是<strong>高阶函数</strong>的一种。这里就会有人提问了，为什么要那么费劲实现add函数？有道经典的面试题实现add(1)(2)(3)(4)=10;</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 我们可以这样理解调用add(1)时返回一个函数fn，然后执行fn(2)依次被调用，当执行到最后一次返回结果</span>
+<span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">sum</span><span class="o">=</span><span class="nx">num</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">fn</span><span class="o">=</span><span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">sum</span><span class="o">+=</span><span class="nx">v</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nx">fn</span>
+    <span class="p">};</span> 
+    <span class="nx">fn</span><span class="p">.</span><span class="nx">toString</span><span class="o">=</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">sum</span>
+    <span class="p">};</span>
+    <span class="k">return</span> <span class="nx">fn</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">2</span><span class="p">)(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">4</span><span class="p">))</span> <span class="c1">// 10</span>
+<span class="c1">// 执行add(1)时返回了fn函数给2，3，4执行，同时定义了fn的toString方法，</span>
+<span class="c1">// 每个对象的toString和valueOf方法都可以被改写，每个对象执行完毕，如果被用以操作JavaScript解析器就会自动调用对象的toString或者valueOf方法</span>
+<span class="c1">// 利用toString隐式调用的特性，当最后执行时隐式调用，并计算最终的值返回</span>
+</code></pre></div></div>
+
+<p>面试题的内容还有 add(1)(1,2,3)(2)=9 这样的形式</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">arguments</span><span class="p">];</span>
+  <span class="kd">var</span> <span class="nx">fn</span><span class="o">=</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">args</span><span class="p">.</span><span class="nx">push</span><span class="p">(...</span><span class="nx">arguments</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">add</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">args</span><span class="p">)</span>
+  <span class="p">};</span>
+  <span class="nx">fn</span><span class="p">.</span><span class="nx">toString</span><span class="o">=</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">args</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+  <span class="k">return</span> <span class="nx">fn</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)(</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>缺点：性能上会受到影响，比如add函数里面需要创建数组去存放每次调用的时候的参数，创建闭包函数这些都会对内存跟速度上会带来花销，存取arguments对象通常要比存取命名参数要慢一点。</p>
+
+<p>Vue源码是这么应用这个特性的，Vue源码中有一个<strong>platform目录</strong>，专门存放和平台相关的源码（Vue可以在多平台上运行 比如Weex）。</p>
+
+<h2 id="编译原理基础知识">编译原理基础知识</h2>
+
+<p>首先通过parse函数将template编译为抽象语法树ast，然后对ast进行代码优化，最后生成render函数。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="kd">const</span> <span class="nx">ast</span> <span class="o">=</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">template</span><span class="p">.</span><span class="nx">trim</span><span class="p">(),</span> <span class="nx">options</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">optimize</span> <span class="o">!==</span> <span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">optimize</span><span class="p">(</span><span class="nx">ast</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="kd">const</span> <span class="nx">code</span> <span class="o">=</span> <span class="nx">generate</span><span class="p">(</span><span class="nx">ast</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="nx">ast</span><span class="p">,</span>
+    <span class="na">render</span><span class="p">:</span> <span class="nx">code</span><span class="p">.</span><span class="nx">render</span><span class="p">,</span>
+    <span class="na">staticRenderFns</span><span class="p">:</span> <span class="nx">code</span><span class="p">.</span><span class="nx">staticRenderFns</span>
+  <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="参考文章">参考文章</h2>
+
+<p><a href="https://www.liaoxuefeng.com/wiki/1022910821149312/1023022043494624" target="_blank" rel="noopener noreferrer nofollow">廖雪峰面向对象编程</a></p>
+
+<p><a href="https://www.jianshu.com/p/c914ccd498e7" target="_blank" rel="noopener noreferrer nofollow">Vue源码解析准备篇</a></p>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>JS基础---JS异步编程的核心 Promise</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="ES6 之前，社区就提出了 Promise 的方案，后随着ES6 将其加入进去，统一了方法，提供了原生的 Promise 对象。" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="JavaScript系列文章" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="JS基础---JS异步编程的核心 Promise" />
+<meta name="twitter:description" content="ES6 之前，社区就提出了 Promise 的方案，后随着ES6 将其加入进去，统一了方法，提供了原生的 Promise 对象。" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/02/01/js_promise" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="JS基础---JS异步编程的核心 Promise" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/02/01/js_promise" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="ES6 之前，社区就提出了 Promise 的方案，后随着ES6 将其加入进去，统一了方法，提供了原生的 Promise 对象。" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-02-01T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="JavaScript系列文章" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/02/01/js_promise">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">JS基础---JS异步编程的核心 Promise</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-02-01T00:00:00+08:00" itemprop="datePublished">
+                
+                Feb 1, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">JS基础---JS异步编程的核心 Promise</h1>
+    <p class="post-meta">
+      <time datetime="2021-02-01T00:00:00+08:00" itemprop="datePublished">
+        
+        Feb 1, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>ES6 之前，社区就提出了 Promise 的方案，后随着ES6 将其加入进去，统一了方法，提供了原生的 Promise 对象。</p>
+
+<p>问题1：</p>
+<font style="color: #ec7907;">Promise 内部究竟有几种状态？</font>
+
+<p>问题2：</p>
+<font style="color: #ec7907;">Promise 是怎么解决回调地狱问题的？</font>
+
+<h2 id="promise-的基本情况">Promise 的基本情况</h2>
+
+<p>简单来说，它就是一个容器，里面保存着某个未来才会结束的事件的结果</p>
+
+<p>从语法上说，Promise是一个对象，从它可以获取异步操作的消息</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">read</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="dl">'</span><span class="s1">utf8</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+            <span class="nx">resolve</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+<span class="nx">read</span><span class="p">(</span><span class="nx">A</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">read</span><span class="p">(</span><span class="nx">B</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">read</span><span class="p">(</span><span class="nx">C</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="nx">g</span>
+    <span class="k">return</span> <span class="nx">read</span><span class="p">(</span><span class="nx">D</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">reason</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">reason</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<ul>
+  <li>待定(pending): 初始状态，既没有被完成，也没有被拒绝</li>
+  <li>已完成(fullfilled): 操作成功完成</li>
+  <li>已拒绝(rejected): 操作失败</li>
+</ul>
+
+<p>待定状态的 Promise 对象执行的话，最后要么会通过一个值完成，要么会通过一个原因被拒绝</p>
+
+<blockquote>
+  <p>最后Promise.prototype.then 和Promise.prototype.catch 方法返回的是一个 Promise 所以它们可以继续被链式调用</p>
+</blockquote>
+
+<p><img src="../../../images/promise1.png" alt="image.png"></p>
+
+<p>深入理解，可学习”有限状态机”</p>
+
+<h2 id="promise-如何解决回调地狱">Promise 如何解决回调地狱</h2>
+
+<p>回调地狱问题：</p>
+<ul>
+  <li>多层嵌套的问题</li>
+  <li>每种任务的处理结果存在两种可能性（成功或失败），那么需要在每种任务执行结束后分别处理这两种可能性</li>
+</ul>
+
+<p>Promise 利用了三大技术手段来解决回调地狱：
+回调函数延迟绑定、返回值穿透、错误冒泡</p>
+
+<p>回调函数延迟绑定</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">readFilePromise</span> <span class="o">=</span> <span class="p">(</span><span class="nx">filename</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">resolve</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+<span class="nx">readFilePromise</span><span class="p">(</span><span class="dl">'</span><span class="s1">1.json</span><span class="dl">'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">readFilePromise</span><span class="p">(</span><span class="dl">'</span><span class="s1">2.json</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>返回值穿透</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">readFilePromise</span><span class="p">(</span><span class="dl">'</span><span class="s1">1.json</span><span class="dl">'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">readFilePromise</span><span class="p">(</span><span class="dl">'</span><span class="s1">2.json</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// 这是返回的Promise</span>
+<span class="p">});</span>
+<span class="nx">x</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="cm">/* 内部逻辑省略 */</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>错误冒泡</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">readFilePromise</span><span class="p">(</span><span class="dl">'</span><span class="s1">1.json</span><span class="dl">'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">readFilePromise</span><span class="p">(</span><span class="dl">'</span><span class="s1">2.json</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">readFilePromise</span><span class="p">(</span><span class="dl">'</span><span class="s1">3.json</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span><span class="nx">g</span>
+    <span class="k">return</span> <span class="nx">readFilePromise</span><span class="p">(</span><span class="dl">'</span><span class="s1">4.json</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="promise-的静态方法">Promise 的静态方法</h2>
+
+<p>从语法、参数以及方法的代码几个方面来分别介绍 all、allSettled、any、race 这四种方法</p>
+
+<h3 id="all-方法">all 方法</h3>
+
+<ul>
+  <li>语法：Promise.all(iterable)</li>
+  <li>参数：一个可迭代对象，如Array</li>
+  <li>描述：此方法对于汇总多个Promise的结果很有用，在ES6中可以将多个Promise.all异步请求并行操作</li>
+</ul>
+
+<ol>
+  <li>当所有结果成功返回时按照请求顺序返回成功</li>
+  <li>当其中有一个失败方法时，则进入失败方法</li>
+</ol>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1.获取轮播数据列表</span>
+<span class="kd">function</span> <span class="nx">getBannerList</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">resolve</span><span class="p">(</span><span class="dl">'</span><span class="s1">轮播数据</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">},</span><span class="mi">300</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="c1">//2.获取店铺列表</span>
+<span class="kd">function</span> <span class="nx">getStoreList</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">resolve</span><span class="p">(</span><span class="dl">'</span><span class="s1">店铺数据</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">},</span><span class="mi">500</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="c1">//2.获取分类列表</span>
+<span class="kd">function</span> <span class="nx">getCategoryList</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="nx">resolve</span><span class="p">(</span><span class="dl">'</span><span class="s1">分类数据</span><span class="dl">'</span><span class="p">)</span>
+        <span class="p">},</span><span class="mi">700</span><span class="p">)</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">initLoad</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span><span class="nx">getBannerList</span><span class="p">(),</span> <span class="nx">getStoreList</span><span class="p">(),</span> <span class="nx">getCategoryList</span><span class="p">()])</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+    <span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="nx">initLoad</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="allsettled-方法">allSettled 方法</h3>
+
+<blockquote>
+  <p>Promise.allSettled 的语法及参数跟 Promise.all 类似</p>
+</blockquote>
+
+<ul>
+  <li>参数：接受一个Promise的数组，返回一个新的Promise</li>
+</ul>
+
+<p>当Promise.allSettled 全部处理完成后，我们可以拿到每个Promise的状态，而不管其是否处理成功</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">resolved</span> <span class="o">=</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">rejected</span> <span class="o">=</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">allSettledPromise</span> <span class="o">=</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">allSettled</span><span class="p">([</span><span class="nx">resolved</span><span class="p">,</span> <span class="nx">rejected</span><span class="p">]);</span>
+
+<span class="nx">allSettledPromise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="c1">// 返回结果：</span>
+<span class="c1">// [</span>
+<span class="c1">//     {status: 'fulfilled', value:2}</span>
+<span class="c1">//     {status: 'rejected', value:-1}</span>
+<span class="c1">// ]</span>
+</code></pre></div></div>
+
+<h3 id="any-方法">any 方法</h3>
+
+<ul>
+  <li>语法：Promise.any(iterable)</li>
+  <li>参数：iterable 可迭代的对象，例如Array</li>
+  <li>描述：any方法返回一个Promise，只要参数Promise实例有一个变成fulfilled状态，最后any返回的实例就会变成fulfilled状态，如果所有参数Promise实例都变成rejected状态，包装实例就会变成rejected状态</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">resolved</span> <span class="o">=</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">rejected</span> <span class="o">=</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">allSettledPromise</span> <span class="o">=</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">any</span><span class="p">([</span><span class="nx">resolved</span><span class="p">,</span> <span class="nx">rejected</span><span class="p">]);</span>
+
+<span class="nx">allSettledPromise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="c1">// 返回结果：</span>
+<span class="c1">// 2</span>
+</code></pre></div></div>
+
+<h3 id="race-方法">race 方法</h3>
+
+<ul>
+  <li>语法：Promise.race(iterable)</li>
+  <li>参数：iterable 可迭代的对象，例如Array</li>
+  <li>描述：race方法返回一个Promise，只要参数的Promise之中有一个实例率先改变状态，则race方法的返回状态就跟着改变</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 请求某个图片资源</span>
+<span class="kd">function</span> <span class="nx">requestImg</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span><span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">img</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Image</span><span class="p">();</span>
+        <span class="nx">img</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">img</span><span class="p">);</span> <span class="p">}</span>
+        <span class="nx">img</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">http://www.baidu.com/img/result.png</span><span class="dl">'</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">p</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// 延时函数，用于给请求计时</span>
+<span class="kd">function</span> <span class="nx">timeout</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span><span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">reject</span><span class="p">(</span><span class="dl">'</span><span class="s1">图片超时</span><span class="dl">'</span><span class="p">);</span> <span class="p">},</span><span class="mi">5000</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="k">return</span> <span class="nx">p</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">Promise</span><span class="p">.</span><span class="nx">race</span><span class="p">[</span><span class="nx">requestImg</span><span class="p">(),</span> <span class="nx">timeout</span><span class="p">()]</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">reason</span><span class="p">);</span>
+    <span class="p">})</span>
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Promise方法</th>
+      <th>简单总结</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>all</td>
+      <td>参数所有返回结果为成功才返回</td>
+    </tr>
+    <tr>
+      <td>allSettled</td>
+      <td>参数不论返回结果是否返回成功，都返回每个参数执行状态</td>
+    </tr>
+    <tr>
+      <td>any</td>
+      <td>参数中只要有一个成功，就返回该成功的执行结果</td>
+    </tr>
+    <tr>
+      <td>race</td>
+      <td>返回最先返回执行成功的参数的执行结果</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

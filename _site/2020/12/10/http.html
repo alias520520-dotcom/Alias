@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>HTTP 请求与 HTTP 的发展</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="讲解HTTP请求，从输入url到页面呈现的过程." />
+
+
+
+  <meta name="keywords" itemprop="categories" content="浏览器&amp;网络" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="HTTP 请求与 HTTP 的发展" />
+<meta name="twitter:description" content="讲解HTTP请求，从输入url到页面呈现的过程." />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2020/12/10/http" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="HTTP 请求与 HTTP 的发展" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2020/12/10/http" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="讲解HTTP请求，从输入url到页面呈现的过程." />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2020-12-10T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="浏览器&amp;网络" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2020/12/10/http">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">HTTP 请求与 HTTP 的发展</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2020-12-10T00:00:00+08:00" itemprop="datePublished">
+                
+                Dec 10, 2020
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">HTTP 请求与 HTTP 的发展</h1>
+    <p class="post-meta">
+      <time datetime="2020-12-10T00:00:00+08:00" itemprop="datePublished">
+        
+        Dec 10, 2020
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>讲解HTTP请求，从输入url到页面呈现的过程.</p>
+
+<h2 id="http-请求">HTTP 请求</h2>
+<p>浏览器中的 HTTP 请求流程</p>
+
+<p><img src="../../../images/http1.png" alt="image.png"></p>
+<center style="font-size:14px;color:#C0C0C0;">整体流程</center>
+
+<blockquote>
+  <p>浏览器中的 HTTP 请求从发起到结束一共经历：</p>
+  <ul>
+    <li>构建请求</li>
+    <li>查找缓存</li>
+    <li>准备 IP 和端口</li>
+    <li>等待 TCP 队列</li>
+    <li>建立 TCP 连接</li>
+    <li>发起 HTTP 请求</li>
+    <li>服务器处理请求</li>
+    <li>服务器返回请求和断开连接</li>
+  </ul>
+</blockquote>
+
+<h2 id="浏览器端发起-http-请求流程">浏览器端发起 HTTP 请求流程</h2>
+
+<h3 id="构建请求">构建请求</h3>
+
+<p>首先，浏览器构建<strong>请求行</strong>信息（如下所示），构建好后，浏览器准备发起网络请求。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET /index.html HTTP1.1
+</code></pre></div></div>
+<h3 id="查找缓存">查找缓存</h3>
+
+<p>在真正发起网络请求之前，浏览器会先在浏览器缓存中查询是否有要请求的文件。其中，<strong>浏览器缓存是一种在本地保存资源副本，以供下次请求时直接使用的技术</strong>。</p>
+
+<p>当浏览器发现请求的资源已经在浏览器缓存中存有副本，它会拦截请求，返回该资源的副本，并直接结束请求，而不会再去源服务器重新下载。这样做的好处：</p>
+<ul>
+  <li>缓解服务器端压力，提升性能（获取资源的耗时更短了）；</li>
+  <li>对于网站来说，缓存是实现快速资源加载的重要组成部分。</li>
+</ul>
+
+<p>如果缓存查找失败，就会进入网络请求过程了</p>
+
+<h3 id="准备-ip-地址和端口">准备 IP 地址和端口</h3>
+
+<p><strong>HTTP 和 TCP 的关系</strong>：浏览器使用 HTTP 协议作为应用层协议，用来封装请求的文本信息；并使用 TCP/IP 作传输层协议将它发到网络上，所以在 HTTP 工作开始之前，浏览器需要通过 TCP 与服务器建立连接。也就是说 HTTP 的内容是通过 TCP 的传输数据阶段来实现的。</p>
+
+<p><img src="../../../images/http2.png" alt="image.png"></p>
+<center style="font-size:14px;color:#C0C0C0;">HTTP 网络请求</center>
+
+<p>建立 TCP 连接的第一步就是需要准备 IP 地址和端口号。</p>
+
+<blockquote>
+  <p>域名系统（DNS）：域名和 IP 地址做一一映射关系。</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>IP地址</strong>：第一步浏览器会请求 DNS 返回域名对应的 IP。当然浏览器还提供了 DNS 数据缓存服务，如果某个域名已经解析过了，那么浏览器会缓存解析的结果，以供下次查询时直接使用，这样也会减少一次网络请求。</p>
+
+  <p><strong>端口号</strong>：通常情况下，如果 URL 没有特别指明端口号，那么 HTTP 协议默认是 80 端口。</p>
+</blockquote>
+
+<p>阮一峰的<a href="http://www.ruanyifeng.com/blog/2016/06/dns.html" target="_blank" rel="noopener noreferrer nofollow">DNS 原理入门</a></p>
+
+<h3 id="等待-tcp-队列">等待 TCP 队列</h3>
+
+<blockquote>
+  <p>Chrome 有个机制，同一个域名同时最多只能建立 6 个 TCP 连接，如果在同一个域名下同时有 10 个请求发生，那么其中 4 个请求会进入排队等待状态，直至进行中的请求完成。
+如果当前请求数量少于 6，会直接进入下一步，建立 TCP 连接。</p>
+</blockquote>
+
+<p>有很多图片资源或者其他支援请求怎么办？</p>
+
+<p>一. 浏览器有连接请求限制，一般浏览器都是最大http连接数被限制在6个，有以下解决方法</p>
+
+<p>　1. 懒加载，没有浏览到的图片暂不请求</p>
+
+<p>　2. 小图片比较多，可以用雪碧图、字体图标、base64等，这样可以有效减少连接数</p>
+
+<p>　3. 连接数限制问题还可以由http2来解决，http2一个站点只有一个连接。每个请求为一个流，每个请求被分为多个二进制帧，不同流中的帧可以交错的发送，实现多路复用。这就解决了连接数限制的问题</p>
+
+<p><a href="https://ye11ow.gitbooks.io/http2-explained/content/" target="_blank" rel="noopener noreferrer nofollow">《http2讲解》</a></p>
+
+<p>二、图片过大，传输和渲染比较慢，有以下的处理办法</p>
+
+<p>　1. 如果是相册之类的可以预加载，在展示当前图片的时候，就加载它的前一个和后一个图片</p>
+
+<p>　2. 加载的时候可以先加载一个压缩率非常高的缩略图，以提高用户体验</p>
+
+<p>　3. 使用渐进式jpeg，会提高用户体验</p>
+
+<p>　4. 如果展示区域小于图片的真实大小，可以在服务端先压缩到合适的尺寸</p>
+
+<h3 id="建立-tcp-连接">建立 TCP 连接</h3>
+
+<p>排队等待结束之后，就可以和服务器握手了。在 HTTP 工作开始之前，浏览器通过 TCP 与服务器建立连接。而 TCP 的工作方式可以看看这篇文章：</p>
+
+<p><a href="https://juejin.cn/post/TCP/UDP%E5%8D%8F%E8%AE%AE%E8%AF%A6%E8%A7%A3" target="_blank" rel="noopener noreferrer nofollow">TCP/UDP协议详解</a></p>
+
+<p>一个完整的TCP连接生命周期包括了“建立连接”“传输数据”和“断开连接”三个阶段。</p>
+
+<p><img src="../../../images/http3.png" alt="TCP连接生命周期.png"></p>
+<center style="font-size:14px;color:#C0C0C0;">TCP连接生命周期</center>
+
+<h3 id="发送-http-请求">发送 HTTP 请求</h3>
+
+<p>TCP的连接，是为了保证浏览器跟服务器更好的通信， HTTP 中的数据就是在这个通信过程中传输的。</p>
+
+<p><img src="../../../images/http4.png" alt="HTTP数据.png"></p>
+<center style="font-size:14px;color:#C0C0C0;">HTTP数据</center>
+
+<p><strong>请求行</strong>：</p>
+
+<p>①是请求方法，GET和POST是最常见的HTTP方法，除此以外还包括DELETE、HEAD、OPTIONS、PUT、TRACE。</p>
+
+<p>②为请求对应的URL地址，它和报文头的Host属性组成完整的请求URL。</p>
+
+<p>③是协议名称及版本号。</p>
+
+<p><strong>请求头</strong>：</p>
+
+<p>④是HTTP的报文头，报文头包含若干个属性，格式为“属性名:属性值”，服务端据此获取客户端的信息。</p>
+
+<p>与缓存相关的规则信息，均包含在header中</p>
+
+<p><strong>请求体</strong>：</p>
+
+<p>⑤是报文体，它将一个页面表单中的组件值通过param1=value1&amp;param2=value2的键值对形式编码成一个格式化串，它承载多个请求参数的数据。不但报文体可以传递请求参数，请求URL也可以通过类似于“/chapter15/user.html? param1=value1&amp;param2=value2”的方式传递请求参数。</p>
+
+<p><strong>HTTP请求报文头属性</strong></p>
+<blockquote>
+  <p><strong>Accept</strong>：告诉服务端，客户端接受什么类型的响应。 如下，报文头相当于告诉服务端，响应类型仅为纯文本数据</p>
+  <div class="language-plaintext highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>Accept:text/plain 
+</code></pre></div>  </div>
+  <p>Accept属性的值可以为一个或多个MIME类型的值（描述消息内容类型的因特网标准， 消息能包含文本、图像、音频、视频以及其他应用程序专用的数据）</p>
+
+  <p><strong>cookie</strong>：客户端的Cookie就是通过这个报文头属性传给服务端</p>
+  <div class="language-plaintext highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>Cookie: $Version=1; Skin=new;jsessionid=5F4771183629C9834F8382E23 
+</code></pre></div>  </div>
+  <p>服务端通过jsessionid判断是否隶属于同一个客户端。HTTP请求报文头的Cookie属性的jsessionid的值关联起来（也可以通过重写URL的方式将会话ID附带在每个URL的后面）。</p>
+
+  <p><strong>Referer</strong>：表示这个请求是从哪个URL过来的。假如你通过google搜索出一个商家的广告页面，你对这个广告页面感兴趣，鼠标一点发送一个请求报文到商家的网站，这个请求报文的Referer报文头属性值&gt;就是http://www.google.com。</p>
+
+  <p><strong>Cache-Control</strong>：对缓存进行控制，如一个请求希望响应返回的内容在客户端要被缓存一年，或不希望被缓存就可以通过这个报文头达到目的。</p>
+</blockquote>
+
+<h3 id="服务器端处理http请求流程">服务器端处理HTTP请求流程</h3>
+
+<p>此时你可以理解成HTTP请求信息终于送到到服务器，接下来服务器会根据请求信息来准备相应的内容啦</p>
+
+<p><strong>1.HTTP响应报文</strong></p>
+
+<p><img src="../../../images/http5.png" alt="HTTP数据.png"></p>
+<center style="font-size:14px;color:#C0C0C0;">HTTP响应报文</center>
+
+<p><strong>响应行</strong>：</p>
+
+<p>①报文协议及版本；</p>
+
+<p>②状态码及状态描述；</p>
+
+<p><strong>响应头</strong>：</p>
+
+<p>③响应报文头，也是由多个属性组成；</p>
+
+<p><strong>响应体</strong>：</p>
+
+<p>④响应报文体，即我们真正要的“干货”</p>
+
+<p><a href="https://juejin.im/post/6844903519447678990" target="_blank" rel="noopener noreferrer nofollow">具有代表性的 HTTP 状态码</a></p>
+
+<p><a href="http://hpoenixf.com/%E9%9D%A2%E8%AF%95%E5%BF%85%E8%80%83%E4%B9%8Bhttp%E7%8A%B6%E6%80%81%E7%A0%81%E6%9C%89%E5%93%AA%E4%BA%9B.html" target="_blank" rel="noopener noreferrer nofollow">面试必考之http状态码有哪些</a></p>
+
+<p><strong>2.断开连接</strong></p>
+
+<p>一般情况下，服务器发送完数据后，就要关闭TCP连接。不过有一种情况比较特殊，我们来看看</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Connection:Keep-Alive
+</code></pre></div></div>
+<p>复制代码如果浏览器或者在服务器中加入其头信息如上面的字段的话，TCP连接会仍然保持，这样子浏览器就可以通过同一个TCP连接发送请求，保存TCP连接可以省下去下次请求需要建立连接的时间，提升资源加载速度。</p>
+
+<p>比如，一个 Web 页面中内嵌的图片就都来自同一个 Web 站点，如果初始化了一个持久连接，你就可以复用该连接，以请求其他资源，而不需要重新再建立新的 TCP 连接。</p>
+<h3 id="重定向">重定向</h3>
+
+<p>你肯定遇到过这样子的情况吧：<strong>当你在浏览器中打开 baidu.com 后，你会发现最终打开的页面地址是 www.baidu.com ** 这就是涉及到了</strong>重定向**</p>
+
+<p><img src="../../../images/http6.png" alt=""></p>
+
+<blockquote>
+  <p>我们看看响应行返回的状态码301，状态301告诉浏览器，你需要重新转到另外一个网址，需要重定向的地址正式包含在响应头的Location字段中。接下啦，浏览器获取Location字段中的地址，重新导航，这也就是完整的重定向的执行流程。</p>
+</blockquote>
+
+<p>这解释了为什么输入baidu.com后，最终打开的是www.baidu.com</p>
+
+<h2 id="http10http11-和-http20">HTTP/1.0、HTTP/1.1 和 HTTP/2.0</h2>
+
+<h3 id="http10">HTTP/1.0</h3>
+
+<ul>
+  <li>
+<strong>缺陷</strong>：
+    <ul>
+      <li>浏览器与服务器只保持短暂的连接，浏览器的每次请求都需要与服务器建立一个TCP连接（<em>TCP连接的新建成本很高，因为需要客户端和服务器三次握手</em>），服务器完成请求处理后立即断开TCP连接，服务器不跟踪每个客户也不记录过去的请求;</li>
+      <li>下个请求必须在前一个请求返回后才能发出，request-response对按序发生。显然，如果某个请求长时间没有返回，那么接下来的请求就全部阻塞了。</li>
+    </ul>
+  </li>
+  <li>
+<strong>解决方案</strong>：
+    <ul>
+      <li>添加头信息——非标准的Connection字段<code class="language-plaintext highlighter-rouge">Connection: keep-alive</code>
+</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="http11">HTTP/1.1</h3>
+
+<p><mark>改进点：</mark></p>
+
+<ol>
+  <li>
+<strong>持久连接</strong>
+    <ul>
+      <li>引入了持久连接，即TCP连接默认不关闭，可以被多个请求复用，不用声明<code class="language-plaintext highlighter-rouge">Connection: keep-alive</code>(对于同一个域名，大多数浏览器允许同时建立6个持久连接)</li>
+    </ul>
+  </li>
+  <li>管道机制
+    <ul>
+      <li>即在同一个TCP连接里面，客户端可以同时发送多个请求。</li>
+    </ul>
+  </li>
+  <li>分块传输编码
+    <ul>
+      <li>即服务端没产生一块数据，就发送一块，采用”流模式”而取代”缓存模式”。</li>
+    </ul>
+  </li>
+  <li>新增请求方式
+    <ul>
+      <li>PUT:请求服务器存储一个资源;</li>
+      <li>DELETE：请求服务器删除标识的资源；</li>
+      <li>OPTIONS：请求查询服务器的性能，或者查询与资源相关的选项和需求；</li>
+      <li>TRACE：请求服务器回送收到的请求信息，主要用于测试或诊断；</li>
+      <li>CONNECT：保留将来使用</li>
+    </ul>
+  </li>
+</ol>
+
+<p><mark>缺点：</mark></p>
+
+<ol>
+  <li>虽然允许复用TCP连接，但是同一个TCP连接里面，所有的数据通信是按次序进行的。服务器只有处理完一个请求，才会接着处理下一个请求。如果前面的处理特别慢，后面就会有许多请求排队等着。这将导致 <strong>“队头堵塞”</strong>
+</li>
+  <li>
+<strong>避免方式</strong>：一是减少请求数，二是同时多开持久连接</li>
+</ol>
+
+<h3 id="http20">HTTP/2.0</h3>
+
+<p><mark>特点：</mark></p>
+
+<ul>
+  <li>采用二进制格式而非文本格式；</li>
+  <li>完全多路复用，而非有序并阻塞的、只需一个连接即可实现并行；</li>
+  <li>使用报头压缩，降低开销</li>
+  <li>服务器推送</li>
+</ul>
+
+<ol>
+  <li>二进制协议
+    <ul>
+      <li>HTTP/1.1 版的头信息肯定是文本（ASCII编码），数据体可以是文本，也可以是二进制。HTTP/2 则是一个彻底的二进制协议，头信息和数据体都是二进制，并且统称为”帧”：头信息帧和数据帧。</li>
+      <li>二进制协议解析起来更高效、“线上”更紧凑，更重要的是错误更少。</li>
+    </ul>
+  </li>
+  <li>完全多路复用
+    <ul>
+      <li>HTTP/2 复用TCP连接，在一个连接里，客户端和浏览器都可以同时发送多个请求或回应，而且不用按照顺序一一对应，这样就避免了”队头堵塞”。</li>
+    </ul>
+  </li>
+  <li>报头压缩
+    <ul>
+      <li>HTTP 协议是没有状态，导致每次请求都必须附上所有信息。所以，请求的很多头字段都是重复的，比如Cookie，一样的内容每次请求都必须附带，这会浪费很多带宽，也影响速度。</li>
+      <li>对于相同的头部，不必再通过请求发送，只需发送一次；</li>
+      <li>HTTP/2 对这一点做了优化，引入了头信息压缩机制；</li>
+      <li>一方面，头信息使用gzip或compress压缩后再发送；</li>
+      <li>另一方面，客户端和服务器同时维护一张头信息表，所有字段都会存入这个表，产生一个索引号，之后就不发送同样字段了，只需发送索引号。</li>
+    </ul>
+  </li>
+  <li>服务器推送
+    <ul>
+      <li>HTTP/2 允许服务器未经请求，主动向客户端发送资源；</li>
+      <li>通过推送那些服务器任务客户端将会需要的内容到客户端的缓存中，避免往返的延迟</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="http3">HTTP/3</h3>
+
+<p><strong>问题</strong>：<code class="language-plaintext highlighter-rouge">HTTP/2</code> 使用了多路复用，同一域名下只需要使用一个 <code class="language-plaintext highlighter-rouge">TCP</code> 连接，但是连接中若出现了丢包，反倒不如 <code class="language-plaintext highlighter-rouge">HTTP/1</code>。</p>
+
+<p><strong>分析</strong>：出现丢包的情况下，整个 <code class="language-plaintext highlighter-rouge">TCP</code> 都要开始等待重传，也就导致了后面的所有数据都被阻塞了。但是对于 <code class="language-plaintext highlighter-rouge">HTTP/1.1</code> 来说，可以开启多个 <code class="language-plaintext highlighter-rouge">TCP</code> 连接，出现这种情况反到只会影响其中一个连接，剩余的 <code class="language-plaintext highlighter-rouge">TCP</code> 连接还可以正常传输数据。</p>
+
+<p><mark>Google 就更起炉灶搞了一个基于 UDP 协议的 QUIC 协议，并且使用在了 HTTP/3 </mark></p>
+
+<h4 id="quic-新功能">QUIC 新功能</h4>
+
+<p><span style="color: #ec7907;">0-RTT</span></p>
+
+<blockquote>
+  <p>类似 TCP 快速打开的技术，缓存当前会话的上下文，在下次恢复会话的时候，只需要将之前的缓存传递给服务端验证通过就可以进行传输了</p>
+</blockquote>
+
+<p><mark>0RTT 建连可以说是 QUIC 相比 HTTP2 最大的性能优势</mark></p>
+
+<p>0-RTT建连</p>
+<ul>
+  <li>传输层 0RTT 就能建立连接</li>
+  <li>加密层 0RTT 就能建立加密连接</li>
+</ul>
+
+<p><img src="../../../images/http7.png" alt=""></p>
+
+<p>HTTPS 的一次完全握手的建连过程，需要 3 个 RTT，会话复用也需要至少 2 个 RTT。</p>
+
+<p>QUIC 建立在 UDP 的基础上，同时又实现了 0-RTT 的安全握手，所以在大部分情况下，只需要 0 个 RTT 就能实现数据发送。</p>
+
+<p><span style="color: #ec7907;">多路复用</span></p>
+
+<p>同 <code class="language-plaintext highlighter-rouge">HTTP2.0</code> 一样，同一条 QUIC 连接上可以创建多个 stream，来发送多个 HTTP 请求，但是 QUIC 是基于 UDP 的，一个连接上的多个 stream 之间没有依赖。</p>
+<blockquote>
+  <p>比如下图中 stream2 丢了一个 UDP 包，不会影响后面跟着 Stream3 和 Stream4，不存在 TCP 队头阻塞。虽然 stream2 的那个包需要重新传，但是 stream3、stream4 的包无需等待，就可以发给用户。</p>
+</blockquote>
+
+<p>QUIC 在移动端的表现也会比 TCP 好</p>
+<ul>
+  <li>TCP 是基于 IP 和端口去识别连接的，这种方式在多变的移动端网络环境下很脆弱</li>
+  <li>QUIC 是通过 ID 的方式去识别一个连接，ID 不变就能很快连接上</li>
+</ul>
+
+<p><img src="../../../images/http8.png" alt=""></p>
+
+<p><span style="color: #ec7907;">加密认证的报文</span></p>
+
+<p>TCP 协议头部没有经过任何加密和认证，传输过程中很容易被中间网络设备篡改，注入和窃听。</p>
+<blockquote>
+  <p>比如修改序列号、滑动窗口。这些行为有可能是出于性能优化，也有可能是主动攻击。</p>
+</blockquote>
+
+<p>QUIC 的 packet 除了个别报文比如 PUBLIC_RESET 和 CHLO，所有报文头部都是经过认证的，报文 Body 都是经过加密的。</p>
+
+<p><img src="../../../images/http9.png" alt=""></p>
+
+<p>红色部分是 Stream Frame 的报文头部，有认证。绿色部分是报文内容，全部经过加密。</p>
+
+<p><span style="color: #ec7907;">向前纠错机制</span></p>
+
+<p>每个数据包除了它本身的内容之外，还包括了部分其他数据包的数据，因此少量的丢包可以通过其他包的冗余数据直接组装而无需重传。</p>
+
+<blockquote>
+  <p>假如说这次我要发送三个包，那么协议会算出这三个包的异或值并单独发出一个校验包，也就是总共发出了四个包。当非校验包丢包时，可以通过另外三个包计算出丢失的数据包的内容。</p>
+</blockquote>
+
+<h2 id="总结">总结</h2>
+
+<ul>
+  <li>HTTP/1.x 有连接无法复用、队头阻塞、协议开销大和安全因素等多个缺陷</li>
+  <li>HTTP/2 通过多路复用、二进制流、Header 压缩等等技术，极大地提高了性能，但是还是存在着问题的</li>
+  <li>QUIC 基于 UDP 实现，是 HTTP/3 中的底层支撑协议，该协议基于 UDP，又取了 TCP 中的精华，实现了即快又可靠的协议</li>
+</ul>
+
+<h2 id="参考文章">参考文章</h2>
+
+<p><a href="https://blog.fundebug.com/2019/03/07/understand-http2-and-http3/" target="_blank" rel="noopener noreferrer nofollow">一文读懂 HTTP/2 及 HTTP/3 特性</a></p>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

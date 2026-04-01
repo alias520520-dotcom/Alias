@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>Css-—Css优先级</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="从css样式分类入手，结合选择器给出css优先级规则。" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="Css" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="Css-—Css优先级" />
+<meta name="twitter:description" content="从css样式分类入手，结合选择器给出css优先级规则。" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/02/08/css_priority" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="Css-—Css优先级" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/02/08/css_priority" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="从css样式分类入手，结合选择器给出css优先级规则。" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-02-08T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="Css" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/02/08/css_priority">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">Css-—Css优先级</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-02-08T00:00:00+08:00" itemprop="datePublished">
+                
+                Feb 8, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Css-—Css优先级</h1>
+    <p class="post-meta">
+      <time datetime="2021-02-08T00:00:00+08:00" itemprop="datePublished">
+        
+        Feb 8, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>从css样式分类入手，结合选择器给出css优先级规则。</p>
+
+<h2 id="css样式分类">CSS样式分类</h2>
+
+<p>一个标签的样式将会受到越来越多的影响，这种影响可能来自周围的标签，也可能来自其自身。</p>
+
+<h3 id="外部样式">外部样式</h3>
+
+<p>外部样式与HTML代码分离，单独存放在.css文件中。使用时通过link标签将此文件引入到页面中</p>
+
+<p>引入的格式为：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;link</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">".css文件的地址"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<h3 id="内部样式">内部样式</h3>
+
+<p>内部样式使用<style>标签将CSS代码包裹起来，并放入&lt;head&gt;标签中(一般存放在head中，也可存放于别处，如body中)</style></p>
+
+<p>引入的格式为：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span> <span class="nt">span</span><span class="p">{</span><span class="nl">color</span><span class="p">:</span> <span class="no">red</span><span class="p">;}</span> <span class="nt">&lt;/style&gt;</span>
+</code></pre></div></div>
+
+<h3 id="内联样式">内联样式</h3>
+
+<p>内联样式定义在dom元素的style属性中</p>
+
+<p>引入的格式为：</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"background-color: red;"</span><span class="nt">&gt;</span> hello <span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>以上三种样式类型的优先级为：</p>
+
+<font style="color: red;">内联样式  &gt;  内部样式  &gt;  外部样式</font>
+
+<p>但这个<span style="color: red;">优先级并不是绝对的</span>，因为还存在着选择器的优先级以及!important一说。</p>
+<h2 id="css的继承性">CSS的继承性</h2>
+
+<p>CSS 的继承特性指的是应用在一个标签上的那些 CSS 属性被传到其子标签上。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div&gt;</span>
+    <span class="nt">&lt;p&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>如果 <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code> 有个属性 color: red，则这个属性将被 <code class="language-plaintext highlighter-rouge">&lt;p&gt;</code> 继承，即 <code class="language-plaintext highlighter-rouge">&lt;p&gt;</code> 也拥有属性 color: red。</p>
+
+<h3 id="css-优先规则1">CSS 优先规则1：</h3>
+
+<font style="color: #ec7907;">最近的祖先样式比其他祖先样式优先级高。</font>
+
+<blockquote>
+  <p>如果我们把一个标签从祖先那里继承来的而自身没有的属性叫做”祖先样式”，那么”直接样式”就是一个标签直接拥有的属性。</p>
+</blockquote>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- 类名为 son 的 div 的 color 为 blue --&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"color: red"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"color: blue"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"son"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<h3 id="css-优先规则2">CSS 优先规则2：</h3>
+
+<font style="color: #ec7907;">"直接样式"比"祖先样式"优先级高。</font>
+
+<h2 id="选择器的优先级">选择器的优先级</h2>
+
+<p>上面讨论了一个标签从祖先继承来的属性，现在讨论标签自有的属性。</p>
+
+<p>CSS 7 种基础的选择器：</p>
+
+<ul>
+  <li>ID 选择器， 如 #id{}</li>
+  <li>类选择器， 如 .class{}</li>
+  <li>属性选择器， 如 a[href=”segmentfault.com”]{}</li>
+  <li>伪类选择器， 如 :hover{}</li>
+  <li>伪元素选择器， 如 ::before{}</li>
+  <li>标签选择器， 如 span{}</li>
+  <li>通配选择器， 如 *{}</li>
+</ul>
+
+<h3 id="css-优先规则3">CSS 优先规则3：</h3>
+
+<font style="color: #ec7907;">优先级关系：内联样式 &gt; ID 选择器 &gt; 类选择器 = 属性选择器 = 伪类选择器 &gt; 标签选择器 = 伪元素选择器</font>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// HTML
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"content-class"</span> <span class="na">id=</span><span class="s">"content-id"</span> <span class="na">style=</span><span class="s">"color: black"</span><span class="nt">&gt;&lt;/div&gt;</span>
+
+// CSS
+#content-id {
+    color: red;
+}
+.content-class {
+    color: blue;
+}
+div {
+    color: grey;
+}
+</code></pre></div></div>
+
+<p>最终的 color 为 black，因为内联样式比其他选择器的优先级高。</p>
+
+<h2 id="css-组合选择符">CSS 组合选择符</h2>
+
+<p>CSS3 中包含了四种组合方式:</p>
+
+<ul>
+  <li>后代选择器(以空格 <code class="language-plaintext highlighter-rouge"></code> 分隔)
+    <blockquote>
+      <p>用于选取某元素的后代元素</p>
+    </blockquote>
+  </li>
+  <li>子元素选择器(以大于 <code class="language-plaintext highlighter-rouge">&gt;</code> 号分隔）
+    <blockquote>
+      <p>选择作为某元素子元素的元素</p>
+    </blockquote>
+  </li>
+  <li>相邻兄弟选择器（以加号 <code class="language-plaintext highlighter-rouge">+</code> 分隔）
+    <blockquote>
+      <p>选择紧接在另一元素后的元素，且二者有相同父元素</p>
+    </blockquote>
+  </li>
+  <li>后续兄弟选择器（以波浪号 <code class="language-plaintext highlighter-rouge">～</code> 分隔）
+    <blockquote>
+      <p>选取指定元素之后的所有相邻兄弟元素</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p>当一个标签同时被多个选择符选中，我们便需要确定这些选择符的优先级。</p>
+
+<h3 id="css-优先规则4">CSS 优先规则4：</h3>
+
+<font style="color: #ec7907;">计算选择符中 ID 选择器的个数（a），计算选择符中类选择器、属性选择器以及伪类选择器的个数之和（b），计算选择符中标签选择器和伪元素选择器的个数之和（c）。按 a、b、c 的顺序依次比较大小，大的则优先级高，相等则比较下一个。若最后两个的选择符中 a、b、c 都相等，则按照"就近原则"来判断。</font>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// HTML
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"con-id"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"con-span"</span><span class="nt">&gt;&lt;/span&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+// CSS
+#con-id span {
+    color: red;
+}
+div .con-span {
+    color: blue;
+}
+</code></pre></div></div>
+
+<p>由规则 4 可见，<span> 的 color 为 red。</span></p>
+
+<font style="color: blue;">如果外部样式表和内部样式表中的样式发生冲突会出现什么情况呢？</font>
+
+<p>这与样式表在 HTML 文件中所处的位置有关。样式被应用的位置越在下面则优先级越高，其实这仍然可以用规则 4 来解释。</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// HTML
+<span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"style-link.css"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span><span class="nt">&gt;</span>
+<span class="k">@import</span> <span class="sx">url(style-import.css)</span><span class="p">;</span> 
+<span class="nt">div</span> <span class="p">{</span>
+    <span class="nl">background</span><span class="p">:</span> <span class="no">blue</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+
+<span class="nt">&lt;div&gt;&lt;/div&gt;</span>
+
+// style-link.css
+div {
+    background: lime;
+}
+
+// style-import.css
+div {
+    background: grey;
+}
+</code></pre></div></div>
+
+<p>从顺序上看，内部样式在最下面，被最晚引用，所以 &lt;div&gt; 的背景色为 blue。</p>
+
+<p>上面代码中，@import 语句必须出现在内部样式之前，否则文件引入无效。当然不推荐使用 @import 的方式引用外部样式文件</p>
+
+<h3 id="css-优先规则5">CSS 优先规则5：</h3>
+
+<font style="color: #ec7907;">属性后插有 !important 的属性拥有最高优先级。若同时插有 !important，则再利用规则 3、4 判断优先级。</font>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// HTML
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"father"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">"son"</span><span class="nt">&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+// CSS
+p {
+    background: red !important;
+}
+.father .son {
+    background: blue;
+}
+</code></pre></div></div>
+
+<p>虽然 .father .son 拥有更高的权值，但选择器 p 中的 background 属性被插入了 !important， 所以 &lt;p&gt; 的 background 为 red。</p>
+
+<h2 id="错误的说法">错误的说法</h2>
+
+<p>在学习过程中，你可能发现给选择器加权值的说法，即 ID 选择器权值为 100，类选择器权值为 10，标签选择器权值为 1，当一个选择器由多个 ID 选择器、类选择器或标签选择器组成时，则将所有权值相加，然后再比较权值。这种说法其实是有问题的。比如一个由 11 个类选择器组成的选择器和一个由 1 个 ID 选择器组成的选择器指向同一个标签，按理说 110 &gt; 100，应该应用前者的样式，然而事实是应用后者的样式。错误的原因是：<strong>权重的进制是并不是十进制，CSS 权重进制在 IE6 为 256，后来扩大到了 65536，现代浏览器则采用更大的数量</strong>。还是拿刚刚的例子说明。11 个类选择器组成的选择器的总权值为 110，但因为 11 个均为类选择器，所以其实总权值最多不能超过 100， 你可以理解为 99.99，所以最终应用后者样式。</p>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

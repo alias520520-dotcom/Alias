@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>Webpack-—模块化发展（CMD、AMD、CommonJS、ES6）</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="讲解模块化的发展史" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="Webpack" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="Webpack-—模块化发展（CMD、AMD、CommonJS、ES6）" />
+<meta name="twitter:description" content="讲解模块化的发展史" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/02/05/webpack_1" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="Webpack-—模块化发展（CMD、AMD、CommonJS、ES6）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/02/05/webpack_1" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="讲解模块化的发展史" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-02-05T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="Webpack" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/02/05/webpack_1">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">Webpack-—模块化发展（CMD、AMD、CommonJS、ES6）</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-02-05T00:00:00+08:00" itemprop="datePublished">
+                
+                Feb 5, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Webpack-—模块化发展（CMD、AMD、CommonJS、ES6）</h1>
+    <p class="post-meta">
+      <time datetime="2021-02-05T00:00:00+08:00" itemprop="datePublished">
+        
+        Feb 5, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>讲解模块化的发展史</p>
+
+<p><img src="../../../images/webpack1.png" alt="image.png"></p>
+
+<h2 id="模块化的演进过程">模块化的演进过程</h2>
+
+<ul>
+  <li>Stage1 - 文件划分方式：根据功能、数据状态存放到不同的文件
+    <blockquote>
+      <p>缺点：</p>
+      <ul>
+        <li>模块直接在全局工作，大量模块成员污染全局作用域</li>
+        <li>没有私有空间，所有模块内的成员都可以在模块外部被访问或者修改</li>
+        <li>一旦模块增多，容易产生命名冲突</li>
+        <li>无法管理模块之间的依赖关系</li>
+        <li>在维护的过程中很难分辨每个成员所属的模块</li>
+      </ul>
+    </blockquote>
+  </li>
+  <li>Stage2 - 命名空间方式：每个文件暴露出来是一个全局对象
+    <blockquote>
+      <p>解决命名冲突的问题，但其他问题依旧存在</p>
+    </blockquote>
+  </li>
+  <li>Stage3 - IIFE：每个模块的成员放到立即执行函数中，带来私有作用域概念，通过闭包访问
+    <blockquote>
+      <p>解决了命名冲突的问题</p>
+    </blockquote>
+  </li>
+  <li>Stage4 - IIFE 依赖参数：通过参数明显表面这个模块的依赖</li>
+</ul>
+
+<p>模块加载问题：不受代码控制</p>
+
+<p><mark>理想的方式</mark></p>
+
+<p>在页面中引入一个 JS 入口文件，其余用到的模块可以通过代码控制，按需加载</p>
+
+<h3 id="模块化规范的出现">模块化规范的出现</h3>
+
+<p>两点需求：</p>
+<ul>
+  <li>一个统一的模块化标准规范</li>
+  <li>一个可以自动加载模块的基础库</li>
+</ul>
+
+<font style="color: #ec7907;">CommonJS 规范</font>
+
+<ul>
+  <li>是 Node.js 中所遵循的模块规范</li>
+  <li>约定一个文件就是一个模块，每个模块都有单独的作用域</li>
+  <li>通过 module.exports 导出成员，再通过 require 函数载入模块</li>
+  <li>以同步的方式加载模块（加载页面较慢），Node.js 是启动的时候加载模块（执行中再去使用模块）</li>
+</ul>
+
+<font style="color: #ec7907;">AMD 规范（异步模块定义规范）</font>
+
+<ul>
+  <li>每个模块都通过 define 去定义</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">define</span><span class="p">([</span><span class="dl">'</span><span class="s1">jquery</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">./module2.js</span><span class="dl">'</span><span class="p">],</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">module2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="na">start</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="nx">$</span><span class="p">(</span><span class="dl">'</span><span class="s1">body</span><span class="dl">'</span><span class="p">).</span><span class="nx">animate</span><span class="p">({</span> <span class="na">margin</span><span class="p">:</span> <span class="dl">'</span><span class="s1">200px</span><span class="dl">'</span> <span class="p">})</span>
+            <span class="nx">module2</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<font style="color: #ec7907;">模块化的标准规范</font>
+<ul>
+  <li>在 Node.js 环境中，遵循 CommonJS 规范来组织模块</li>
+  <li>在浏览器环境中，遵循 ES Modules 规范</li>
+</ul>
+
+<p>ES Modules 已发展成为现今最主流的前端模块化标准</p>
+
+<h3 id="模块打包工具的出现">模块打包工具的出现</h3>
+
+<ul>
+  <li>ES Modules 本身存在环境兼容问题</li>
+  <li>模块化的方式划分出来的模块文件过多，而前端应用又运行在浏览器中，导致频繁发送网络请求</li>
+  <li>不仅仅 JS 代码需要模块化，HTML、CSS 也面临需要模块化的问题</li>
+</ul>
+
+<p>针对问题1、2，gulp和插件、编译工具即可</p>
+
+<p>但是问题3，webpck可</p>
+
+<h2 id="几种模块化规范对比">几种模块化规范对比</h2>
+<h3 id="amdcmd-两大规范">AMD、CMD 两大规范</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>规范</th>
+      <th>约束条件</th>
+      <th>代表作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>AMD</td>
+      <td>依赖前置</td>
+      <td>requirejs</td>
+    </tr>
+    <tr>
+      <td>CMD</td>
+      <td>就近依赖</td>
+      <td>seajs</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>AMD、CMD 提供了封装模块的方法，实现语法上相近，甚至于 requirejs 在后期也默默支持了 CMD 的写法。</p>
+
+<p><mark>AMD、CMD差异</mark>：依赖前置和就近依赖。</p>
+
+<font style="color: blue;">AMD和require.js</font>
+
+<p>这里介绍用<code class="language-plaintext highlighter-rouge">require.js</code>实现AMD规范的模块化：用<code class="language-plaintext highlighter-rouge">require.config()</code>指定引用路径等，用<code class="language-plaintext highlighter-rouge">define()</code>定义模块，用<code class="language-plaintext highlighter-rouge">require()</code>加载模块。</p>
+
+<p>首先我们需要引入<code class="language-plaintext highlighter-rouge">require.js</code>文件和一个入口文件<code class="language-plaintext highlighter-rouge">main.js</code>。<code class="language-plaintext highlighter-rouge">main.js</code>中配置<code class="language-plaintext highlighter-rouge">require.config()</code>并规定项目中用到的基础模块。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/** 网页中引入require.js及main.js **/</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="dl">"</span><span class="s2">js/require.js</span><span class="dl">"</span> <span class="nx">data</span><span class="o">-</span><span class="nx">main</span><span class="o">=</span><span class="dl">"</span><span class="s2">js/main</span><span class="dl">"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>
+<span class="cm">/** main.js 入口文件/主模块 **/</span>
+<span class="c1">// 首先用config()指定各模块路径和引用名</span>
+<span class="nx">require</span><span class="p">.</span><span class="nx">config</span><span class="p">({</span>
+  <span class="na">baseUrl</span><span class="p">:</span> <span class="dl">"</span><span class="s2">js/lib</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">paths</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">jquery</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">jquery.min</span><span class="dl">"</span><span class="p">,</span>  <span class="c1">//实际路径为js/lib/jquery.min.js</span>
+    <span class="dl">"</span><span class="s2">underscore</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">underscore.min</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+<span class="c1">// 执行基本操作</span>
+<span class="nx">require</span><span class="p">([</span><span class="dl">"</span><span class="s2">jquery</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">underscore</span><span class="dl">"</span><span class="p">],</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span><span class="nx">_</span><span class="p">){</span>
+  <span class="c1">// some code here</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>引用模块的时候，我们将模块名放在<code class="language-plaintext highlighter-rouge">[]</code>中作为<code class="language-plaintext highlighter-rouge">reqiure()</code>的第一参数；如果我们定义的模块本身也依赖其他模块,那就需要将它们放在<code class="language-plaintext highlighter-rouge">[]</code>中作为<code class="language-plaintext highlighter-rouge">define()</code>的第一参数。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 定义math.js模块</span>
+<span class="nx">define</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">basicNum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+    <span class="p">};</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="na">add</span><span class="p">:</span> <span class="nx">add</span><span class="p">,</span>
+        <span class="na">basicNum</span> <span class="p">:</span><span class="nx">basicNum</span>
+    <span class="p">};</span>
+<span class="p">});</span>
+<span class="c1">// 定义一个依赖underscore.js的模块</span>
+<span class="nx">define</span><span class="p">([</span><span class="dl">'</span><span class="s1">underscore</span><span class="dl">'</span><span class="p">],</span><span class="kd">function</span><span class="p">(</span><span class="nx">_</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">classify</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">list</span><span class="p">){</span>
+    <span class="nx">_</span><span class="p">.</span><span class="nx">countBy</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span><span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">){</span>
+      <span class="k">return</span> <span class="nx">num</span> <span class="o">&gt;</span> <span class="mi">30</span> <span class="p">?</span> <span class="dl">'</span><span class="s1">old</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">young</span><span class="dl">'</span><span class="p">;</span>
+    <span class="p">})</span>
+  <span class="p">};</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">classify</span> <span class="p">:</span><span class="nx">classify</span>
+  <span class="p">};</span>
+<span class="p">})</span>
+
+<span class="c1">// 引用模块，将模块放在[]内</span>
+<span class="nx">require</span><span class="p">([</span><span class="dl">'</span><span class="s1">jquery</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">math</span><span class="dl">'</span><span class="p">],</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">,</span> <span class="nx">math</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">);</span>
+  <span class="nx">$</span><span class="p">(</span><span class="dl">"</span><span class="s2">#sum</span><span class="dl">"</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">sum</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<font style="color: blue;">CMD和sea.js</font>
+
+<p>CMD是另一种js模块化方案，推崇<strong>依赖就近</strong>、<strong>延迟执行</strong>。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/** AMD写法 **/</span>
+<span class="nx">define</span><span class="p">([</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">d</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">e</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">f</span><span class="dl">"</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">,</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">f</span><span class="p">)</span> <span class="p">{</span> 
+     <span class="c1">// 等于在最前面声明并初始化了要用到的所有模块</span>
+    <span class="nx">a</span><span class="p">.</span><span class="nx">doSomething</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 即便没用到某个模块 b，但 b 还是提前执行了</span>
+        <span class="nx">b</span><span class="p">.</span><span class="nx">doSomething</span><span class="p">()</span>
+    <span class="p">}</span> 
+<span class="p">});</span>
+
+<span class="cm">/** CMD写法 **/</span>
+<span class="nx">define</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">require</span><span class="p">,</span> <span class="nx">exports</span><span class="p">,</span> <span class="nx">module</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./a</span><span class="dl">'</span><span class="p">);</span> <span class="c1">//在需要时申明</span>
+    <span class="nx">a</span><span class="p">.</span><span class="nx">doSomething</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="kc">false</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./b</span><span class="dl">'</span><span class="p">);</span>
+        <span class="nx">b</span><span class="p">.</span><span class="nx">doSomething</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="cm">/** sea.js **/</span>
+<span class="c1">// 定义模块 math.js</span>
+<span class="nx">define</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">require</span><span class="p">,</span> <span class="nx">exports</span><span class="p">,</span> <span class="nx">module</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">$</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">jquery.js</span><span class="dl">'</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nx">a</span><span class="o">+</span><span class="nx">b</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">exports</span><span class="p">.</span><span class="nx">add</span> <span class="o">=</span> <span class="nx">add</span><span class="p">;</span>
+<span class="p">});</span>
+<span class="c1">// 加载模块</span>
+<span class="nx">seajs</span><span class="p">.</span><span class="nx">use</span><span class="p">([</span><span class="dl">'</span><span class="s1">math.js</span><span class="dl">'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">math</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">sum</span> <span class="o">=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="commonjs">CommonJS</h3>
+
+<p>CommonJS 定义了，一个文件就是一个模块。在 node.js 的实现中，也给每个文件赋予了一个 module 对象，这个对象包括了描述当前模块的所有信息，我们尝试打印 module 对象。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// index.js</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">module</span><span class="p">);</span>
+
+<span class="c1">// 输出</span>
+<span class="p">{</span>
+    <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/Users/x/Documents/code/demo/index.js</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">exports</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="na">parent</span><span class="p">:</span> <span class="p">{</span> <span class="nx">module</span> <span class="p">},</span> <span class="c1">// 调用该模块的模块，可以根据该属性查找调用链</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/Users/x/Documents/code/demo/index.js</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">loaded</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="na">children</span><span class="p">:</span> <span class="p">[...],</span>
+    <span class="na">paths</span><span class="p">:</span> <span class="p">[...]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>commonJS用同步的方式加载模块。在服务端，模块文件都存在本地磁盘，读取非常快，所以这样做不会有问题。但是在浏览器端，限于网络原因，更合理的方案是使用异步加载。</p>
+
+<p>在 CommonJS 里面，模块是用对象来表示。通过“循环加载”的例子理解下</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// a.js</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">a1</span><span class="dl">'</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">a.js </span><span class="dl">'</span><span class="p">,</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./b.js</span><span class="dl">'</span><span class="p">).</span><span class="nx">x</span><span class="p">);</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">a2</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">//b.js</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">b1</span><span class="dl">'</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">b.js </span><span class="dl">'</span><span class="p">,</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./a.js</span><span class="dl">'</span><span class="p">).</span><span class="nx">x</span><span class="p">);</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">b2</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">//main</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">index.js</span><span class="dl">'</span><span class="p">,</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./a.js</span><span class="dl">'</span><span class="p">).</span><span class="nx">x</span><span class="p">);</span>
+
+<span class="c1">// 输出</span>
+<span class="nx">b</span><span class="p">.</span><span class="nx">js</span>  <span class="nx">a1</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">js</span>  <span class="nx">b2</span>
+<span class="nx">index</span><span class="p">.</span><span class="nx">js</span>  <span class="nx">a2</span>
+</code></pre></div></div>
+
+<p>根据模块对象，进行如下分析</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1、 a.js准备加载，在内存中生成module对象moduleA
+2、 a.js执行exports.x = 'a1'; 在moduleA的exports属性中添加x
+3、 a.js执行console.log('a.js', require('./b.js').x); 检测到require关键字，开始加载b.js，a.js执行暂停
+4、 b.js准备加载，在内存中生成module对象moduleB
+5、 b.js执行exports.x = 'b1'; 在moduleB的exports属性中添加x
+6、 b.js执行console.log('b.js', require('./a.js').x); 检测到require关键字，开始加载a.js，b.js执行暂停
+7、 检测到内存中存在a.js的module对象moduleA，于是可以将第6步看成console.log('b.js', moduleA.x); 在第二步中moduleA.x赋值为a1，于是输出b.js, a1
+8、 b.js继续执行，exports.x = 'b2'，改写moduleBexports的x属性
+9、 b.js执行完成，回到a.js，此时同理可以将第3步看成console.log('a.js', modulerB.x); 输出了a.js, b2
+10、 a.js继续执行，改写exports.x = 'a2'
+11、 输出index.js a2
+</code></pre></div></div>
+
+<p>例子里面还出现了一个保留字 exports。其实 exports 是指向 module.exports 的一个引用:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">myFuns</span> <span class="o">=</span> <span class="p">{</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">};</span>
+<span class="kd">let</span> <span class="nx">moduleExports</span> <span class="o">=</span> <span class="nx">myFuns</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">myExports</span> <span class="o">=</span> <span class="nx">moduleExports</span><span class="p">;</span>
+
+<span class="c1">// moduleExports 重新指向</span>
+<span class="nx">moduleExports</span> <span class="o">=</span> <span class="p">{</span> <span class="na">b</span><span class="p">:</span> <span class="mi">2</span> <span class="p">};</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myExports</span><span class="p">);</span>
+<span class="c1">// 输出 {a : 1}</span>
+
+<span class="c1">// 也就是说在module.exports被重新复制时，exports与它的关系就gg了。解决方法就是重新指向</span>
+<span class="nx">myExports</span> <span class="o">=</span> <span class="nx">modulerExports</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">myExports</span><span class="p">);</span>
+<span class="c1">// 输出 { b: 2 }</span>
+</code></pre></div></div>
+
+<h3 id="es6-module">ES6 module</h3>
+
+<p>web 前端模块化在 ES6 之前，并不是语言规范，不像是其他语言 java、php 等存在命名空间或者包的概念。上文提及的 AMD、CMD、CommonJS 规范，都是为了基于规范实现的模块化，并非 JavaScript 语法上的支持。</p>
+
+<p>ES6 模块化写法：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// a.js</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="c1">// b.js</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+
+<span class="c1">// main</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">a</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./a.js</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">b</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./b.js</span><span class="dl">'</span><span class="p">;</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
+<span class="c1">//输出 1 2</span>
+</code></pre></div></div>
+
+<p>从保留字对比 ES6 和 CommonJS</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>保留字</th>
+      <th>CommonJS</th>
+      <th>ES6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>require</td>
+      <td>支持</td>
+      <td>支持</td>
+    </tr>
+    <tr>
+      <td>export / import</td>
+      <td>不支持</td>
+      <td>支持</td>
+    </tr>
+    <tr>
+      <td>exports / module.exports</td>
+      <td>支持</td>
+      <td>不支持</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>除了 require 两个都可以用之外，其他实际上还是有明显差别的。那这两个在 require 使用上，有差异吗？</p>
+
+<font style="color: #ec7907;">ES6 module 和 CommonJS 之间的差异</font>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>模块输出</th>
+      <th>加载方式</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CommonJS</td>
+      <td>值拷贝</td>
+      <td>对象</td>
+    </tr>
+    <tr>
+      <td>ES6</td>
+      <td>引用（符号链接）</td>
+      <td>静态解析</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>值拷贝和引用的区别：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 值拷贝 vs 引用</span>
+
+<span class="c1">// CommonJS</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">add</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">a</span><span class="o">++</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">add</span><span class="p">,</span> <span class="nx">a</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./a.js</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">add</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span> <span class="c1">// 1</span>
+
+<span class="c1">// ES6</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">add</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">a</span><span class="o">++</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">import</span> <span class="p">{</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">add</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./a.js</span><span class="dl">'</span><span class="p">;</span>
+<span class="nx">add</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span> <span class="c1">// 2</span>
+<span class="c1">// 显而易见CommonJS和ES6之间，值拷贝和引用的区别吧。</span>
+</code></pre></div></div>
+
+<p>ES6的模块不是对象，<code class="language-plaintext highlighter-rouge">import</code>命令会被 <code class="language-plaintext highlighter-rouge">JavaScript</code> 引擎静态分析，在编译时就引入模块代码，而不是在代码运行时加载，所以无法实现条件加载。也正因为这个，使得静态分析成为可能。</p>
+
+<font style="color: #ec7907;">静态解析，什么是的静态解析呢？</font>
+
+<p>区别于 CommonJS 的模块实现，ES6 的模块并不是一个对象，而只是代码集合。也就是说，ES6 不需要和 CommonJS 一样，需要把整个文件加载进去，形成一个对象之后，才能知道自己有什么，而是在编写代码的过程中，代码是什么，它就是什么。</p>
+
+<font style="color: red;">PS:</font>
+<ol>
+  <li>目前各个浏览器、node.js 端对 ES6 的模块化支持实际上并不友好。</li>
+  <li>在 ES6 中使用 require 字样，静态解析的能力将会丢失</li>
+</ol>
+
+<h2 id="es6-模块与-commonjs-模块的差异">ES6 模块与 CommonJS 模块的差异</h2>
+
+<p><strong><em>CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用</em></strong></p>
+
+<ul>
+  <li>CommonJS 模块输出的是<strong>值的拷贝</strong>，也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。</li>
+  <li>ES6 模块的运行机制与 CommonJS 不一样。JS 引擎对脚本静态分析的时候，遇到模块加载命令<code class="language-plaintext highlighter-rouge">import</code>，就会生成一个只读引用。等到脚本真正执行时，再根据这个只读引用，到被加载的那个模块里面去取值。换句话说，ES6 的<code class="language-plaintext highlighter-rouge">import</code>有点像 Unix 系统的“符号连接”，原始值变了，<code class="language-plaintext highlighter-rouge">import</code>加载的值也会跟着变。因此，ES6 模块是动态引用，并且不会缓存值，模块里面的变量绑定其所在的模块。</li>
+</ul>
+
+<p><strong><em>CommonJS 模块是运行时加载，ES6 模块是编译时输出接口</em></strong></p>
+
+<ul>
+  <li>运行时加载: CommonJS 模块就是对象；即在输入时是先加载整个模块，<strong>生成一个对象</strong>，然后再从这个对象上面读取方法，这种加载称为“运行时加载”。</li>
+  <li>编译时加载: ES6 模块不是对象，而是通过 export 命令显式指定输出的代码，import时采用静态命令的形式。即<strong>在import时可以指定加载某个输出值</strong>，而不是加载整个模块，这种加载称为“编译时加载”。</li>
+</ul>
+
+<p>CommonJS 加载的是一个对象（即module.exports属性），该对象只有在脚本运行完才会生成。而 ES6 模块不是对象，它的对外接口只是一种静态定义，在代码静态解析阶段就会生成。</p>
+
+<h2 id="参考文章">参考文章</h2>
+
+<p><a href="https://juejin.cn/post/6844903576309858318#heading-1" target="_blank" rel="noopener noreferrer nofollow">前端模块化：CommonJS,AMD,CMD,ES6</a></p>
+
+<p><a href="https://juejin.cn/post/6844903717947310093#heading-4" target="_blank" rel="noopener noreferrer nofollow">WEB 前端模块化都有什么</a></p>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

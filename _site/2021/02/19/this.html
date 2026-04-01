@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>JS基础---this 指向问题</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="理解this 指向问题~" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="JavaScript系列文章" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="JS基础---this 指向问题" />
+<meta name="twitter:description" content="理解this 指向问题~" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/02/19/this" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="JS基础---this 指向问题" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/02/19/this" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="理解this 指向问题~" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-02-19T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="JavaScript系列文章" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/02/19/this">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">JS基础---this 指向问题</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-02-19T00:00:00+08:00" itemprop="datePublished">
+                
+                Feb 19, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">JS基础---this 指向问题</h1>
+    <p class="post-meta">
+      <time datetime="2021-02-19T00:00:00+08:00" itemprop="datePublished">
+        
+        Feb 19, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>理解this 指向问题~</p>
+
+<h2 id="this">this</h2>
+
+<p><strong>作用</strong>：提供了一种更优雅的方法来隐式’传递’一个对象的引用，因此可以将API设计得更加简洁并且易于复用。</p>
+
+<h3 id="词法作用域和动态作用域">词法作用域和动态作用域</h3>
+
+<ul>
+  <li>
+<strong>词法作用域（静态作用域）</strong>：函数的作用域在函数定义的时候就决定了（ JavaScript ）</li>
+  <li>
+<strong>动态作用域</strong>：函数的作用域是在函数调用的时候才决定的</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="nx">foo</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">bar</span><span class="p">();</span>
+
+<span class="c1">// 结果是 ???</span>
+</code></pre></div></div>
+
+<p>假设<code class="language-plaintext highlighter-rouge">JavaScript</code>采用静态作用域：</p>
+
+<blockquote>
+  <p>执行 foo 函数，先从 foo 函数内部查找是否有局部变量 value，如果没有，就根据书写的位置，查找上面一层的代码，也就是 value 等于 1，所以结果会打印 1。</p>
+</blockquote>
+
+<p>假设<code class="language-plaintext highlighter-rouge">JavaScript</code>采用动态作用域：</p>
+
+<blockquote>
+  <p>执行 foo 函数，依然是从 foo 函数内部查找是否有局部变量 value。如果没有，就从调用函数的作用域，也就是 bar 函数内部查找 value 变量，所以结果会打印 2。</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">JavaScript</code>采用的是静态作用域，所以结果是 1。bash 就是动态作用域</p>
+
+<font style="color: #ec7907;">《JavaScript权威指南》中的例子</font>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">scope</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">global scope</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">checkscope</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">scope</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">local scope</span><span class="dl">"</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">f</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="nx">scope</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">f</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="nx">checkscope</span><span class="p">();</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">scope</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">global scope</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">checkscope</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">scope</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">local scope</span><span class="dl">"</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">f</span><span class="p">(){</span>
+        <span class="k">return</span> <span class="nx">scope</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">f</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">checkscope</span><span class="p">()();</span>
+</code></pre></div></div>
+
+<p>两段代码都会打印：<code class="language-plaintext highlighter-rouge">local scope</code>。原因也很简单，因为<code class="language-plaintext highlighter-rouge">JavaScript</code>采用的是词法作用域，函数的作用域基于函数创建的位置。</p>
+
+<p>官方解答：</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">JavaScript</code> 函数的执行用到了作用域链，这个作用域链是在函数定义的时候创建的。嵌套的函数 <code class="language-plaintext highlighter-rouge">f()</code> 定义在这个作用域链里，其中的变量 <code class="language-plaintext highlighter-rouge">scope</code> 一定是局部变量，不管何时何地执行函数 <code class="language-plaintext highlighter-rouge">f()</code>，这种绑定在执行 <code class="language-plaintext highlighter-rouge">f()</code> 时依然有效。</p>
+</blockquote>
+
+<h3 id="执行上下文栈ecstack">执行上下文栈(ECStack)</h3>
+
+<p><code class="language-plaintext highlighter-rouge">JavaScript</code> 的可执行代码(<code class="language-plaintext highlighter-rouge">executable code</code>)的类型：</p>
+<ul>
+  <li>全局代码</li>
+  <li>函数代码</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">eval</code>代码</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">JavaScript</code> 引擎创建了执行上下文栈（<code class="language-plaintext highlighter-rouge">Execution context stack，ECS</code>）来管理执行上下文，为了模拟执行上下文栈的行为。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">fun3</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">fun3</span><span class="dl">'</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">fun2</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fun3</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">fun1</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fun2</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">fun1</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>当执行一个函数的时候，就会创建一个执行上下文，并且压入执行上下文栈，当函数执行完毕的时候，就会将函数的执行上下文从栈中弹出。</p>
+
+<p>上面这段代码处理：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 伪代码</span>
+<span class="c1">// fun1()</span>
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">fun1</span><span class="o">&gt;</span> <span class="nx">functionContext</span><span class="p">);</span>
+
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">fun2</span><span class="o">&gt;</span> <span class="nx">functionContext</span><span class="p">);</span>
+
+<span class="c1">// fun2还调用了fun3</span>
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">fun3</span><span class="o">&gt;</span> <span class="nx">functionContext</span><span class="p">);</span>
+
+<span class="c1">// fun3执行完毕</span>
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+
+<span class="c1">// fun2执行完毕</span>
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+
+<span class="c1">// fun1执行完毕</span>
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+
+<span class="c1">// javascript接着执行下面的代码，但是ECStack底层永远有个globalContext</span>
+</code></pre></div></div>
+
+<p>上面的《JavaScript权威指南》中的两个例子，上下文栈:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ECStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">checkscope</span><span class="o">&gt;</span> <span class="nx">functionContext</span><span class="p">);</span>
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">f</span><span class="o">&gt;</span> <span class="nx">functionContext</span><span class="p">);</span>
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ECStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">checkscope</span><span class="o">&gt;</span> <span class="nx">functionContext</span><span class="p">);</span>
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="o">&lt;</span><span class="nx">f</span><span class="o">&gt;</span> <span class="nx">functionContext</span><span class="p">);</span>
+<span class="nx">ECStack</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h4 id="进入执行上下文">进入执行上下文</h4>
+
+<p>上下⽂的⽣命周期包括三个阶段：<span style="color: #ec7907;">创建阶段 -&gt; 执⾏阶段 -&gt; 回收阶段。</span></p>
+
+<p>当进入执行上下文时，这时候还没有执行代码，变量对象会包括：</p>
+
+<ul>
+  <li>函数的所有形参 (如果是函数上下文)
+    <ul>
+      <li>由名称和对应值组成的一个变量对象的属性被创建</li>
+      <li>没有实参，属性值设为 undefined</li>
+    </ul>
+  </li>
+  <li>函数声明
+    <ul>
+      <li>由名称和对应值（函数对象(function-object)）组成一个变量对象的属性被创建</li>
+      <li>如果变量对象已经存在相同名称的属性，则完全替换这个属性</li>
+    </ul>
+  </li>
+  <li>变量声明
+    <ul>
+      <li>由名称和对应值（undefined）组成一个变量对象的属性被创建；</li>
+      <li>如果变量名称跟已经声明的形式参数或函数相同，则变量声明不会干扰已经存在的这类属性</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="作用域链">作用域链</h3>
+
+<p>查找变量的时候，会先从当前上下文的变量对象中查找，如果没有找到，就会从父级(词法层面上的父级)执行上下文的变量对象中查找，一直找到全局上下文的变量对象，也就是全局对象。</p>
+
+<p>这样由多个执行上下文的变量对象构成的链表就叫做作用域链。</p>
+
+<h3 id="this原理">this原理</h3>
+
+<p><img src="../../../images/this.png" alt="image.png"></p>
+
+<h2 id="this-的四种绑定规则">this 的四种绑定规则</h2>
+
+<h3 id="默认绑定">默认绑定</h3>
+
+<p><strong>规则</strong>：在非严格模式下，默认绑定的<code class="language-plaintext highlighter-rouge">this</code>指向全局对象，严格模式下<code class="language-plaintext highlighter-rouge">this</code>指向<code class="language-plaintext highlighter-rouge">undefined</code></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span> <span class="c1">// this指向全局对象</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="nx">foo</span><span class="p">();</span> <span class="c1">// 2</span>
+<span class="kd">function</span> <span class="nx">foo2</span><span class="p">()</span> <span class="p">{</span>
+  <span class="dl">"</span><span class="s2">use strict</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// 严格模式this绑定到undefined</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span> 
+<span class="p">}</span>
+<span class="nx">foo2</span><span class="p">();</span> <span class="c1">// TypeError:a undefined</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span> <span class="c1">// foo函数不是严格模式 默认绑定全局对象</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">foo2</span><span class="p">(){</span>
+  <span class="dl">"</span><span class="s2">use strict</span><span class="dl">"</span><span class="p">;</span>
+  <span class="nx">foo</span><span class="p">();</span> <span class="c1">// 严格模式下调用其他函数，不影响默认绑定</span>
+<span class="p">}</span>
+<span class="nx">foo2</span><span class="p">();</span> <span class="c1">// 2</span>
+</code></pre></div></div>
+
+<p>对于默认绑定来说，<strong>决定this绑定对象的是函数体是否处于严格模式</strong>，严格指向undefined，非严格指向全局对象。</p>
+<h3 id="隐式绑定">隐式绑定</h3>
+
+<p><strong>规则</strong>：函数在调用位置，是否有上下文对象，如果有，那么<code class="language-plaintext highlighter-rouge">this</code>就会隐式绑定到这个对象上。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Oops, global</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">obj2</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">a</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="na">foo</span><span class="p">:</span> <span class="nx">foo</span>
+<span class="p">};</span>
+<span class="kd">let</span> <span class="nx">obj1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">a</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+    <span class="na">obj2</span><span class="p">:</span> <span class="nx">obj2</span>
+<span class="p">};</span>
+<span class="nx">obj2</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span> <span class="c1">// 2 this指向调用函数的对象</span>
+<span class="nx">obj1</span><span class="p">.</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span> <span class="c1">// 2 this指向最后一层调用函数的对象</span>
+    
+<span class="c1">// 隐式绑定丢失</span>
+<span class="kd">let</span> <span class="nx">bar</span> <span class="o">=</span> <span class="nx">obj2</span><span class="p">.</span><span class="nx">foo</span><span class="p">;</span> <span class="c1">// bar只是一个函数别名 是obj2.foo的一个引用</span>
+<span class="nx">bar</span><span class="p">();</span> <span class="c1">// "Oops, global" - 指向全局</span>
+</code></pre></div></div>
+
+<font style="color: #ec7907;">隐式绑定丢失</font>
+
+<p>隐式绑定丢失的问题：<strong>实际上就是函数调用时，并没有上下文对象，只是对函数的引用</strong>，所以会导致隐式绑定丢失。</p>
+
+<p>传入回调函数中，这种情况更加常见，并且隐蔽:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">test</span><span class="p">(</span><span class="nx">obj2</span><span class="p">.</span><span class="nx">foo</span><span class="p">);</span> <span class="c1">// 传入函数的引用，调用时也是没有上下文对象。</span>
+</code></pre></div></div>
+
+<h3 id="显式绑定">显式绑定</h3>
+
+<p>隐式绑定会丢失，我们可以在<strong>某个对象上强制调用函数，从而将this绑定在这个对象上</strong>。</p>
+
+<p><strong>规则</strong>：我们可以通过<code class="language-plaintext highlighter-rouge">apply</code>、<code class="language-plaintext highlighter-rouge">call</code>、<code class="language-plaintext highlighter-rouge">bind</code>将函数中的<code class="language-plaintext highlighter-rouge">this</code>绑定到指定对象上。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">a</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">};</span>
+<span class="nx">foo</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span> <span class="c1">// 2</span>
+</code></pre></div></div>
+
+<font style="color: #ec7907;">传入的不是对象</font>
+
+<p>如果你传入了一个原始值(<code class="language-plaintext highlighter-rouge">字符串</code>,<code class="language-plaintext highlighter-rouge">布尔类型</code>，<code class="language-plaintext highlighter-rouge">数字类型</code>)，来当做<code class="language-plaintext highlighter-rouge">this</code>的绑定对象，这个原始值转<strong>换成它的对象形式</strong>。</p>
+
+<p>如果你把<code class="language-plaintext highlighter-rouge">null</code>或者<code class="language-plaintext highlighter-rouge">undefined</code>作为<code class="language-plaintext highlighter-rouge">this</code>的绑定对象传入<code class="language-plaintext highlighter-rouge">call</code>/<code class="language-plaintext highlighter-rouge">apply</code>/<code class="language-plaintext highlighter-rouge">bind</code>，这些值会在调用时被忽略，实际应用的是默认绑定规则。</p>
+
+<h3 id="new绑定">new绑定</h3>
+
+<p>new的时候会做哪些事情：</p>
+
+<ul>
+  <li>
+<strong>创建一个全新的对象</strong>。</li>
+  <li>这个新对象会被执行 <code class="language-plaintext highlighter-rouge">[[Prototype]]</code> 连接。</li>
+  <li>这个新对象会绑定到函数调用的<code class="language-plaintext highlighter-rouge">this</code>。</li>
+  <li>如果函数没有返回其他对象，那么<code class="language-plaintext highlighter-rouge">new</code>表达式中的函数调用会自动返回这个新对象。</li>
+</ul>
+
+<p><strong>规则</strong>：使用构造调用的时候，<code class="language-plaintext highlighter-rouge">this</code>会自动绑定在<code class="language-plaintext highlighter-rouge">new</code>期间创建的对象上。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span> <span class="c1">// this绑定到bar上</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">bar</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">foo</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">bar</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span> <span class="c1">// 2</span>
+</code></pre></div></div>
+
+<h2 id="this-四种绑定规则的优先级">this 四种绑定规则的优先级</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">obj</span><span class="p">.</span><span class="nx">foo</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj2</span><span class="p">);</span> <span class="c1">// this指向obj2 显式绑定比隐式绑定优先级高。</span>
+<span class="k">new</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">foo</span><span class="p">();</span> <span class="c1">// thsi指向new新创建的对象 new绑定比隐式绑定优先级高。</span>
+</code></pre></div></div>
+
+<font style="color: red;">显式绑定 &gt; 隐式绑定 &gt; 默认绑定</font>
+
+<font style="color: red;">new绑定 &gt; 隐式绑定 &gt; 默认绑定</font>
+
+<h2 id="箭头函数的-this不会使用上述的四条规则">箭头函数的 this（不会使用上述的四条规则）</h2>
+
+<p><strong>箭头函数的this规则</strong></p>
+
+<ol>
+  <li>箭头函数中的<code class="language-plaintext highlighter-rouge">this</code>继承于它外面第一个不是箭头函数的函数的<code class="language-plaintext highlighter-rouge">this</code>指向。</li>
+  <li>箭头函数的 <code class="language-plaintext highlighter-rouge">this</code> 一旦绑定了上下文，就不会被任何代码改变。</li>
+</ol>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">foo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">obj1</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">a</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">};</span>
+<span class="kd">let</span> <span class="nx">obj2</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">a</span><span class="p">:</span> <span class="mi">22</span>
+<span class="p">};</span>
+<span class="kd">let</span> <span class="nx">bar</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj1</span><span class="p">);</span> <span class="c1">// foo this指向obj1</span>
+<span class="nx">bar</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">obj2</span><span class="p">);</span> <span class="c1">// 输出2 这里执行箭头函数 并试图绑定this指向到obj2</span>
+</code></pre></div></div>
+
+<h2 id="总结">总结</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>调用方式</th>
+      <th>this指向</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>普通函数调用</td>
+      <td>window</td>
+    </tr>
+    <tr>
+      <td>构造函数调用</td>
+      <td>实例对象 原型对象里面的方法也指向实例对象</td>
+    </tr>
+    <tr>
+      <td>对象方法调用</td>
+      <td>该方法所属对象</td>
+    </tr>
+    <tr>
+      <td>事件绑定方法</td>
+      <td>绑定事件对象</td>
+    </tr>
+    <tr>
+      <td>定时器函数</td>
+      <td>window</td>
+    </tr>
+    <tr>
+      <td>立即执行函数</td>
+      <td>window</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="参考文章">参考文章</h2>
+
+<p><a href="https://juejin.cn/post/6844903630592540686#heading-3" target="_blank" rel="noopener noreferrer nofollow">你不知道的js中关于this绑定机制的解析[看完还不懂算我输]</a></p>
+
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>web安全-—XSS</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="在 Web 安全领域中，XSS 和 CSRF 是最常见的攻击方式。本文将会简单介绍 XSS 的攻防问题。" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="浏览器&amp;网络" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="web安全-—XSS" />
+<meta name="twitter:description" content="在 Web 安全领域中，XSS 和 CSRF 是最常见的攻击方式。本文将会简单介绍 XSS 的攻防问题。" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/02/11/xss" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="web安全-—XSS" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/02/11/xss" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="在 Web 安全领域中，XSS 和 CSRF 是最常见的攻击方式。本文将会简单介绍 XSS 的攻防问题。" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-02-11T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="浏览器&amp;网络" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/02/11/xss">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">web安全-—XSS</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-02-11T00:00:00+08:00" itemprop="datePublished">
+                
+                Feb 11, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">web安全-—XSS</h1>
+    <p class="post-meta">
+      <time datetime="2021-02-11T00:00:00+08:00" itemprop="datePublished">
+        
+        Feb 11, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>在 Web 安全领域中，XSS 和 CSRF 是最常见的攻击方式。本文将会简单介绍 XSS 的攻防问题。</p>
+
+<h2 id="xss-攻击">XSS 攻击</h2>
+
+<h3 id="什么是-xss">什么是 XSS</h3>
+<p>Cross-Site Scripting（跨站脚本攻击）简称 XSS，是一种代码注入攻击。</p>
+
+<blockquote>
+  <p>攻击者通过在目标网站上注入恶意脚本，使之在用户的浏览器上运行。利用这些恶意脚本，攻击者可获取用户的敏感信息如 Cookie、SessionID 等，进而危害数据安全。</p>
+
+  <p>为了和 CSS 区分，这里把攻击的第一个字母改成了 X，于是叫做 XSS。</p>
+</blockquote>
+
+<p><mark>XSS 的本质是</mark>：恶意代码未经过滤，与网站正常的代码混在一起；浏览器无法分辨哪些脚本是可信的，导致恶意脚本被执行。</p>
+
+<p>用户是通过哪种方法“注入”恶意脚本的呢？</p>
+
+<ul>
+  <li>来自用户的 UGC 信息</li>
+  <li>来自第三方的链接</li>
+  <li>URL 参数</li>
+  <li>POST 参数</li>
+  <li>Referer （可能来自不可信的来源）</li>
+  <li>Cookie （可能来自其他子域注入）</li>
+</ul>
+
+<h2 id="xss-分类">XSS 分类</h2>
+<p>根据攻击的来源，XSS 攻击可分为存储型、反射型和 DOM 型三种。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>类型</th>
+      <th>存储区</th>
+      <th>插入点</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>存储型 XSS</td>
+      <td>后端数据库</td>
+      <td>HTML</td>
+    </tr>
+    <tr>
+      <td>反射型 XSS</td>
+      <td>URL</td>
+      <td>HTML</td>
+    </tr>
+    <tr>
+      <td>DOM 型 XSS</td>
+      <td>后端数据库/前端存储/URL</td>
+      <td>前端 JavaScript</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>存储区：恶意代码存放的位置。</li>
+  <li>插入点：由谁取得恶意代码，并插入到网页上。</li>
+</ul>
+
+<h3 id="存储型-xss">存储型 XSS</h3>
+
+<p><img src="../../../images/xss1.png" alt="image.png"></p>
+
+<font style="color: blue;">存储型 XSS 的攻击步骤：</font>
+
+<ol>
+  <li>攻击者将恶意代码提交到目标网站的<strong>数据库</strong>中。</li>
+  <li>用户打开目标网站时，网站<strong>服务端将恶意代码</strong>从数据库<strong>取出</strong>，拼接在 HTML 中返回给浏览器。</li>
+  <li>用户<strong>浏览器接收到响应</strong>后解析执行，混在其中的恶意代码也被执行。</li>
+  <li>恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户的行为，调用目标网站接口执行攻击者指定的操作。</li>
+</ol>
+
+<p>这种攻击常见于带有用户保存数据的网站功能，如论坛发帖、商品评论、用户私信等。</p>
+
+<h3 id="反射型-xss">反射型 XSS</h3>
+
+<font style="color: blue;">反射型 XSS 的原理：</font>
+
+<p>攻击者诱导用户访问一个带有恶意代码的 URL 后，服务器端接收数据后处理，然后把带有恶意代码的数据发送到浏览器端，浏览器端解析这段带有 XSS 代码的数据后当做脚本执行，最终完成 XSS 攻击。</p>
+
+<p><img src="../../../images/xss2.png" alt="image.png"></p>
+
+<font style="color: blue;">反射型 XSS 的攻击步骤：</font>
+
+<ol>
+  <li>攻击者构造出<strong>特殊的 URL</strong>，其中包含恶意代码。</li>
+  <li>用户打开带有恶意代码的 URL 时，网站<strong>服务端将恶意代码从 URL 中取出</strong>，拼接在 HTML 中返回给浏览器。</li>
+  <li>用户浏览器接收到响应后解析执行，混在其中的恶意代码也被执行。</li>
+  <li>恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户的行为，调用目标网站接口执行攻击者指定的操作。</li>
+</ol>
+
+<font style="color: #ec7907;">反射型 XSS 跟存储型 XSS 的区别是</font>
+
+<ul>
+  <li><mark>存储型 XSS 的恶意代码存在服务器上，反射型 XSS 的恶意代码存在 URL 里。</mark></li>
+  <li><mark>存储型 XSS 攻击时恶意脚本会存储在目标服务器上。</mark></li>
+</ul>
+
+<p>反射型 XSS 漏洞常见于通过 URL 传递参数的功能，如<strong>网站搜索</strong>、<strong>跳转</strong>等。</p>
+
+<p>由于需要用户主动打开恶意的 URL 才能生效，攻击者往往会结合多种手段诱导用户点击。</p>
+
+<p>POST 的内容也可以触发反射型 XSS，只不过其触发条件比较苛刻（需要构造表单提交页面，并引导用户点击），所以非常少见。</p>
+
+<h3 id="dom-型-xss">DOM 型 XSS</h3>
+
+<font style="color: blue;">DOM 型 XSS 的原理：</font>
+<p>DOM 型 XSS 形成原因是通过修改页面的 DOM 节点形成的 XSS。 DOM 型 XSS 攻击中，取出和执行恶意代码都由浏览器端完成，属于前端自身的安全漏洞。</p>
+
+<p><img src="../../../images/xss3.png" alt="image.png"></p>
+
+<font style="color: blue;">DOM 型 XSS 的攻击步骤：</font>
+
+<ol>
+  <li>攻击者构造出<strong>特殊的 URL</strong>，其中包含恶意代码。</li>
+  <li>用户打开带有恶意代码的 URL。</li>
+  <li>用户浏览器接收到响应后解析执行，<strong>前端 JavaScript 取出</strong> URL 中的恶意代码并执行。</li>
+  <li>恶意代码窃取用户数据并发送到攻击者的网站，或者冒充用户的行为，调用目标网站接口执行攻击者指定的操作。</li>
+</ol>
+
+<font style="color: #ec7907;">DOM 型 XSS 跟前两种 XSS 的区别</font>
+
+<p><mark>DOM 型 XSS 攻击中，取出和执行恶意代码由浏览器端完成，属于前端 JavaScript 自身的安全漏洞，而其他两种 XSS 都属于服务端的安全漏洞。</mark></p>
+
+<h2 id="xss-攻击的预防">XSS 攻击的预防</h2>
+
+<p>现在主流的浏览器内置了防范 XSS 的措施，例如 CSP。但对于开发者来说，也应该寻找可靠的解决方案来防止 XSS 攻击。</p>
+
+<p>通过前面的介绍可以得知，XSS 攻击有两大要素：</p>
+
+<ul>
+  <li>攻击者提交恶意代码。</li>
+  <li>浏览器执行恶意代码。</li>
+</ul>
+
+<font style="color: blue;">针对第一个要素：我们是否能够在用户输入的过程，过滤掉用户输入的恶意代码呢？</font>
+
+<h3 id="输入过滤">输入过滤</h3>
+<p>在用户提交时，由前端过滤输入，然后提交到后端。这样做是否可行呢？</p>
+
+<blockquote>
+  <p>答案是不可行。一旦攻击者绕过前端过滤，直接构造请求，就可以提交恶意代码了。</p>
+</blockquote>
+
+<p>那么，换一个过滤时机：后端在写入数据库前，对输入进行过滤，然后把“安全的”内容，返回给前端。这样是否可行呢？</p>
+
+<blockquote>
+  <p>例子，一个正常的用户输入了 <code class="language-plaintext highlighter-rouge">5 &lt; 7</code> 这个内容，在写入数据库前，被转义，变成了 <code class="language-plaintext highlighter-rouge">5 &amp;lt; 7</code>。</p>
+</blockquote>
+
+<p>问题是：在提交阶段，我们并不确定内容要输出到哪里：</p>
+
+<ol>
+  <li>用户的输入内容可能同时提供给前端和客户端，而一旦经过了 <code class="language-plaintext highlighter-rouge">escapeHTML()</code>，客户端显示的内容就变成了乱码( <code class="language-plaintext highlighter-rouge">5 &amp;lt; 7</code> )。</li>
+  <li>在前端中，不同的位置所需的编码也不同。
+    <ul>
+      <li>当 <code class="language-plaintext highlighter-rouge">5 &amp;lt; 7</code> 作为 HTML 拼接页面时，可以正常显示：<code class="language-plaintext highlighter-rouge">&lt;div title="comment"&gt;5 &amp;lt; 7&lt;/div&gt;</code>
+</li>
+      <li>当 <code class="language-plaintext highlighter-rouge">5 &amp;lt; 7</code> 通过 Ajax 返回，然后赋值给 JavaScript 的变量时，前端得到的字符串就是转义后的字符。这个内容不能直接用于 Vue 等模板的展示，也不能直接用于内容长度计算。不能用于标题、alert 等。</li>
+    </ul>
+  </li>
+</ol>
+
+<p>所以，输入侧过滤能够在某些情况下解决特定的 XSS 问题，但会引入很大的不确定性和乱码问题。</p>
+
+<p>而在一些前端框架中，都会有一份 decodingMap， 用于对用户输入所包含的特殊字符或标签进行编码或过滤，如 <code class="language-plaintext highlighter-rouge">&lt;</code>，<code class="language-plaintext highlighter-rouge">&gt;</code>，<code class="language-plaintext highlighter-rouge">script</code>，防止 XSS 攻击：</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// vuejs 中的 decodingMap</span>
+<span class="c1">// 在 vuejs 中，如果输入带 script 标签的内容，会直接过滤掉</span>
+<span class="kd">const</span> <span class="nx">decodingMap</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="dl">'</span><span class="s1">&amp;lt;</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">&amp;gt;</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&gt;</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">&amp;quot;</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">"</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">&amp;amp;</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&amp;</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">&amp;#10;</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="se">\n</span><span class="dl">'</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<font style="color: blue;">既然输入过滤并非完全可靠，我们就要通过“防止浏览器执行恶意代码”来防范 XSS，分为两类：</font>
+
+<ul>
+  <li>防止 HTML 中出现注入。</li>
+  <li>防止 JavaScript 执行时，执行恶意代码。</li>
+</ul>
+
+<h3 id="预防存储型和反射型-xss-攻击">预防存储型和反射型 XSS 攻击</h3>
+
+<p>存储型和反射型 XSS 都是在服务端取出恶意代码后，插入到响应 HTML 里的，攻击者刻意编写的“数据”被内嵌到“代码”中，被浏览器所执行。</p>
+
+<p>预防这两种漏洞，有两种常见做法：</p>
+
+<ul>
+  <li>改成纯前端渲染，把代码和数据分隔开。</li>
+  <li>对 HTML 做充分转义。</li>
+</ul>
+
+<h4 id="纯前端渲染">纯前端渲染</h4>
+<p>纯前端渲染的过程：</p>
+
+<ol>
+  <li>浏览器先加载一个静态 HTML，此 HTML 中不包含任何跟业务相关的数据。</li>
+  <li>然后浏览器执行 HTML 中的 JavaScript。</li>
+  <li>JavaScript 通过 Ajax 加载业务数据，调用 DOM API 更新到页面上。</li>
+</ol>
+
+<p>在纯前端渲染中，我们会明确的告诉浏览器：下面要设置的内容是文本（<code class="language-plaintext highlighter-rouge">.innerText</code>），还是属性（<code class="language-plaintext highlighter-rouge">.setAttribute</code>），还是样式（<code class="language-plaintext highlighter-rouge">.style</code>）等等。浏览器不会被轻易的被欺骗，执行预期外的代码了。</p>
+
+<p>但纯前端渲染还需注意避免 DOM 型 XSS 漏洞（例如 <code class="language-plaintext highlighter-rouge">onload</code> 事件和 <code class="language-plaintext highlighter-rouge">href</code> 中的 <code class="language-plaintext highlighter-rouge">javascript:xxx</code> 等，请参考下文”预防 DOM 型 XSS 攻击“部分）。</p>
+
+<p>在很多内部、管理系统中，采用纯前端渲染是非常合适的。但对于性能要求高，或有 SEO 需求的页面，我们仍然要面对拼接 HTML 的问题。</p>
+
+<h4 id="转义-html">转义 HTML</h4>
+<p>如果拼接 HTML 是必要的，就需要采用合适的转义库，对 HTML 模板各处插入点进行充分的转义。</p>
+
+<p>常用的模板引擎，如 doT.js、ejs、FreeMarker 等，对于 HTML 转义通常只有一个规则，就是把 &amp; &lt; &gt; “ ‘ / 这几个字符转义掉，确实能起到一定的 XSS 防护作用，但并不完善：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>XSS 安全漏洞</th>
+      <th>简单转义是否有防护作用</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HTML 标签文字内容</td>
+      <td>有</td>
+    </tr>
+    <tr>
+      <td>HTML 属性值</td>
+      <td>有</td>
+    </tr>
+    <tr>
+      <td>CSS 内联样式</td>
+      <td>无</td>
+    </tr>
+    <tr>
+      <td>内联 JavaScript</td>
+      <td>无</td>
+    </tr>
+    <tr>
+      <td>内联 JSON</td>
+      <td>无</td>
+    </tr>
+    <tr>
+      <td>跳转链接</td>
+      <td>无</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>所以要完善 XSS 防护措施，我们要使用更完善更细致的转义策略。</p>
+
+<p>例如 Java 工程里，常用的转义库为 org.owasp.encoder。</p>
+
+<h4 id="预防-dom-型-xss-攻击">预防 DOM 型 XSS 攻击</h4>
+<p>DOM 型 XSS 攻击，实际上就是网站前端 JavaScript 代码本身不够严谨，把不可信的数据当作代码执行了。</p>
+
+<p>在使用 <code class="language-plaintext highlighter-rouge">.innerHTML</code>、<code class="language-plaintext highlighter-rouge">.outerHTML</code>、<code class="language-plaintext highlighter-rouge">document.write()</code> 时要特别小心，不要把不可信的数据作为 HTML 插到页面上，而应尽量使用 <code class="language-plaintext highlighter-rouge">.textContent</code>、<code class="language-plaintext highlighter-rouge">.setAttribute()</code> 等。</p>
+
+<p>如果用 Vue/React 技术栈，并且不使用<code class="language-plaintext highlighter-rouge">v-html</code>/<code class="language-plaintext highlighter-rouge">dangerouslySetInnerHTML</code> 功能，就在前端 <code class="language-plaintext highlighter-rouge">render</code> 阶段避免 <code class="language-plaintext highlighter-rouge">innerHTML</code>、<code class="language-plaintext highlighter-rouge">outerHTML</code> 的 XSS 隐患。</p>
+
+<p>DOM 中的内联事件监听器，如 <code class="language-plaintext highlighter-rouge">location</code>、<code class="language-plaintext highlighter-rouge">onclick</code>、<code class="language-plaintext highlighter-rouge">onerror</code>、<code class="language-plaintext highlighter-rouge">onload</code>、<code class="language-plaintext highlighter-rouge">onmouseover</code> 等，<code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> 标签的 <code class="language-plaintext highlighter-rouge">href</code>属性，JavaScript 的 <code class="language-plaintext highlighter-rouge">eval()</code>、<code class="language-plaintext highlighter-rouge">setTimeout()</code>、<code class="language-plaintext highlighter-rouge">setInterval()</code> 等，都能把字符串作为代码运行。如果不可信的数据拼接到字符串中传递给这些 API，很容易产生安全隐患，请务必避免。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- 链接内包含恶意代码 --&gt;
+&lt;a href="UNTRUSTED"&gt;1&lt;/a&gt;
+
+&lt;script&gt;
+// setTimeout()/setInterval() 中调用恶意代码
+setTimeout("UNTRUSTED")
+setInterval("UNTRUSTED")
+
+// location 调用恶意代码
+location.href = 'UNTRUSTED'
+
+// eval() 中调用恶意代码
+eval("UNTRUSTED")
+&lt;/script&gt;
+</code></pre></div></div>
+
+<p>如果项目中有用到这些的话，一定要避免在字符串中拼接不可信数据。</p>
+
+<h3 id="其他-xss-防范措施">其他 XSS 防范措施</h3>
+
+<h4 id="content-security-policy">Content Security Policy</h4>
+<p>严格的 CSP 在 XSS 的防范中可以起到以下的作用：</p>
+
+<ul>
+  <li>禁止加载外域代码，防止复杂的攻击逻辑。</li>
+  <li>禁止外域提交，网站被攻击后，用户的数据不会泄露到外域。</li>
+  <li>禁止内联脚本执行（规则较严格，目前发现 GitHub 使用）。</li>
+  <li>禁止未授权的脚本执行（新特性，Google Map 移动版在使用）。</li>
+  <li>合理使用上报可以及时发现 XSS，利于尽快修复问题。</li>
+</ul>
+
+<h4 id="输入内容长度控制">输入内容长度控制</h4>
+<p>对于不受信任的输入，都应该限定一个合理的长度。虽然无法完全防止 XSS 发生，但可以增加 XSS 攻击的难度。</p>
+
+<h4 id="其他安全措施">其他安全措施</h4>
+<ul>
+  <li>HTTP-only Cookie: 禁止 JavaScript 读取某些敏感 Cookie，攻击者完成 XSS 注入后也无法窃取此 Cookie。</li>
+  <li>验证码：防止脚本冒充用户提交危险操作。</li>
+</ul>
+
+<h4 id="xss-的检测">XSS 的检测</h4>
+
+<ol>
+  <li>使用通用 XSS 攻击字符串手动检测 XSS 漏洞。</li>
+  <li>使用扫描工具自动检测 XSS 漏洞。</li>
+</ol>
+
+<h2 id="xss-攻击的总结">XSS 攻击的总结</h2>
+
+<p>减少漏洞的产生：</p>
+
+<ul>
+  <li>
+<strong>利用模板引擎</strong> 开启模板引擎自带的 HTML 转义功能。</li>
+  <li>
+<strong>避免内联事件</strong> 尽量不要使用 <code class="language-plaintext highlighter-rouge">onLoad="onload('')"</code>、<code class="language-plaintext highlighter-rouge">onClick="go('')"</code> 这种拼接内联事件的写法。在 JavaScript 中通过 <code class="language-plaintext highlighter-rouge">.addEventlistener()</code> 事件绑定会更安全。</li>
+  <li>
+<strong>避免拼接</strong> HTML 前端采用拼接 HTML 的方法比较危险，如果框架允许，使用 <code class="language-plaintext highlighter-rouge">createElement</code>、<code class="language-plaintext highlighter-rouge">setAttribute</code> 之类的方法实现。或者采用比较成熟的渲染框架，如 Vue/React 等。</li>
+  <li>
+<strong>时刻保持警惕</strong> 在插入位置为 DOM 属性、链接等位置时，要打起精神，严加防范。</li>
+  <li>
+<strong>增加攻击难度，降低攻击后果</strong> 通过 CSP、输入长度配置、接口安全措施等方法，增加攻击的难度，降低攻击的后果。</li>
+  <li>
+<strong>主动检测和发现</strong> 可使用 XSS 攻击字符串和自动扫描工具寻找潜在的 XSS 漏洞。</li>
+</ul>
+
+<h2 id="参考文章">参考文章</h2>
+
+<p><a href="https://github.com/dwqs/blog/issues/68" target="_blank" rel="noopener noreferrer nofollow">浅说 XSS 和 CSRF</a></p>
+
+<p><a href="https://tech.meituan.com/2018/09/27/fe-security.html" target="_blank" rel="noopener noreferrer nofollow">前端安全系列（一）：如何防止XSS攻击？</a></p>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

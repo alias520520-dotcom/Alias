@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>JS基础---实现一个符合 Promise/A+ 规范的 Promise</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="实现Promise 或者是all、race、any等" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="JavaScript系列文章" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="JS基础---实现一个符合 Promise/A+ 规范的 Promise" />
+<meta name="twitter:description" content="实现Promise 或者是all、race、any等" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/02/04/js_Promise1" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="JS基础---实现一个符合 Promise/A+ 规范的 Promise" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/02/04/js_Promise1" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="实现Promise 或者是all、race、any等" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-02-04T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="JavaScript系列文章" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/02/04/js_Promise1">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">JS基础---实现一个符合 Promise/A+ 规范的 Promise</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-02-04T00:00:00+08:00" itemprop="datePublished">
+                
+                Feb 4, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">JS基础---实现一个符合 Promise/A+ 规范的 Promise</h1>
+    <p class="post-meta">
+      <time datetime="2021-02-04T00:00:00+08:00" itemprop="datePublished">
+        
+        Feb 4, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>实现Promise 或者是all、race、any等</p>
+
+<p>问题1：</p>
+<font style="color: #ec7907;">Promise/A+ 约定了哪些规范？</font>
+
+<p>问题2：</p>
+<font style="color: #ec7907;">手动实现 Promise 的过程中都遇到过哪些问题？</font>
+
+<h2 id="promisea-规范">Promise/A+ 规范</h2>
+
+<h3 id="术语">术语</h3>
+
+<ul>
+  <li>promise：是一个具有then 方法的对象或者函数，它的行为符合该规范</li>
+  <li>thenable：是一个定义了then 方法的对象或函数</li>
+  <li>value：可以是任何一个合法的 JavaScript 的值（包括undefined、thenable 或 promise）</li>
+  <li>exception：是一个异常，是在 Promise 里面可以用 throw 语句抛出来的值</li>
+  <li>reason：是一个 Promise 里 reject 之后返回的拒绝原因</li>
+</ul>
+
+<h3 id="状态描述">状态描述</h3>
+
+<p>一个 Promise 有三种状态：<span style="color: #e0650b;">pending</span>、<span style="color: #234abf;">fulfilled</span> 和 <span style="color: #28bb64;">rejected</span></p>
+
+<p>当状态为 <span style="color: #e0650b;">pending</span> 状态时，即可以转换为 fulfilled 或者 rejected 其中之一</p>
+
+<p>当状态为 <span style="color: #234abf;">fulfilled</span> 状态时，就不能转换为其他状态了，必须返回一个不能再改变的值</p>
+
+<p>当状态为 <span style="color: #28bb64;">rejected</span> 状态时，同样也不能转换为其他状态，必须有一个原因的值也不能改变</p>
+
+<h2 id="then-方法">then 方法</h2>
+
+<p>一个 Promise 必须拥有一个 then 方法来访问它的值或者拒绝原因</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">onFulfilled</span><span class="p">,</span> <span class="nx">onRejected</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="onfulfilled-和-onrejected-特性">onFulfilled 和 onRejected 特性</h3>
+
+<p>如果 onFulfilled 是函数，则当 Promise 执行结束之后必须被调用，最终返回值为 value，其调用次数不可超过一次</p>
+
+<p>而 onRejected 除了最后返回的是 reason 外，其他方面和 onFulfilled 在规范上的表述基本一样</p>
+
+<h3 id="多次调用">多次调用</h3>
+
+<p>then 方法其实可以被一个 Promise 调用多次且必须返回一个 Promise 对象</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">promise2</span> <span class="o">=</span> <span class="nx">promise1</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">onFulfilled</span><span class="p">,</span> <span class="nx">onRejected</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="实现一个符合-promisea-规范的-promise">实现一个符合 Promise/A+ 规范的 Promise</h2>
+
+<h3 id="构造函数">构造函数</h3>
+
+<p>Promise 构造函数接受一个 executor 函数</p>
+
+<p>executor 函数执行完同步或异步操作后，调用它的两个参数 resolve 和 reject</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="p">{</span>
+    <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nb">Promise</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nb">Promise</span><span class="p">(</span><span class="nx">executor</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nb">self</span> <span class="o">=</span> <span class="k">this</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span> <span class="c1">// Promise 当前的状态</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="kc">undefined</span> <span class="c1">// Promise 的值</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nx">onResolvedCallback</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">// Promise resolve时的回调函数集</span>
+    <span class="nb">self</span><span class="p">.</span><span class="nx">onRejectedCallback</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">// Promise reject时的回调函数集</span>
+    <span class="kd">function</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="k">instanceof</span> <span class="nb">Promise</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">value</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 异步执行所有的回调函数</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nb">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">resolved</span><span class="dl">'</span>
+            <span class="nb">self</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">value</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nb">self</span><span class="p">.</span><span class="nx">onResolvedCallback</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nb">self</span><span class="p">.</span><span class="nx">onResolvedCallback</span><span class="p">[</span><span class="nx">i</span><span class="p">](</span><span class="nx">value</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">})</span>
+    <span class="kd">function</span> <span class="nx">reject</span><span class="p">(</span><span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 异步执行所有的回调函数</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nb">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">rejected</span><span class="dl">'</span>
+                <span class="nb">self</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">reason</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nb">self</span><span class="p">.</span><span class="nx">onRejectedCallback</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nb">self</span><span class="p">.</span><span class="nx">onRejectedCallback</span><span class="p">[</span><span class="nx">i</span><span class="p">](</span><span class="nx">reason</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">})</span>   
+    <span class="p">}</span>
+    <span class="k">try</span> <span class="p">{</span> <span class="c1">// 考虑到执行过程中有可能出错，所以我们用try/catch 块给包起</span>
+        <span class="nx">executor</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="c1">// 执行 executor</span>
+    <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">reject</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">resolvePromise</span><span class="p">(</span><span class="nx">promise2</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">then</span>
+    <span class="kd">var</span> <span class="nx">thenCalledOrThrow</span> <span class="o">=</span> <span class="kc">false</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">promise2</span> <span class="o">===</span> <span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">reject</span><span class="p">(</span><span class="k">new</span> <span class="nx">TypeError</span><span class="p">(</span><span class="dl">'</span><span class="s1">Chaning cycle detected for promise!</span><span class="dl">'</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="k">instanceof</span> <span class="nb">Promise</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">x</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">x</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">resolvePromise</span><span class="p">(</span><span class="nx">promise2</span><span class="p">,</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span>
+            <span class="p">},</span> <span class="nx">reject</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">x</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">((</span><span class="nx">x</span> <span class="o">!==</span> <span class="kc">null</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">((</span><span class="k">typeof</span> <span class="nx">x</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">x</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="nx">then</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">then</span>
+            <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">then</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">then</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="kd">function</span> <span class="nx">rs</span><span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">thenCalledOrThrow</span><span class="p">)</span> <span class="k">return</span>
+                    <span class="nx">thenCalledOrThrow</span> <span class="o">=</span> <span class="kc">true</span>
+                    <span class="k">return</span> <span class="nx">resolvePromise</span><span class="p">(</span><span class="nx">promise2</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span>
+                <span class="p">},</span> <span class="kd">function</span> <span class="nx">rj</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="nx">thenCalledOrThrow</span><span class="p">)</span> <span class="k">return</span>
+                    <span class="nx">thenCalledOrThrow</span> <span class="o">=</span> <span class="kc">true</span>
+                    <span class="k">return</span> <span class="nx">reject</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+                <span class="p">})</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">resolve</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">thenCalledOrThrow</span><span class="p">)</span> <span class="k">return</span>
+            <span class="nx">thenCalledOrThrow</span> <span class="o">=</span> <span class="kc">true</span>
+            <span class="k">return</span> <span class="nx">reject</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">resolve</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="实现-then-方法">实现 then 方法</h3>
+
+<p>then 方法是 Promise 执行完之后可以拿到 value 或者 reason 的方法并且还要保持then 执行之后</p>
+
+<p>返回的依旧是一个 Promise 方法，还要支持多次调用</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// then 方法接收两个参数 onResolved 和 onRejected，分别为 Promise 成功或失败后的回调</span>
+<span class="nb">Promise</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">then</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">onResolved</span><span class="p">,</span> <span class="nx">onRejected</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nb">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">promise2</span>
+    <span class="c1">// 根据标准，如果then 的参数不是function，则需要忽略它</span>
+    <span class="nx">onResolved</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">onResolved</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span> <span class="p">?</span> <span class="nx">onResolved</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">v</span> <span class="p">}</span>
+    <span class="nx">onRejected</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">onRejected</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span> <span class="p">?</span> <span class="nx">onRejected</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">r</span> <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">resolved</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 如果 promise1 的状态已经确定并且是 resolved，我们调用 onResolved，考虑到有可能 throw，所以还需要将其包在try/catch块里</span>
+        <span class="k">return</span> <span class="nx">promise2</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 异步执行 onResolved</span>
+                <span class="k">try</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">onResolved</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span>
+                    <span class="nx">resolvePromise</span><span class="p">(</span><span class="nx">promise2</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span>
+                <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">reject</span><span class="p">(</span><span class="nx">reason</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+            <span class="c1">// try {</span>
+            <span class="c1">//     var x = onResolved(self, data)</span>
+            <span class="c1">//     if (x instanceof Promise) {</span>
+            <span class="c1">//         // 如果 onResolved 的返回值是一个 Promise 对象，直接取它的结果作为 Promise2 的结果</span>
+            <span class="c1">//         x.then(resolve, reject)</span>
+            <span class="c1">//     }</span>
+            <span class="c1">//     resolve(x) // 否则，以它的返回值作为 promise2 的结果</span>
+            <span class="c1">// } catch (e) {</span>
+            <span class="c1">//     reject(e); // 如果出错，以捕获到的错误作为promise2 的结果</span>
+            <span class="c1">// }</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+    <span class="c1">// 此处与前一个 if 块的逻辑几乎相同，区别在于所调用的是 onRejected 函数</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">rejected</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">promise2</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 异步执行 onRejected</span>
+                <span class="k">try</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">onRejected</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span>
+                    <span class="nx">resolvePromise</span><span class="p">(</span><span class="nx">promise2</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span>
+                <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">reject</span><span class="p">(</span><span class="nx">reason</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+            <span class="c1">// try {</span>
+            <span class="c1">//     var x = onRejected(self.data)</span>
+            <span class="c1">//     if (x instanceof Promise) {</span>
+            <span class="c1">//         x.then(resolve, reject);</span>
+            <span class="c1">//     }</span>
+            <span class="c1">// } catch (e) {</span>
+            <span class="c1">//     reject(e);</span>
+            <span class="c1">// }</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 如果当前的 Promise 还处于 pending 状态，我们并不是确定调用 onResolved 还是 onRejected，只能等到 Promise 的状态确定后，才能确定如何处理</span>
+        <span class="k">return</span> <span class="nx">promise2</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nb">self</span><span class="p">.</span><span class="nx">onResolvedCallback</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">try</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">onResolved</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span>
+                    <span class="nx">resolvePromise</span><span class="p">(</span><span class="nx">promise2</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span>
+                    <span class="c1">// if (x instanceof Promise) {</span>
+                    <span class="c1">//     x.then(resolve, reject)</span>
+                    <span class="c1">// }</span>
+                <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">reject</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+            <span class="nb">self</span><span class="p">.</span><span class="nx">onRejectedCallback</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">reason</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">try</span> <span class="p">{</span>
+                    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">onRejected</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="nx">data</span><span class="p">)</span>
+                    <span class="nx">resolvePromise</span><span class="p">(</span><span class="nx">promise2</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span>
+                    <span class="c1">// if (x instanceof Promise) {</span>
+                    <span class="c1">//     x.then(resolve, reject)</span>
+                    <span class="c1">// }</span>
+                <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">reject</span><span class="p">(</span><span class="nx">re</span><span class="p">)</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nb">Promise</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="k">catch</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">onRejected</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">onRejected</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 测试</span>
+<span class="nb">Promise</span><span class="p">.</span><span class="nx">deferred</span> <span class="o">=</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">defer</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">dfd</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="nx">dfd</span><span class="p">.</span><span class="nx">promise</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">dfd</span><span class="p">.</span><span class="nx">resolve</span> <span class="o">=</span> <span class="nx">resolve</span>
+        <span class="nx">dfd</span><span class="p">.</span><span class="nx">reject</span> <span class="o">=</span> <span class="nx">reject</span>
+    <span class="p">})</span>
+    <span class="k">return</span> <span class="nx">dfd</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Promise 并不是 JS 一开始存在的标准，如果你使用的某一个库中封装了一个 Promise 的实现，想象一下如果它不能跟你自己使用的 Promise 实现交互的情况，其实还是会有问题的</p>
+</blockquote>
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

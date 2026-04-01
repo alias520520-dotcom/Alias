@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>Web 性能优化</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="降低前端包体积，优化页面渲染时间，检测页面性能~" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="性能优化" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="Web 性能优化" />
+<meta name="twitter:description" content="降低前端包体积，优化页面渲染时间，检测页面性能~" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2021/07/16/performance" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="Web 性能优化" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2021/07/16/performance" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="降低前端包体积，优化页面渲染时间，检测页面性能~" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2021-07-16T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="性能优化" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2021/07/16/performance">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">Web 性能优化</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2021-07-16T00:00:00+08:00" itemprop="datePublished">
+                
+                Jul 16, 2021
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Web 性能优化</h1>
+    <p class="post-meta">
+      <time datetime="2021-07-16T00:00:00+08:00" itemprop="datePublished">
+        
+        Jul 16, 2021
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>降低前端包体积，优化页面渲染时间，检测页面性能~</p>
+
+<h2 id="性能检测">性能检测</h2>
+<h3 id="lighthouse">Lighthouse</h3>
+
+<p><a href="https://github.com/GoogleChrome/lighthouse" target="_blank" rel="noopener noreferrer nofollow">项目传送门</a></p>
+
+<p>可使用 chorme 插件，可在 chorme 开发者工具中点击</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>性能指标</th>
+      <th>释义</th>
+      <th>权重</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FCP</td>
+      <td>从进入页面到首次有 DOM 内容绘制所用的时间，即<strong>首次内容绘制</strong>。</td>
+      <td>15%</td>
+    </tr>
+    <tr>
+      <td>SI</td>
+      <td>网页内容填充的速度，即<strong>速度指数</strong>。</td>
+      <td>15%</td>
+    </tr>
+    <tr>
+      <td>LCP</td>
+      <td>从页面开始加载到视窗内最大内容绘制的所需时间，即最大内容绘制。</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>TTI</td>
+      <td>
+<strong>页面可交互的时间</strong>  <br>1.页面开始绘制内容，即 FCP 指标开始之后<br>2.用户的交互可以及时响应<br>3.部分页面可见的元素已注册了监听事件（在 DOMContentLoaded 事件之后）<br>4.在 TTI 之后持续 5 秒的时间内无长任务执行（没有超过 50 ms 的执行任务 &amp; 没有超过 2 个 GET 请求）</td>
+      <td>15%</td>
+    </tr>
+    <tr>
+      <td>TBT</td>
+      <td>测量的是 FCP 与 TTI 之间的时间间隔，即<strong>阻塞总时间</strong>。</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>CLS</td>
+      <td>评估<strong>累计布局位移</strong>，通过比较单个元素在帧与帧之间的位置偏移来计算<br>计算公式是cls = impact fraction * distance fraction 。<br>例：<br>cls = 75% * 25% = 0.1875<br>impact fraction 是红色框部分<br>distance fraction 是蓝色箭头的距离</td>
+      <td>5%</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="performance-开发者工具使用">Performance 开发者工具使用</h3>
+
+<h3 id="performance-api">Performance API</h3>
+
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Performance" target="_blank" rel="noopener noreferrer nofollow">属性传送门</a></p>
+
+<p><img src="../../../images/performance1.png" alt="image.png"></p>
+
+<p>const timing = window.performance.timing</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th>公式</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>firstbyte：首包时间</td>
+      <td>timing.responseStart – timing.domainLookupStart</td>
+    </tr>
+    <tr>
+      <td>fpt：First Paint Time, 首次渲染时间 / 白屏时间</td>
+      <td>timing.responseEnd – timing.fetchStart</td>
+    </tr>
+    <tr>
+      <td>tti：Time to Interact，首次可交互时间</td>
+      <td>timing.domInteractive – timing.fetchStart</td>
+    </tr>
+    <tr>
+      <td>ready：HTML 加载完成时间，即 DOM 就位的时间</td>
+      <td>timing.domContentLoaded – timing.fetchStart</td>
+    </tr>
+    <tr>
+      <td>load：页面完全加载时间</td>
+      <td>timing.loadEventStart – timing.fetchStart</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="依赖分析优化">依赖分析优化</h2>
+
+<h3 id="依赖分析工具">依赖分析工具</h3>
+
+<p><a href="https://www.npmjs.com/package/webpack-bundle-analyzer" target="_blank" rel="noopener noreferrer nofollow">webpack bundle analyzer</a></p>
+
+<ul>
+  <li>包体积大小类型：
+    <ul>
+      <li>Stat：文件的“输入”大小，在未进行任何缩小，被称为“统计大小”</li>
+      <li>Parsed：文件的“输出”大小，例如 Uglify，则此值将反映代码的缩小大小。</li>
+      <li>Gzipped：通过 gzip 压缩运行解析的包/模块的大小</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="优化手段总结">优化手段总结</h2>
+
+<ol>
+  <li>分析
+    <ul>
+      <li>Chrome Devtool Coverage 面板，确定页面中加载了哪些不必要的资源</li>
+      <li>webpack-bundle-analyzer 依赖分析</li>
+    </ul>
+  </li>
+  <li>Code Splitting
+    <ul>
+      <li>多入口：基于 entry 配置，每个入口打包成单独的 bundle</li>
+      <li>抽离公共代码：如果多个页面使用了公共的模块，可以通过 SpitChunksPlugin 将代码分割成多个 chunks</li>
+      <li>动态加载：过动态import引入的模块会被 webpack 单独拆分成一个chunk</li>
+      <li>DCE：production 模式下自动进行一些优化</li>
+    </ul>
+  </li>
+  <li>代码压缩
+    <ul>
+      <li>terser-webpack-plugin（webpack 5自带）</li>
+    </ul>
+  </li>
+  <li>脚本加载的顺序
+    <ul>
+      <li>关键的脚本内联使用</li>
+      <li>其他的脚本在文档底部引入，或者通过 async/defer 异步引用</li>
+    </ul>
+  </li>
+  <li>优化 CSS 资源加载
+    <ul>
+      <li>mini-css-extract-plugin，按需加载css</li>
+      <li>optimize-css-assets-webpack-plugin css压缩，移除无用的代码</li>
+    </ul>
+  </li>
+  <li>优化图片的加载
+    <ul>
+      <li>图片懒加载</li>
+      <li>响应式图片</li>
+      <li>WebP 图片格式优化</li>
+    </ul>
+  </li>
+  <li>优化网络请求
+    <ul>
+      <li>CDN 加速</li>
+      <li>合理的 HTTP 缓存策略</li>
+      <li>使用 HTTP/2</li>
+      <li>使用 pre-* 预处理</li>
+    </ul>
+  </li>
+</ol>
+
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>
