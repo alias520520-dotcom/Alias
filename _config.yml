@@ -3,7 +3,7 @@ description: 每天都要加油鸭，芳芳~
 show_downloads: true
 
 baseurl: "/Alias" # change this to the subpath of your site, e.g. /blog. Leave it empty if you don't need it.
-url: "https://higwendolyn.github.io" # change this to the base hostname & protocol for your site
+url: "https://alias520520-dotcom.github.io" # change this to the base hostname & protocol for your site
 
 
 google_analytics:

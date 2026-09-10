@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang=" en">
+
+<head>
+
+    
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="https://unpkg.com/scrollnav@3.0.1/dist/scrollnav.min.umd.js"></script>
+
+    <!-- Non social metatags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    
+
+    <title>Node.js 基础</title>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Place this data between the <head> tags of your website -->
+
+<meta name="description" content="回顾一下 node.js 基础知识~" />
+
+
+
+  <meta name="keywords" itemprop="categories" content="Node.js" />
+
+
+  <meta name="keywords" itemprop="category" content="" />
+
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image" />
+
+
+
+<meta name="twitter:title" content="Node.js 基础" />
+<meta name="twitter:description" content="回顾一下 node.js 基础知识~" />
+
+
+
+<!-- Twitter summary card with large image must be at least 280x150px -->
+
+  <meta name="twitter:image:src" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+  <meta name="twitter:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta name="twitter:url" content="http://localhost:4000/Alias/2026/09/09/node" />
+
+<!-- Open Graph data -->
+<meta property="og:title" content="Node.js 基础" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:4000/Alias/2026/09/09/node" />
+
+
+  <meta property="og:image" content="http://localhost:4000/Alias/thumbnail-jumbo.png" />
+
+<meta property="og:description" content="回顾一下 node.js 基础知识~" />
+<meta property="og:site_name" content="Alias's Blog" />
+
+
+<meta property="og:locale" content="" />
+
+
+  <meta property="article:published_time" content="2026-09-09T00:00:00+08:00" />
+
+
+
+
+  
+
+
+
+
+
+  
+    <meta property="article:tag" content="Node.js" />
+  
+
+
+
+  <meta property="article:tag" content="" />
+
+
+    
+
+    <link rel="canonical" href="http://localhost:4000/Alias/2026/09/09/node">
+
+    
+
+    <link rel="shortcut icon" href="http://localhost:4000/Alias/%20/favicon.ico">
+
+    <meta name="robots" content="noarchive">
+
+    <!-- <link rel="alternate" media="only screen and (max-width: 640px)" href="">
+        <link rel="alternate" media="handheld" href=""> -->
+
+
+    <link rel="stylesheet" href="http://localhost:4000/Alias/assets/css/style.css?v=">
+</head>
+
+<body style="position: relative;">
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="http://localhost:4000/Alias/">Alias's Blog</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/now.html">现在</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/about.html">关于</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="http://localhost:4000/Alias/contact">联系方式</a>
+              
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+
+    <section class="page-header">
+        <h1 class="project-name">Node.js 基础</h1>
+        
+        <!-- Post tagline -->
+        
+        <h2 class="project-date">
+            <time datetime="2026-09-09T00:00:00+08:00" itemprop="datePublished">
+                
+                Sep 9, 2026
+            </time>
+            
+            
+            • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alias</span></span>
+            
+        </h2>
+        
+        <!-- End: Post tagline -->
+    </section>
+
+    <section class="main-content">
+
+        <article class="artile-detail" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <!-- <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Node.js 基础</h1>
+    <p class="post-meta">
+      <time datetime="2026-09-09T00:00:00+08:00" itemprop="datePublished">
+        
+        Sep 9, 2026
+      </time>
+      </p>
+  </header> -->
+
+  <div itemprop="articleBody" class="article-content">
+    <p>回顾一下 node.js 基础知识~</p>
+
+<h2 id="nodejs-基础知识">Node.js 基础知识</h2>
+
+<h3 id="浏览器中的-javascript-的组成部分">浏览器中的 JavaScript 的组成部分</h3>
+
+<p><img src="../../../images/js.png" alt="image.png"></p>
+
+<p><strong>为什么 JavaScript 可以在浏览器中被执行？</strong></p>
+
+<p>浏览器会将待执行的 JS 代码经过 JavaScript 解析引擎解析。</p>
+
+<p><strong>不同的浏览器使用不同的 JavaScript 解析引擎：</strong></p>
+
+<ul>
+  <li>Safari ：WebKit</li>
+  <li>Chrome for iOS ：WebKit</li>
+  <li>Chrome for Android/macOS/Windows ： Blink + V8</li>
+  <li>FireFox ：Gecko + SpiderMonkey</li>
+</ul>
+
+<p><strong>为什么 JavaScript 可以操作 DOM 和 BOM？</strong>
+每个浏览器都内置了 DOM、BOM 这样的 API 函数，因此，浏览器中的 JavaScript 才可以调用他们。</p>
+
+<p><code class="language-plaintext highlighter-rouge">window</code> 是 BOM 的核心对象，代表浏览器窗口。它既是全局对象，也是其他 BOM 对象的顶层容器。</p>
+
+<p><img src="../../../images/bom.png" alt="image.png"></p>
+
+<p><img src="../../../images/node1.png" alt="image.png"></p>
+
+<h3 id="浏览器中的-javascript">浏览器中的 JavaScript</h3>
+
+<ol>
+  <li>V8 引擎负责解析和执行 JavaScript 代码</li>
+  <li>内置 API 是由运行环境提供的特殊接口，只能在所属的运行环境中被调用。</li>
+</ol>
+
+<h3 id="fs-文件系统模块">fs 文件系统模块</h3>
+
+<p>fs 模块是 Node.js 官方提供的、用来操作文件的模块，它提供了一系列的方法和属性，用来满足用户对文件的操作要求。</p>
+
+<p>例如：</p>
+
+<ul>
+  <li>fs.readFile() 方法，用来读取指定文件中的内容</li>
+  <li>fs.writeFile() 方法，用来向指定的文件中写入内容</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">fs</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">node:fs</span><span class="dl">'</span><span class="p">;</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="dl">'</span><span class="s1">./files/11.txt</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">dataStr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">fs</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">node:fs</span><span class="dl">'</span><span class="p">;</span>
+<span class="nx">fs</span><span class="p">.</span><span class="nx">writeFile</span><span class="p">(</span><span class="dl">'</span><span class="s1">./files/11.txt</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">hello</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">dataStr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>在使用 fs 模块操作文件时，如果提供的操作路径是以 ./ 或 ../ 开头的相对路径时，很容易出现路径动态拼接错误的问题。</p>
+
+<p>原因：代码在运行的时候，会以执行 node 命令时所在的目录，动态拼接出被操作文件的完整路径。</p>
+
+<p>解决方案：在使用 fs 模块操作文件时，直接提供完整的路径，不要提供 ./ 或 ../ 开头的相对路径，从而防止路径动态拼接的问题。</p>
+
+<h3 id="path-路径模块">path 路径模块</h3>
+
+<p>path 模块是 Node.js 官方提供的模块，它提供了一系列的方法和属性，用来满足用户对路径的处理需求。</p>
+
+<p>例如：</p>
+<ul>
+  <li>path.join() 方法，用来将多个路径片段拼接成一个完整的路径字符串</li>
+  <li>path.basename() 方法，用来从路径字符串中，将文件名解析出来</li>
+</ul>
+
+<p><strong>path.join() 的语法格式</strong></p>
+
+<p>使用 path.join() 方法，可以把多个路径片段拼接为完整的路径字符串：</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">path</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">node:path</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">pathStr</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="dl">'</span><span class="s1">/a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">/b/c</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">../</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">./d</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">./e</span><span class="dl">'</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">pathStr</span><span class="p">)</span> <span class="c1">// 输出 /a/b/d/e</span>
+
+<span class="kd">const</span> <span class="nx">pathStr2</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">./files/1.txt</span><span class="dl">'</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">pathStr2</span><span class="p">)</span> <span class="c1">// 输出 当前文件所在目录/files/1.txt</span>
+
+</code></pre></div></div>
+
+<p>注意：今后凡是涉及到路径拼接的操作，都要使用 path.join() 方法进行处理，不要直接使用 + 进行字符串的拼接。</p>
+
+<p><strong>path.basename() 的使用</strong></p>
+
+<p>使用 path.basename() 方法，可以从一个文件路径中，获取到文件的名称部分：</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">path</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">node:path</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">fpath</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">/a/b/c/index.html</span><span class="dl">'</span> <span class="c1">// 文件的存放路径</span>
+
+
+<span class="kd">var</span> <span class="nx">fullName</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">fpath</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">fullName</span><span class="p">)</span> <span class="c1">// 输出 index.html</span>
+
+<span class="kd">var</span> <span class="nx">nameWithoutExt</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">basename</span><span class="p">(</span><span class="nx">fpath</span><span class="p">,</span> <span class="dl">'</span><span class="s1">.html</span><span class="dl">'</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">nameWithoutExt</span><span class="p">)</span> <span class="c1">// 输出 index</span>
+
+</code></pre></div></div>
+
+<p><strong>path.extname() 的使用</strong></p>
+
+<p>用 path.extname() 方法，可以获取路径中的扩展名部分</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">path</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">node:path</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">fpath</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">/a/b/c/index.html</span><span class="dl">'</span> <span class="c1">// 文件的存放路径</span>
+
+
+<span class="kd">var</span> <span class="nx">fext</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">fpath</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">fext</span><span class="p">)</span> <span class="c1">// 输出 .html</span>
+
+</code></pre></div></div>
+
+<h3 id="http-模块">http 模块</h3>
+
+<p>在网络节点中，负责消费资源的电脑，叫做客户端；负责对外提供网络资源的电脑，叫做服务器。</p>
+
+<p>http 模块是 Node.js 官方提供的，用来创建 web 服务器的模块，通过 http 模块提供的 http.createServer() 方法，就能方便的把一台普通的电脑，变成一台 web 服务器，从未对外提供 web 资源服务。</p>
+
+<p><strong>服务器相关概念</strong></p>
+
+<p>IP 地址就是互联网上每台计算器的唯一地址，因此 IP 地址具有唯一性，如果把 “个人电脑” 比作 “一台电脑”，那么 “IP 地址” 就相当于 “电话号码”，只有在知道对方 IP 地址的前提下，才能与对应的电脑之间进行数据通信。</p>
+
+<p>注意：</p>
+<ol>
+  <li>互联网中每台 Web 服务器，都有自己的 IP 地址，例如： 大家可以在终端 ping www.baidu.com 命令，即可查看到百度服务器的 IP 地址。</li>
+  <li>在开发期间，自己的电脑就是一台服务器，也是一个客户端，为了方便测试，可以在自己的浏览器中输入 127.0.0.1 这个 IP 地址，酒呢把自己的电脑当做一台服务器进行访问。</li>
+</ol>
+
+<p><strong>域名和域名服务器</strong></p>
+
+<p>尽管 IP 地址能够唯一标记网络上的计算机，但是 IP 地址是一长串数字，不直观，而且不便于记忆，于是人们又发明了另一套字符型的地址方案，即所谓的域名地址。</p>
+
+<p>IP 地址和域名是一一对应的关系，这份对应关系存放在一种叫做域名服务器的电脑中，使用者只需通过好记的域名访问对应的服务器即可，对应的转换工作由域名服务器实现。因此，域名服务器就是提供 IP 地址和域名之间的转换服务的服务器。</p>
+
+<p>注意：</p>
+<ol>
+  <li>单纯使用 IP 地址，互联网中的电脑也能够正常工作，但是有了域名的加持，能让互联网的世界变得更加方便。</li>
+  <li>在开发测试期间，127.0.0.1 对应的域名是 localhost，它们都代表我们自己的这台电脑，在使用效果上没有任何区别。</li>
+</ol>
+
+<p><strong>端口号</strong></p>
+
+<p>计算机中的端口号，就好像是现实生活中的门牌号，外卖小哥可以在整栋大楼众多的房间中，准确把外卖送到你的手中。</p>
+
+<p>同样的道理，在一台电脑中，可以运行成百上千个 web 服务，每个 web 服务都对应一个唯一的端口号，客户端发送过来的网络请求，通过端口号，可以被准确的交给对应的 web 服务进行处理。</p>
+
+<p>注意：</p>
+<ol>
+  <li>每个端口号不能同时被多个 web 服务占用</li>
+  <li>在实际应用中， URL 中的 80 端口可以被省略</li>
+</ol>
+
+<p><strong>创建最基本的 web 服务器</strong></p>
+
+<ol>
+  <li>导入 http 模块</li>
+  <li>创建 web 服务器实例</li>
+  <li>为服务器实例绑定 request 事件，监听客户端的请求</li>
+  <li>启动服务器</li>
+</ol>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="o">*</span> <span class="nx">http</span> <span class="nx">path</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">node:http</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">()</span>
+<span class="c1">// 使用服务器实例的 .on() 方法，为服务器绑定一个 request 实践</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// 只要有客户端来请求我们自己的服务器，就会触发 request 事件，从而调用这个事件处理函数</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Some visit our web server.</span><span class="dl">'</span><span class="p">)</span>
+    <span class="c1">// req 是请求对象，它包含了与客户端相关的数据和属性</span>
+    <span class="c1">// req.url 是客户端请求的 url 地址</span>
+    <span class="c1">// req.method 是客户端的 method 请求类型</span>
+    <span class="kd">const</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">`request url </span><span class="p">${</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">}</span><span class="s2">, request method </span><span class="p">${</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">}</span><span class="s2">`</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+    <span class="c1">// 为了防止中文显示乱码问题，需要设置响应头 Content-Type</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">text/html;charset=utf-8</span><span class="dl">'</span><span class="p">)</span>
+    <span class="c1">// res.end() 方法作用</span>
+    <span class="c1">// 向客户端发送指定的内容，并结束这次请求的处理过程</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="c1">// 调用 server.listen(端口，cb回调)方法，即可启动 web 服务器</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">http serv</span><span class="dl">'</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<h3 id="模块化">模块化</h3>
+
+<h4 id="模块化的基本概念">模块化的基本概念</h4>
+
+<p>模块化是指解决一个复杂问题时，自顶向下逐层把系统划分成若干模块的过程，对于整个系统来说，模块是可组合，分解和更换的单元。</p>
+
+<p>编程领域中的模块化，就是遵守固定的规则，把一个大文件拆成独立并互相依赖的多个小模块。</p>
+
+<p>好处：</p>
+<ol>
+  <li>提高代码的复用性</li>
+  <li>提高代码的可维护性</li>
+  <li>可以实现按需加载</li>
+</ol>
+
+<p>模块化规范就是对代码进行模块化的拆分与组合时，需要遵守的那些规则。</p>
+
+<ul>
+  <li>使用什么样的语法格式来引入模块</li>
+  <li>在模块中使用什么样的语法格式向外暴露成员</li>
+</ul>
+
+<p>模块化规范的好处：大家都遵守同样的模块化规范写代码，降低了沟通的成本，极大方便了各个模块之间的互相调用，利人利己。</p>
+
+<h4 id="nodejs-中模块的分类">Node.js 中模块的分类</h4>
+
+<p>Node.js 中根据模块来源的不同，将模块分为 3 大类，分别是：</p>
+
+<ul>
+  <li>内置模块：由 Node.js 官方提供，例如 fs、path、http 等</li>
+  <li>自定义模块： 用户创建的每个 js 文件，都是自定义模块</li>
+  <li>第三方模块：由第三方开发出来的模块，并非官方提供的内置模块，也不是用户创建的自定义模块，使用前需要先下载</li>
+</ul>
+
+<h4 id="nodejs-中模块作用域">Node.js 中模块作用域</h4>
+
+<p>和函数作用域类似，在自定义模块中定义的变量、方法等成员，只能在当前模块内被访问，这种模块级别的访问限制，叫做模块作用域。</p>
+
+<p>好处：防止全局变量污染的问题</p>
+
+<h4 id="向外共享模块作用域中的成员">向外共享模块作用域中的成员</h4>
+
+<p>在自定义模块中，可以使用 module.exports 对象，将模块内的成员共享出去，供外界使用。</p>
+
+<p>外界用 require() 方法导入自定义模块时，得到的就是 module.exports 所指向的对象。</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 向 module.exports 对象上挂载 username 属性</span>
+<span class="nx">module</span> <span class="nx">exports</span><span class="p">.</span><span class="nx">username</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">zs</span><span class="dl">'</span>
+<span class="c1">// 向 module.exports 对象上挂载 sayHello 方法</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">sayHello</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello!</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="nx">age</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>共享成员注意点：使用 require() 方法导入模块时，导入的结果，永远以 module.exports 指向的对象为准。</p>
+
+<p>exports 对象</p>
+
+<p>由于 module.exports 单词写起来比较复杂，为了简化向外共享成员的代码，Node 提供了 exports 对象。默认情况下，exports 和 module.exports 指向同一个对象。最终共享的结果，还是以 module.exports 指向的对象为准。</p>
+
+<p>exports 和 module.exports 的使用误区</p>
+
+<p>外界用 require() 方法导入自定义模块时，得到的就是 module.exports 所指向的对象。</p>
+
+<p><strong>Common.js 模块化规范</strong></p>
+
+<p>Common.js 规定：</p>
+<ol>
+  <li>每个模块内部，module 变量代表当前模块</li>
+  <li>module 变量是一个对象，它的 exports 属性（即 module.exports）是对外的接口</li>
+  <li>加载某个模块，其实是加载该模块的 module.exports 属性，require() 方法用于加载模块。</li>
+</ol>
+
+<h4 id="模块的加载机制">模块的加载机制</h4>
+
+<p><strong>优先从缓存中加载</strong></p>
+
+<p>模块在第一次加载后会被缓存，这也意味着多次调用 require() 不会导致模块的代码被执行多次。
+注意：不论是内置模块，用户自定义模块，还是第三方模块，它们都会优先从缓存中加载，从而提高模块的加载效率。</p>
+
+<p><strong>内置模块的加载机制</strong></p>
+
+<p>内置模块是由 Node.js 官方提供的模块，内置模块的加载优先级最高</p>
+
+<p>例如，require(‘fs’) 始终返回内置的 fs 模块，即使在 node_modules 目录下有名字相同的包也叫做 fs。</p>
+
+<p><strong>自定义模块的加载机制</strong></p>
+
+<p>使用 require() 加载自定义模块时，必须指定以 ./ 或 ../ 开头的路径标识符，在加载自定义模块时，如果没有指定 ./ 或 ../ 这样的路径标识符，则 node 会把它当做内置模块或第三方模块进行加载。</p>
+
+<p>同时，在使用 require() 导入自定义模块时，如果省略了文件的扩展名，则 Node.js 会按顺序分别尝试加载一下的文件：</p>
+<ol>
+  <li>按照确切的文件名进行加载</li>
+  <li>补全 .js 扩展名进行加载</li>
+  <li>补全 .json 扩展名进行加载</li>
+  <li>补全 .node 扩展名进行加载</li>
+  <li>加载失败，终端报错</li>
+</ol>
+
+<p><strong>第三方模块的加载机制</strong></p>
+
+<p>如果传递给require() 的模块标识符不是一个内置模块，也没有以 ./ 或 ../ 开头，则 Node.js 会从当前模块的父目录开始，尝试从 /node_modules 文件夹中加载第三方模块。</p>
+
+<p>如果没有找到对应的第三方模块，则移动到再上一层父目录中，进行加载，直到文件系统的根目录。</p>
+
+<p><strong>目录作为模块</strong></p>
+
+<p>当把目录作为模块标识符，传递给 requie() 进行加载的时候，有三种加载方式：</p>
+<ol>
+  <li>在被加载的目录下查找一个叫做 package.json 的文件，并寻找 main 属性，作为 require() 加载的入口</li>
+  <li>如果目录里没有 package.json 文件，或者 main 入口不存在或无法解析，则 Node.js 将会试图加载目录下的 index.js 文件</li>
+  <li>如果以上两步都失败了，则 Node.js 会在终端打印错误消息，报错模块缺失： Error:Cannot find module ‘xxx’</li>
+</ol>
+
+
+  </div>
+
+  
+</article>
+
+        <footer class="site-footer">
+            <!-- SVG icons from https://iconmonstr.com -->
+
+            <!-- Github icon -->
+            <span class="my-span-icon">
+                <a href="https://github.com/higwendolyn/Alias" aria-label="Alias's GitHub" title="Alias's GitHub" target="_blank" rel="noopener noreferrer nofollow">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
+                </a>
+            </span>
+
+            <!-- RSS icon -->
+            
+
+            <!-- Contact icon -->
+            
+            
+            <span class="my-span-icon">
+                <a href="http://localhost:4000/Alias/contact" aria-label="Contact" title="Contact Alias">
+                    <svg class="my-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+                        <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z"></path>
+                    </svg>
+                </a>
+            </span>
+            
+
+        </footer>
+    </section>
+    
+    <div class="shade" style="display:none;"></div>
+    
+
+    <script>
+        // 页面加载需要时间会影响导航的准确性
+        setTimeout(() => {
+            const ct = document.querySelector('.article-content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+            scrollnav.init(ct, {
+                debug: false,
+                easingStyle: 'linear',
+                //section为一级目录，subsection为二级目录
+                //以下两行意为h3为一级目录，h4为二级目录（个人只需要一级目录，所以注释了二级目录）
+                sections: ($('.article-content > h1').length > 0) ? 'h1' : 'h2',
+                subSections: ($('.post-content > h1').length > 0) ? 'h2' : 'h3',
+            });
+        }, 1200)
+
+        var menu = document.querySelector("nav.site-nav");
+        var checkbox = document.getElementById("nav-trigger");
+
+        var pic;
+        var imgPicture;
+        // close menu if click outside menu
+        document.addEventListener("click", function (e) {
+            if (e.target.nodeName === 'IMG' && e.target.className !== 'hoverImg') {
+                imgPicture = e.target.currentSrc;
+                showImg(e.target.currentSrc);
+            }
+            if (['shade', 'hoverImg'].includes(e.target.className)) {
+                hiddenImg(e.target.currentSrc);
+            }
+            if (menu != e.target &&
+                !isDescendant(menu, e.target)) {
+                checkbox.checked = false;
+            }
+        }, false);
+
+        function showImg(imgSrc) {
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: block';
+            pic = document.createElement('img');
+            pic.setAttribute("class", "hoverImg");
+            pic.src = imgSrc;
+            document.body.appendChild(pic);
+        }
+
+        function hiddenImg(imgSrc) {
+            document.body.removeChild(pic);
+            let shade = document.getElementsByClassName("shade");
+            shade[0].style = 'display: none';
+        }
+
+        function isDescendant(parent, child) {
+            var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        }
+        window.onscroll = function () {
+            let isArticlePage = document.getElementsByClassName("artile-detail").length > 0
+                && document.getElementsByClassName("hoverImg").length > 0;
+            if (isArticlePage) {
+                hiddenImg(imgPicture);
+            }
+        }  
+    </script>
+
+</body>
+
+</html>

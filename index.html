@@ -58,55 +58,22 @@ layout: home
     <h2>分类标签</h2>
     {% capture site_categories %}{% for category in site.categories %}{{ category | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
     {% assign category_words = site_categories | split:',' | sort %}
+    {% assign backgrounds = '/Alias/images/back1.jpg|/Alias/images/back2.jpeg|/Alias/images/back3.jpg|/Alias/images/back4.jpeg|/Alias/images/back5.jpg|/Alias/images/back4.jpg' | split: '|' %}
     <div>
-      {% for item in (0..site.categories.size) %}{% unless forloop.last %}
-      {% capture this_word %}{{ category_words[item] | strip_newlines }}{% endcapture %}
-      <div class="category-card">
-        {% if item == 0 %}
-          <div class="card-containt" style="background-image: url(/Alias/images/back2.jpeg);">
-            <div class="card-image-cell">
-              <a href="/Alias/categories.html#{{ this_word | cgi_escape }}" rel="nofollow">{{ this_word }}</a>
+      {% for this_word in category_words %}
+        {% assign trimmed_word = this_word | strip_newlines | strip %}
+        {% unless trimmed_word == '' %}
+          {% assign bg_index = forloop.index0 | modulo: backgrounds.size %}
+          {% assign bg_url = backgrounds[bg_index] %}
+          <div class="category-card">
+            <div class="card-containt" style="background-image: url('{{ bg_url }}');">
+              <div class="card-image-cell">
+                <a href="/Alias/categories.html#{{ trimmed_word | cgi_escape }}" rel="nofollow">{{ trimmed_word }}</a>
+              </div>
             </div>
           </div>
-        {% endif %}
-        {% if item == 1 %}
-          <div class="card-containt" style="background-image: url(/Alias/images/back1.jpg);">
-            <div class="card-image-cell">
-              <a href="/Alias/categories.html#{{ this_word | cgi_escape }}" rel="nofollow">{{ this_word }}</a>
-            </div>
-          </div>
-        {% endif %}
-        {% if item == 2 %}
-          <div class="card-containt" style="background-image: url(/Alias/images/back3.jpg);">
-            <div class="card-image-cell">
-              <a href="/Alias/categories.html#{{ this_word | cgi_escape }}" rel="nofollow">{{ this_word }}</a>
-            </div>
-          </div>
-        {% endif %}
-        {% if item == 3 %}
-          <div class="card-containt" style="background-image: url(/Alias/images/back4.jpeg);">
-            <div class="card-image-cell">
-              <a href="/Alias/categories.html#{{ this_word | cgi_escape }}" rel="nofollow">{{ this_word }}</a>
-            </div>
-          </div>
-        {% endif %}
-        {% if item == 4 %}
-          <div class="card-containt" style="background-image: url(/Alias/images/back5.jpg);">
-            <div class="card-image-cell">
-              <a href="/Alias/categories.html#{{ this_word | cgi_escape }}" rel="nofollow">{{ this_word }}</a>
-            </div>
-          </div>
-        {% endif %}
-        {% if item == 5 %}
-          <div class="card-containt" style="background-image: url(/Alias/images/back4.jpeg);">
-            <div class="card-image-cell">
-              <a href="/Alias/categories.html#{{ this_word | cgi_escape }}" rel="nofollow">{{ this_word }}</a>
-            </div>
-          </div>
-        {% endif %}
-      </div>
-      {% endunless %}{% endfor %}
-    </ul>
+        {% endunless %}
+      {% endfor %}
     </div>
   </div>
 
